@@ -1,135 +1,166 @@
 # Container Blocks
 
-## disclosure
+## accordion
 
-Disclosure provides accordion/tabs grouping. Both `as: accordion` and `as: tab` produce a `disclosure` block — this is the underlying manifest keyword. The `as:` alias determines which `style` axis value is set internally.
+Collapsible panels. Each `###` heading after `as: accordion` becomes a panel that expands/collapses.
 
-**Syntax (accordion):**
+**Syntax:**
 ```prax
-### Topic A
+### Hazard Types
 as: accordion
 accordionStyle: contained
-allowMultipleOpen: false
 
-Topic A details.
+Chemical, electrical, and mechanical hazards.
 
-### Topic B
+### Control Measures
 
-Topic B details.
+Engineering controls, administrative controls, and PPE.
+
+### Reporting
+
+File an incident report within 24 hours.
 ```
 
-> **`accordionStyle` controls the visual variant**, not `style`. Use `accordionStyle: contained | separated | default`. The `style` axis selects accordion vs. tabs mode and is set implicitly by the `as:` value — do not set `style: accordion` manually.
+**Parameters:**
+- `accordionStyle`: `default | contained | separated` — visual style of accordion panels.
+- `allowMultipleOpen` (boolean) — whether multiple panels can be open at once.
+- `layout`: `wide | full | breakout`
 
-**Tabs variant:**
+## tabs
 
+Tabbed content panels. Each `###` heading after `as: tab` becomes a tab.
+
+**Syntax:**
 ```prax
-### Step 1
+### Before Shift
 as: tab
 
-Explain step 1.
+Review overnight incidents and pending actions.
 
-### Step 2
+### During Shift
 
-Explain step 2.
+Use the checklist and escalate unresolved hazards.
 ```
 
-**Variants:**
-- `style`: `accordion | tabs` (set implicitly by `as: accordion` or `as: tab`)
-- `accordionStyle`: `default | contained | separated`
-- `allowMultipleOpen`: boolean
+**Parameters:**
+- `layout`: `wide | full | breakout`
 
 ## columns
 
-Column layout via repeated standalone `as: col`.
+Column layout. Each `as: col` starts a new column. Columns must be explicitly closed with `close: col`.
 
 **Syntax:**
 ```prax
 as: col
-### Left Column
-Left content.
+
+/assets/safety-diagram.png
+alt: Workplace safety zones diagram
 
 as: col
-### Right Column
-Right content.
+
+### Key Safety Zones
+- Loading dock
+- Chemical storage
+- Assembly line
 
 close: col
 ```
 
+Any content can go inside a column — headings, images, text, lists, even nested blocks.
+
 **Parameters:**
-- `layout`
+- `layout`: `wide | full | breakout`
 
 ## sequence
 
-Step-by-step or timeline container.
+Step-by-step or timeline container. Each `###` heading becomes a labeled step or point in the sequence.
 
 **Syntax:**
 ```prax
-### Step 1
+### Report the incident
 as: sequence
-variant: numbered
+variant: timeline
 orientation: vertical
-alignment: left
 
-Describe step 1.
+Notify your supervisor immediately.
 
-### Step 2
+### Secure the area
 
-Describe step 2.
+Cordon off the affected zone.
+
+### Document findings
+
+Take photos and complete the incident form.
 ```
 
 **Variants:**
-- `variant`: `numbered | timeline | plain` (plus planned values)
+- `variant`: `numbered | timeline | plain`
 - `orientation`: `vertical | horizontal`
-- `alignment`: `left | center | right`
+- `alignment`: `left | center | right` — controls text alignment within steps.
 
 ## comparison
 
-Before/after or side-by-side comparison.
+Side-by-side comparison of two items. Currently supports `side-by-side` layout.
 
 **Syntax:**
 ```prax
 ### Before
 as: comparison
-style: side-by-side
 
-Manual triage.
+Manual triage with paper forms.
 
 ### After
 
-Automated triage.
+Automated triage with digital checklists.
 ```
 
 **Variants:**
-- `style`: `side-by-side` (implemented), `slider|toggle|diff` planned
+- `style`: `side-by-side`
+
+Future styles (`slider` for image comparison) are planned but not yet implemented.
 
 ## card
 
-Card container for grouped rich content. `card` is parser-supported as a container frame but is not listed in the manifest's `INTERACTIVE_KEYWORDS` or `ASSESSMENT_KEYWORDS`. It works as a standalone block but does not appear in the block picker.
+Card container for grouped rich content. Items are `###` headings, rendered in a grid layout with configurable columns. Requires explicit `close: card`.
 
 **Syntax:**
 ```prax
-### Decision Card
+### Fire Safety
 as: card
+columns: 2
 
-Scenario details and options.
+Know your nearest exit and extinguisher location.
+
+### Chemical Safety
+
+Always check the SDS before handling chemicals.
+
+### Electrical Safety
+
+Lock out/tag out before any maintenance work.
 
 close: card
 ```
 
-**Layout variants (card):**
+**Parameters:**
+- `columns` (number) — number of grid columns.
+- `layout`: `wide | full | breakout`
 
-| Variant | Values | Notes |
-|---|---|---|
-| `layout` | `single \| grid \| masonry` | Controls card arrangement when multiple cards are used |
-| `flip` | boolean | Set `flip: true` for flashcard-style front/back behavior |
+Cards with `flip: true` create front/back flashcard behavior — see [blocks-interactive.md — flashcard](blocks-interactive.md#flashcard).
 
 ## Nesting rules
 
-- Containers may include content and assessments.
+- Containers may include content blocks and assessments as children.
 - Avoid deeply nested multi-container chains for readability.
-- Page breaks close any open container state.
+- Page breaks (`---`) close all open containers automatically.
 
 ## Closing rules
 
-- Required: `close: col`, `close: assessment-group`.
-- Recommended when standalone: `close: card`, `close: flashcard`.
+| Container | Closing | Notes |
+|---|---|---|
+| `accordion` / `tabs` | Implicit | Closed by next heading at same or higher level, or page break |
+| `col` | `close: col` required | Must explicitly close the column layout |
+| `assessment-group` | `close: assessment-group` required | Must explicitly close |
+| `card` | `close: card` recommended | Explicit close prevents ambiguity |
+| `sequence` | Implicit | Closed by next heading at same or higher level, or page break |
+| `comparison` | Implicit | Closed after second item |

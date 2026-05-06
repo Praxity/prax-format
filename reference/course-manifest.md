@@ -126,4 +126,4 @@ A course folder works without a parent `workspace.praxity.yaml`. The user opens 
 
 ## Single-file courses
 
-A single `.prax` file without a `course.yaml` is still valid. Lessons are defined by `# H1` headings, pages by `---` breaks. No manifest needed. This is the simpler model for quick courses.
+A single `.prax` file without a `course.yaml` is still valid. Pages are separated by `---` breaks. `# H1` headings can be used as structural titles but do not create formal lesson boundaries — the entire file is treated as one course. No manifest needed. This is the simpler model for quick courses.

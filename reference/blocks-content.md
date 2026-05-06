@@ -122,7 +122,7 @@ The embed source is the URL on its own line — it is not written as a `src:` pa
 
 ## note
 
-Callout note based on blockquote + transform.
+Callout note. Write content as a blockquote (`>`), then add `as: note` to transform it into a styled callout.
 
 **Syntax:**
 ```prax
@@ -162,11 +162,12 @@ decorator: line-left
 Fenced code block.
 
 **Syntax:**
-```prax
-\`\`\`ts
+
+````prax
+```ts
 console.log("safe start");
-\`\`\`
 ```
+````
 
 **Parameters:**
 - `language` (optional)
@@ -174,7 +175,7 @@ console.log("safe start");
 
 ## equation
 
-LaTeX block in `$$` fences.
+Math block using [KaTeX](https://katex.org/) syntax, fenced with `$$`. Supports standard LaTeX math notation — see the [KaTeX supported functions](https://katex.org/docs/supported) for the full reference.
 
 **Syntax:**
 ```prax
@@ -184,7 +185,7 @@ $$
 ```
 
 **Parameters:**
-- `layout`
+- `layout`: `wide | full | breakout`
 
 ## button
 
@@ -209,9 +210,7 @@ openInNewTab: true
 
 ## data-table
 
-Table-like content (table or chart rendering model).
-
-The separator row (`| --- | --- |`) is optional — the parser skips it if present but does not require it.
+Pipe table rendered as a data table or chart. The first row is treated as the header. The separator row (`| --- | --- |`) is optional — the parser skips it if present but does not require it.
 
 **Syntax:**
 ```prax
@@ -220,7 +219,7 @@ The separator row (`| --- | --- |`) is optional — the parser skips it if prese
 | Q2 | 1 |
 ```
 
-Optional chart rendering:
+Optional chart rendering — add `chart:` below the table to render it as a visualization:
 
 ```prax
 | Quarter | Incidents |
@@ -232,7 +231,10 @@ yLabel: Count
 ```
 
 **Parameters:**
-- `layout`
+- `chart` (string) — chart type (`bar`, `line`, `pie`, etc.). When present, renders as a chart instead of a table.
+- `xLabel` (string) — horizontal axis label (chart mode).
+- `yLabel` (string) — vertical axis label (chart mode).
+- `layout`: `wide | full | breakout`
 
 **Variants:**
 - `visual`: `table | chart | stats`

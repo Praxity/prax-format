@@ -22,7 +22,7 @@ Rules:
 
 ## H1 heading — module/lesson title
 
-The parser recognizes `#` (H1) separately from H2–H4. An H1 produces a `heading` block with `level: 1` and also closes all open implicit groups. Use it for module or lesson titles at the top of a file or section.
+Praxity's parser recognizes `#` (H1) separately from H2–H4. An H1 produces a `heading` block with `level: 1` and also closes all open implicit groups. Use it for module or lesson titles at the top of a file or section.
 
 ```prax
 # Module 1: SCORM Round-Trip Coverage
