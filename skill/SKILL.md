@@ -476,7 +476,19 @@ feedback: Correct -- all three are required
 feedback: Important, but not sufficient alone
 ```
 
-**With whole-question feedback** (placed after all options): use `feedback:` for a single message, or `correct:` and `incorrect:` for differentiated feedback.
+**With whole-question feedback** (placed after all options): use `correct:` and `incorrect:` for differentiated feedback based on overall correctness. These are distinct from per-option `feedback:` lines — `correct:` and `incorrect:` are not tied to any specific option and are stored as `data.correct`/`data.incorrect` on the block.
+
+```
+### Which PPE is required?
+as: choice
+
+( ) Safety glasses only
+(x) Hard hat, safety glasses, and high-vis vest
+( ) Steel-toed boots
+
+correct: All three items are required in construction zones.
+incorrect: Review the PPE requirements before continuing.
+```
 
 ### Multiple choice (choose-many)
 

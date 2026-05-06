@@ -233,11 +233,11 @@ accordionStyle: contained
 
 Valid `accordionStyle` values: `default`, `contained`, `separated`.
 
-### `as: branch` does not render
+### `as: branch` is not recognized by the parser
 
-`as: branch` is a declared grammar value but is not yet implemented in the renderer. Blocks using `as: branch` will be silently ignored in published output — no error is shown, but the content will not appear.
+`as: branch` is **not recognized by the parser** — it falls through to an unknown `as:` value and renders as a plain heading. No error is shown, but the block will not behave as a branching scenario.
 
-Do not use `as: branch` in generated `.prax` output.
+Do not use `as: branch` in generated `.prax` output. Use conditional visibility (`visible:` with variables) and `when:`/`then:` logic rules for branching behavior instead.
 
 ### Using deprecated v2 fences
 

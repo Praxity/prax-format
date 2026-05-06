@@ -77,9 +77,11 @@ close: flashcard
 
 ## Not yet in the grammar
 
-The following block types exist in Praxity's renderer but are **not authored via `.prax` grammar syntax** — they are created through the editor UI or API:
+The following block types are **not recognized by the parser** — they either fall through to unknown/plain rendering or require backend infrastructure not available in standalone exports:
 
-- **Interactive video** — multi-clip video sequences with timed interactions (Mux player). Created through the editor's video timeline interface.
+- **Interactive video** — multi-clip video sequences with timed interactions (Mux player). Created through the editor's video timeline interface, not via `.prax` grammar syntax.
 - **Discussion / Q&A** (`as: discuss`, `as: qa`) — threaded discussion requiring a live backend. Grammar syntax exists but rendering requires Praxity Cloud publish.
 - **Contribution / Poll** (`as: contribute`, `as: poll`) — shared responses requiring a live backend. Grammar syntax exists but rendering requires Praxity Cloud publish.
-- **Branch** (`as: branch`) — branching scenario. Grammar keyword is defined but the renderer is not yet implemented. Use conditional visibility (`visible:` with variables and `when:` rules) for branching logic in the current version.
+- **Branch** (`as: branch`) — branching scenario. `as: branch` is **not recognized by the parser** — it falls through to an unknown `as:` value and renders as a plain heading. Do not use `as: branch` in authored `.prax` files. Use conditional visibility (`visible:` with variables and `when:` rules) for branching logic.
+- **Document / file download** (`as: document`) — file download block. Not yet in the grammar; use a button (`[label](url)` + `as: button`) as an alternative.
+- **File upload** (`as: file-upload`) — assessment file submission block. Not yet in the grammar.

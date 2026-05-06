@@ -19,9 +19,18 @@ feedback: Correct — isolating the hazard prevents further injury.
 ( ) Keep working and monitor
 feedback: Monitoring alone does not remove the risk.
 ( ) Ask later
+
+correct: Well done. Isolation is always the first action.
+incorrect: Review the emergency response procedure before continuing.
 ```
 
-Per-option `feedback: <text>` lines go directly after each option, not indented. A global `feedback:` line (not after an option) sets fallback feedback for the whole question.
+Per-option `feedback: <text>` lines go directly after each option, not indented. These are shown for the specific option the learner selected.
+
+Whole-question feedback lines go after all options (not after any individual option):
+- `correct: <text>` — shown when the learner answers the question correctly overall.
+- `incorrect: <text>` — shown when the learner answers incorrectly overall.
+
+Both `correct:`/`incorrect:` and per-option `feedback:` can be used together. They are stored as `data.correct` and `data.incorrect` on the block.
 
 ## choose-many
 
