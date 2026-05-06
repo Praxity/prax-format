@@ -165,11 +165,12 @@ A pressure alarm triggers during startup. Review context and choose a response.
 close: card
 
 ### What is lockout/tagout?
-as: flashcard
+as: card
+flip: true
 
 Energy isolation before maintenance.
 
-close: flashcard
+close: card
 
 ---
 

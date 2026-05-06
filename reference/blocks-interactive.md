@@ -52,29 +52,6 @@ prompt: You are a safety coach. Explain controls with concise examples.
 - `prompt` (string) — system prompt for the AI assistant.
 - `layout`: `wide | full | breakout`
 
-## flashcard
-
-Flashcard interaction — a card container with front/back flip behavior. Each `###` heading is a card front; the content below is the back. Requires explicit `close: flashcard`.
-
-This is a variant of the [card container](blocks-containers.md#card) with `flip: true` behavior.
-
-**Syntax:**
-```prax
-### What is lockout/tagout?
-as: flashcard
-
-Energy isolation before maintenance on energized equipment.
-
-### When is a confined space permit required?
-
-Before entering any space with limited entry/exit and potential hazardous atmosphere.
-
-close: flashcard
-```
-
-**Parameters:**
-- `layout`: `wide | full | breakout`
-
 ## Not yet in the grammar
 
 The following block types are **not recognized by the parser** — they either fall through to unknown/plain rendering or require backend infrastructure not available in standalone exports:

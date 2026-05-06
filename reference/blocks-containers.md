@@ -162,9 +162,23 @@ close: card
 
 **Parameters:**
 - `columns` (number) — number of grid columns.
+- `flip` (boolean) — enables front/back flashcard behavior. Each `###` heading is the card front; content below it is the back. Multiple headings create multiple cards.
 - `layout`: `wide | full | breakout`
 
-Cards with `flip: true` create front/back flashcard behavior — see [blocks-interactive.md — flashcard](blocks-interactive.md#flashcard).
+**Flashcard syntax (using `as: card` with `flip: true`):**
+```prax
+### What is lockout/tagout?
+as: card
+flip: true
+
+Energy isolation before maintenance on energized equipment.
+
+### When is a confined space permit required?
+
+Before entering any space with limited entry/exit and potential hazardous atmosphere.
+
+close: card
+```
 
 ## Nesting rules
 
@@ -179,6 +193,6 @@ Cards with `flip: true` create front/back flashcard behavior — see [blocks-int
 | `accordion` / `tabs` | Implicit | Closed by next heading at same or higher level, or page break |
 | `col` | `close: col` required | Must explicitly close the column layout |
 | `assessment-group` | `close: assessment-group` required | Must explicitly close |
-| `card` | `close: card` recommended | Explicit close prevents ambiguity |
+| `card` | `close: card` required | Must explicitly close; applies to both grid cards and flip cards |
 | `sequence` | Implicit | Closed by next heading at same or higher level, or page break |
 | `comparison` | Implicit | Closed after second item |

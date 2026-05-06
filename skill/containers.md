@@ -11,7 +11,7 @@ Key rules:
 - Columns use standalone `as: col` sections (no heading needed).
 - `close: col` is required for columns.
 - `close: assessment-group` is required for assessment groups.
-- `close: card` and `close: flashcard` are required when opened with standalone `as:`.
+- `close: card` is required when opened with standalone `as: card` (including `flip: true` cards).
 - A page break (`---`) closes all still-open containers on that page.
 
 ## accordion
@@ -253,7 +253,7 @@ Planned style variants: `slider`, `toggle`, `diff`.
 
 ## card
 
-Card can be opened from a heading or from a standalone `as: card`. Standalone cards require `close: card`.
+Card can be opened from a heading or from a standalone `as: card`. Requires `close: card`.
 
 ```prax
 ### Incident Simulation
@@ -266,20 +266,12 @@ A worker notices a leaking chemical drum near the loading bay. No one else is pr
 close: card
 ```
 
-### card parameters
-
-| Parameter | Type | Valid values | Default | Description |
-|---|---|---|---|---|
-| `layout` | enum | `wide`, `full`, `breakout` | — | Content width override |
-| `flip` | boolean | true / false | false | Enables flip-card behavior |
-
-## flashcard
-
-Flashcard items are heading-driven. A group of flashcards shares the `as: flashcard` declaration on the first heading. Standalone flashcard blocks require `close: flashcard`.
+Add `flip: true` for front/back flashcard behavior. Each `###` heading is the card front; content below it is the back. Multiple headings create multiple cards.
 
 ```prax
 ### What is lockout/tagout?
-as: flashcard
+as: card
+flip: true
 
 Energy isolation procedure required before servicing equipment.
 
@@ -287,15 +279,16 @@ Energy isolation procedure required before servicing equipment.
 
 An unplanned event that did not result in injury but had the potential to.
 
-close: flashcard
+close: card
 ```
 
-### flashcard parameters
+### card parameters
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `layout` | enum | `single`, `grid`, `masonry` | — | Card display layout |
-| `flip` | boolean | true / false | false | Enables flip-card interaction |
+| `columns` | number | any integer | — | Number of grid columns |
+| `layout` | enum | `wide`, `full`, `breakout` | — | Content width override |
+| `flip` | boolean | true / false | false | Enables front/back flip behavior |
 
 ## Nesting rules
 
@@ -304,7 +297,7 @@ Safe nesting patterns:
 - Any content block (text, image, note, quote, video, button) inside accordion, tab, or sequence items.
 - Assessments inside accordion or sequence items.
 - Columns inside normal page flow.
-- Flashcards can hold content blocks inside each item.
+- Card items (including flip cards) can hold content blocks inside each item.
 
 Avoid nesting containers inside containers (accordion inside accordion) unless required for pedagogy.
 
@@ -319,8 +312,7 @@ Summary of which containers require explicit `close:` and which are closed by st
 | sequence | No | Next `##` heading or page break |
 | comparison | No | Next `##` heading or page break |
 | columns | Yes | `close: col` |
-| card (standalone) | Yes | `close: card` |
-| flashcard (standalone) | Yes | `close: flashcard` |
+| card (any variant, including `flip: true`) | Yes | `close: card` |
 | assessment-group | Yes | `close: assessment-group` |
 
 Page breaks (`---`) close all open containers on the current page regardless of type.

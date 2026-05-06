@@ -166,8 +166,7 @@ Some containers require an explicit close statement. Forgetting it will include 
 |---|---|
 | columns | `close: col` |
 | assessment-group | `close: assessment-group` |
-| card (standalone) | `close: card` |
-| flashcard (standalone) | `close: flashcard` |
+| card (standalone, including `flip: true`) | `close: card` |
 
 Wrong:
 
@@ -282,7 +281,7 @@ Leading text before the first page heading becomes awkward floating content. Sta
 - Is `feedback:` on its own line, flush to the left margin?
 - Does every `assessment-group` end with `close: assessment-group`?
 - Does every column set end with `close: col`?
-- Does every standalone `as: card` or `as: flashcard` have a matching `close:`?
+- Does every standalone `as: card` (including `flip: true` variants) have a matching `close: card`?
 - Is `passingScore` used (not `passing`) in `assessment-group`?
 - Are shared assessment params typed correctly (numbers as numbers, booleans as true/false)?
 - Is frontmatter valid YAML?

@@ -386,23 +386,9 @@ Digital incident capture with real-time alerts.
 
 Uses implicit heading grouping. Typically two items.
 
-### Flashcard
-
-With headings (first paragraph = front, rest = back):
-
-```
-### What is PPE?
-as: flashcard
-
-Personal Protective Equipment -- protective clothing and gear.
-close: flashcard
-```
-
-Without headings, use standalone `as: flashcard` ... `close: flashcard`. First paragraph = front face, subsequent content = back face.
-
 ### Card
 
-A grid of styled cards (`columns:` number, `style:` `outline`/`filled`/`elevated`):
+A grid of styled cards (`columns:` number, `style:` `outline`/`filled`/`elevated`). Requires `close: card`.
 
 ```
 ### Types of PPE
@@ -419,6 +405,22 @@ Safety goggles and face shields...
 close: card
 ```
 
+Add `flip: true` for front/back flashcard behavior. Each `###` heading is the card front; content below it is the back. Multiple headings create multiple cards.
+
+```
+### What is lockout/tagout?
+as: card
+flip: true
+
+Energy isolation before maintenance on energized equipment.
+
+### When is a confined space permit required?
+
+Before entering any space with limited entry/exit and potential hazardous atmosphere.
+
+close: card
+```
+
 ### The `close:` keyword
 
 `close:` ends containers whose boundaries cannot be inferred from headings alone:
@@ -427,8 +429,8 @@ close: card
 |--------------------|-------------------|
 | `close: col` | `close: accordion` |
 | `close: assessment-group` | `close: tab` |
-| `close: flashcard` (without heading) | `close: sequence` |
-| `close: card` | `close: comparison` |
+| `close: card` | `close: sequence` |
+| | `close: comparison` |
 
 A `---` page break always closes all open containers automatically, even without explicit `close:`.
 
@@ -889,6 +891,6 @@ This root skill covers the most common blocks and patterns. For advanced usage, 
 | Sub-skill | Load when... |
 |-----------|-------------|
 | `assessments.md` | Building complex assessments: matrix questions, hotspot authoring details, assessment groups with passing scores, detailed feedback strategies |
-| `containers.md` | Advanced container nesting, card layouts, flashcard collections, comparison variants, sequence orientations |
+| `containers.md` | Advanced container nesting, card layouts, flip cards (`flip: true`), comparison variants, sequence orientations |
 | `design.md` | Fine-tuning the design system: custom fonts, color tokens, image effects, section palettes, background textures, motion and animation |
 | `validation.md` | Checking a `.prax` file for errors: required fields (alt text), assessment structure, container balance, frontmatter schema |
