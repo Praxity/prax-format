@@ -14,7 +14,7 @@ This is plain paragraph text.
 
 ## heading
 
-Headings define structure.
+Headings define structure. The heading level is determined by the number of `#` marks — it is not set via a parameter.
 
 **Syntax:**
 ```prax
@@ -24,8 +24,7 @@ Headings define structure.
 ```
 
 **Parameters:**
-- `level` (number, optional)
-- `layout`
+- `layout`: `wide | full | breakout`
 
 ## image
 
@@ -38,60 +37,71 @@ alt: Building floor plan
 caption: Emergency exits highlighted
 ```
 
-**Parameters:**
-- `src` (required)
-- `alt` (required unless `decorative: true`)
-- `decorative` (boolean)
-- `caption` (string)
-- `layout`
+The image source is the bare media path or URL on its own line — it is not written as a `src:` parameter.
 
-> **`alt` and `decorative` are mutually exclusive.** Either provide descriptive `alt` text OR set `decorative: true`. Images require one or the other — `alt` is enforced unless the image is explicitly marked decorative.
+**Parameters:**
+- `alt` (string) — descriptive text for screen readers. A warning is issued if missing.
+- `decorative` (boolean) — set `decorative: true` for purely decorative images that convey no information. Either `alt` or `decorative: true` should be provided.
+- `caption` (string) — visible caption below the image.
+- `treatment` (string) — image treatment effect.
+- `filter` (string) — CSS-style filter applied to the image.
+- `opacity` (number) — opacity value.
+- `layout`: `wide | full | breakout`
 
 **Variants:**
 - `width`: `small | medium | large`
 - `alignment`: `left | center | right`
 
+**Design system image effects** can also be applied at the course level via frontmatter `design.imageEffects`. See [frontmatter-design.md](frontmatter-design.md) for `grayscale`, `colorWash`, `accentLighting`, `progressiveBlur`, `grain`, `halftone`, and other composable effects.
+
 ## video
 
-Video URL or media path.
+Video from a URL or local media path. The source is the bare URL/path on its own line.
 
 **Syntax:**
 ```prax
 https://www.youtube.com/embed/aqz-KE-bpKQ
 caption: Safety walkthrough
+subtitles: /assets/captions-en.vtt
+transcript: /assets/transcript-en.txt
 ```
 
 **Parameters:**
-- `src` (required)
-- `caption` (optional)
-- `layout`
+- `caption` (string) — visible caption below the video.
+- `subtitles` (string) — path to a subtitle/caption file (e.g. WebVTT `.vtt`).
+- `transcript` (string) — path to a transcript file in the course `assets/` folder.
+- `autoplay` (boolean) — auto-play the video on load.
+- `size` (string) — display size.
+- `layout`: `wide | full | breakout`
+
+Course-level image effects (from `design.imageEffects`) can also apply to video thumbnails.
 
 ## audio
 
-Audio media source.
+Audio from a local media path. The source is the bare path on its own line. A warning is issued if no transcript is provided (accessibility).
 
 **Syntax:**
 ```prax
 /assets/briefing.mp3
 title: Daily briefing
+transcript: /assets/briefing-transcript.txt
 ```
 
 **Parameters:**
-- `src` (required)
-- `title` (optional)
-- `layout`
+- `title` (string) — display title for the audio player.
+- `transcript` (string) — path to a transcript file in the course `assets/` folder. Recommended for accessibility.
+- `layout`: `wide | full | breakout`
 
 ## divider
 
-Section divider inside a page.
+Visual section divider within a page. Styled according to the course's `design.dividerStyle` setting.
 
 **Syntax:**
 ```prax
 --
 ```
 
-**Parameters:**
-- `layout`
+No parameters. The divider style is controlled at the course level via frontmatter `design.dividerStyle` (`none | thin | gradient | wave | angle | curve`).
 
 ## embed
 
@@ -104,9 +114,11 @@ as: embed
 height: 420
 ```
 
+The embed source is the URL on its own line — it is not written as a `src:` parameter.
+
 **Parameters:**
-- `src` (required)
-- `layout`
+- `height` (number) — iframe height in pixels.
+- `layout`: `wide | full | breakout`
 
 ## note
 
@@ -199,10 +211,11 @@ openInNewTab: true
 
 Table-like content (table or chart rendering model).
 
+The separator row (`| --- | --- |`) is optional — the parser skips it if present but does not require it.
+
 **Syntax:**
 ```prax
 | Quarter | Incidents |
-| --- | --- |
 | Q1 | 3 |
 | Q2 | 1 |
 ```
@@ -211,7 +224,6 @@ Optional chart rendering:
 
 ```prax
 | Quarter | Incidents |
-| --- | --- |
 | Q1 | 3 |
 | Q2 | 1 |
 chart: bar

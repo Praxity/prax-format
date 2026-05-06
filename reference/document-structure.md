@@ -113,13 +113,14 @@ All manifest blocks support the following parameters:
 | Parameter | Type | Valid values | Description |
 |---|---|---|---|
 | `layout` | enum | `wide \| full \| breakout` | Overrides the default content width for this block |
-| `name` | string | any | Assigns a named anchor for logic rules (`when: name is X`) |
-| `hide` | boolean | `true \| false` | Hides the block from view initially |
-| `reveal` | string | block name | Reveals this block when the named block emits an event |
-| `visible` | boolean | `true \| false` | Controls initial visibility (alias for `hide: true/false`) |
-| `entrance` | enum | `fade \| slide \| scale \| none` | Block entrance animation; overrides course-level `motionEntrance` |
+| `name` | string | any | Assigns a name to the block for cross-referencing. Used in logic rules (`then: show @myBlock`), assessment-group scoring, and anchor links. Use `camelCase` with no spaces — e.g. `name: safetyTip`. Avoid colons, quotes, and special characters. |
+| `hide` | boolean | `true \| false` | Hides the block from rendered output. The block is preserved in the grammar and can be shown later via logic rules (`then: show @name`). |
+| `reveal` | number, `each`, `true`, or variable name | none | Progressive reveal step. `reveal: 3` means this block appears on step 3 of a click-to-advance sequence. `reveal: each` staggers list items one per click. `reveal: true` reveals on any step. `reveal: someVar` reveals when the variable is truthy. See the language reference Section 10 for full details. |
+| `visible` | condition expression | always | Conditional visibility based on variable state. Example: `visible: score >= 80`. The block renders only when the condition is true. |
+| `entrance` | enum | `fade \| slide \| scale \| none` | Block entrance animation; overrides course-level `motionEntrance`. |
+| `entranceDuration` | CSS duration | `250ms` | Duration of the entrance animation. |
 
-`layout` is the only universal parameter defined in the manifest (`UNIVERSAL_PARAMETERS`). The others are runtime workflow metadata recognized by the published-output viewer.
+`layout` is the only universal parameter defined in the manifest (`UNIVERSAL_PARAMETERS`). The others (`name`, `hide`, `reveal`, `visible`, `entrance`, `entranceDuration`) are runtime workflow metadata recognized by the published-output viewer.
 
 ## Escaping reserved lines
 
