@@ -1,0 +1,59 @@
+---
+title: Safety Team Directory
+description: Card grid introducing team members or roles. Use columns to control how many cards appear per row — 3 is a reliable default for most screen widths.
+lang: en
+design:
+  palette: bold
+  colorMode: light
+  accentHue: 196
+---
+
+## Your Safety Team
+
+These are the people you contact when you have a hazard to report, a question about procedure, or a concern that hasn't been resolved. `columns: 3` keeps the grid scannable without requiring scrolling on a standard display.
+
+### Fatima Osei — Safety Lead
+as: card
+columns: 3
+
+/assets/team/fatima-osei.png
+alt: Portrait photo of Fatima Osei
+
+Fatima oversees all incident reporting and leads the monthly safety audit. Contact her for escalations and policy questions.
+
+### Marcus Chen — Ergonomics Specialist
+
+/assets/team/marcus-chen.png
+alt: Portrait photo of Marcus Chen
+
+Marcus assesses workstation setup, manual handling risks, and repetitive strain concerns. Request a workstation review through the facilities portal.
+
+### Priya Nair — Emergency Response Coordinator
+
+/assets/team/priya-nair.png
+alt: Portrait photo of Priya Nair
+
+Priya runs evacuation drills and maintains first-aid station inventory. She is the primary contact during any declared emergency.
+
+### Jerome Beaumont — Chemical Safety Officer
+
+/assets/team/jerome-beaumont.png
+alt: Portrait photo of Jerome Beaumont
+
+Jerome manages SDS records and chemical storage compliance. Contact him before introducing any new substance to the facility.
+
+### Adaeze Iwu — Training Coordinator
+
+/assets/team/adaeze-iwu.png
+alt: Portrait photo of Adaeze Iwu
+
+Adaeze schedules mandatory safety training, tracks completion records, and coordinates onboarding for new hires.
+
+### Raj Thandavamurthy — Environmental Health Officer
+
+/assets/team/raj-thandavamurthy.png
+alt: Portrait photo of Raj Thandavamurthy
+
+Raj monitors air quality, noise levels, and waste handling. Submit environmental observations through the EHS portal.
+
+close: card

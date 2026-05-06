@@ -67,6 +67,20 @@ Confirm emergency exits are clear and protective gear is available.
 - [`examples/interactive-module.prax`](examples/interactive-module.prax): Containers plus interactions.
 - [`examples/full-featured.prax`](examples/full-featured.prax): Broad feature coverage file.
 
+## Instructional patterns
+
+Reusable templates for common eLearning designs:
+
+- [`patterns/faq-accordion.prax`](examples/patterns/faq-accordion.prax): FAQ page with expandable panels.
+- [`patterns/card-gallery.prax`](examples/patterns/card-gallery.prax): Team or concept cards in a grid.
+- [`patterns/flashcard-drill.prax`](examples/patterns/flashcard-drill.prax): Flip-card vocabulary drill.
+- [`patterns/multicol-signature.prax`](examples/patterns/multicol-signature.prax): Completion page with summary and signoff.
+- [`patterns/horizontal-timeline.prax`](examples/patterns/horizontal-timeline.prax): Process steps on a horizontal timeline.
+- [`patterns/assessment-choice.prax`](examples/patterns/assessment-choice.prax): Learner picks which question to answer.
+- [`patterns/scenario-feedback.prax`](examples/patterns/scenario-feedback.prax): Scenario with conditional feedback via variables.
+- [`patterns/guided-reading.prax`](examples/patterns/guided-reading.prax): Read-then-test across multiple pages.
+- [`patterns/image-comparison.prax`](examples/patterns/image-comparison.prax): Before/after slider comparison.
+
 ## Using with LLMs
 
 - Claude Code: point the model to `skill/` and load `skill/SKILL.md` first.

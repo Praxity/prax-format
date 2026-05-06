@@ -1,0 +1,54 @@
+---
+title: Workstation Ergonomics: Before and After
+description: Before/after image comparison using as: comparison with style: slider. Shows a realistic workplace improvement and follows up with a reflection question. Use this pattern to make abstract improvement principles visible.
+lang: en
+design:
+  palette: standard
+  colorMode: light
+  accentHue: 160
+---
+
+## Ergonomic Workstation Improvement
+
+Poor workstation setup is one of the most common sources of musculoskeletal strain — and one of the easiest to correct. The images below show the same workstation before and after a targeted ergonomic assessment.
+
+Drag the slider to reveal the changes, or use the arrow keys if you prefer keyboard navigation.
+
+### Before assessment
+as: comparison
+style: slider
+
+/assets/workstation-before.jpg
+alt: Workstation before assessment — monitor below eye level, keyboard on desk surface with no wrist support, chair seat too low causing upward reach, cables scattered across the floor
+
+### After assessment
+
+/assets/workstation-after.jpg
+alt: Workstation after assessment — monitor raised to eye level on an adjustable arm, keyboard tray at elbow height with a padded wrist rest, chair adjusted so feet rest flat, cables routed and secured
+
+--
+
+### What changed
+
+The assessment addressed four risk factors in a single adjustment session:
+
+| Risk factor | Before | After |
+| Monitor height | Below eye level, causing neck flexion | Raised to neutral — top of screen at eye level |
+| Keyboard position | On desk surface, shoulders elevated | Keyboard tray at elbow height, shoulders relaxed |
+| Seat height | Too low, arms reaching upward | Adjusted so feet flat, thighs parallel to floor |
+| Cable management | Loose cables across floor (trip hazard) | Routed and secured with cable clips |
+
+> Ergonomic improvements do not require expensive equipment. Adjusting what is already at the workstation resolves most issues.
+as: note
+color: success
+style: outline
+
+--
+
+### Reflection
+
+### Identify one ergonomic risk at your own workstation or a workstation you observe regularly.
+as: free-response
+required: true
+
+Describe the risk factor (posture, reach distance, lighting, repetition), who is affected, and one practical change that could reduce or eliminate it. If a change is outside your authority, note who you would raise it with.

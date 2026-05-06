@@ -1,0 +1,41 @@
+---
+title: Safety Vocabulary Drill
+description: Flashcard study drill for core safety terms. Each card shows a term on the front and its definition on the back. Use this pattern before a quiz to build retrieval fluency.
+lang: en
+design:
+  palette: universal
+  colorMode: light
+  accentHue: 210
+---
+
+## Safety Vocabulary
+
+Review each term, then flip the card to check your understanding. Try to recall the definition before flipping.
+
+### Lockout/Tagout (LOTO)
+as: card
+flip: true
+
+A procedure that isolates hazardous energy sources before maintenance or servicing begins. All energy — electrical, hydraulic, pneumatic, thermal — must be isolated and verified at zero energy state before work proceeds.
+
+### Hierarchy of Controls
+
+A framework for selecting hazard controls, ranked from most to least effective: elimination, substitution, engineering controls, administrative controls, and personal protective equipment (PPE).
+
+### Near Miss
+
+An unplanned event that did not result in injury, illness, or damage but clearly had the potential to do so. Near misses must be reported and investigated to prevent recurrence.
+
+### Job Hazard Analysis (JHA)
+
+A technique that examines the steps of a task to identify hazards and determine the safest way to perform each step. Also called a Job Safety Analysis (JSA) in some sectors.
+
+### Confined Space
+
+An enclosed or partially enclosed space large enough for a worker to enter and perform work, with limited means of entry or exit, that is not designed for continuous occupancy. Entry typically requires a permit.
+
+### SDS (Safety Data Sheet)
+
+A standardized document that provides information about a hazardous material's properties, health effects, handling, storage, and emergency procedures. Required for all controlled products in the workplace.
+
+close: card

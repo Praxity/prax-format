@@ -1,0 +1,58 @@
+---
+title: Hazard Control Knowledge Check — Your Choice
+description: Assessment group with mode oneOf, giving learners agency over which question they answer. Use this when your audience has varied roles and no single question type fits everyone.
+lang: en
+design:
+  palette: universal
+  colorMode: light
+  accentHue: 210
+---
+
+## Knowledge Check
+
+This assessment gives you a choice. Three questions are shown below — you answer **one**. Choose the question that best matches your role and experience. All three questions address the same core competency: selecting appropriate controls for a given hazard.
+
+There is no penalty for which question you choose. This is about demonstrating your understanding in a way that makes sense for your work context.
+
+## Hazard Control Assessment
+as: assessment-group
+mode: oneOf
+showResultsSummary: true
+passingScore: 70
+
+### For field workers — Which control should be applied first?
+as: choice
+points: 10
+required: true
+shuffle: true
+
+A spill of cleaning solvent has occurred near an electrical panel. Select the most appropriate first control.
+
+(x) Shut off the electrical panel and ventilate the area before cleanup
+feedback: Correct — eliminate the ignition source and reduce vapour concentration before anyone enters.
+( ) Provide the cleanup crew with gloves and a face shield, then proceed
+feedback: PPE is a last-resort control, not a first response when an ignition source is present.
+( ) Post a warning sign and schedule cleanup for after-hours
+feedback: Deferring cleanup increases exposure time and does not address the electrical risk.
+( ) Notify the supervisor and wait for instructions before taking any action
+feedback: Some immediate actions — like shutting off the panel — should not wait for supervisor confirmation when the risk is clear.
+
+correct: Well done. Eliminating the ignition source before cleanup is the correct application of the hierarchy of controls.
+incorrect: Review the hierarchy of controls — elimination and engineering controls come before PPE.
+
+### For supervisors — Describe your approach to a recurring near miss
+as: free-response
+points: 10
+required: true
+
+Your team has logged three near misses in the loading dock over the past month, all involving forklifts and pedestrian crossings. Describe the steps you would take to identify the root cause and implement a lasting control.
+
+Include the type of control you would prioritize and why, and how you would confirm the control is working over time.
+
+### For safety coordinators — Complete the investigation record
+as: fill-blank
+points: 10
+
+After a confined space incident, the coordinator must confirm that the {entry permit} was signed, that {atmospheric testing} was completed, and that the {rescue plan} was reviewed before entry. If any of these were missing, the root cause category is {procedural failure}.
+
+close: assessment-group
