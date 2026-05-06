@@ -1,0 +1,89 @@
+---
+title: Interactive Safety Walkthrough
+lang: en
+design:
+  palette: editorial
+  colorMode: light
+  accentHue: 24
+---
+
+## Welcome
+
+This module combines explainers, interaction, and quick decision points.
+
+### Hazard Types
+as: accordion
+style: contained
+
+Physical hazards include slips, noise, and moving machinery.
+
+### Procedural hazards
+
+Procedural hazards include skipped checks and unclear handoffs.
+
+### Reporting hazards
+
+Report hazards immediately and include location plus severity.
+
+close: accordion
+
+### Before Shift
+as: tab
+
+Review overnight incidents and pending actions.
+
+### During Shift
+
+Use the checklist and escalate unresolved hazards.
+
+as: col
+### Risks
+- Chemical splash
+- Electrical fault
+- Fall from ladder
+
+as: col
+### Controls
+- Face shield and gloves
+- Lockout/tagout
+- Guard rail and harness
+
+close: col
+
+https://www.youtube.com/embed/aqz-KE-bpKQ
+caption: Lab safety walkthrough
+
+> Use the buddy system for high-risk tasks.
+as: note
+color: accent
+style: filled
+
+> Stop work immediately when controls fail.
+as: note
+color: warning
+style: outline
+
+- [ ] Inspect exits
+- [ ] Confirm PPE
+- [ ] Review incident board
+as: checklist
+required: true
+
+[Open Full SOP](https://example.com/sop)
+as: button
+variant: outline
+openInNewTab: true
+
+### Decision Scenario
+as: branch
+style: scenario-cards
+
+A solvent leak appears near a heat source. Choose the safest first response.
+
+---
+
+## Signoff
+
+### I confirm I reviewed this interactive walkthrough
+as: signature
+mode: draw

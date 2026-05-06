@@ -1,0 +1,82 @@
+---
+title: Safety Quiz Module
+lang: en
+design:
+  palette: universal
+  colorMode: light
+  accentHue: 210
+---
+
+## Knowledge Check
+
+This module focuses on core safety decisions and response sequence.
+
+## Checkpoint Group
+as: assessment-group
+mode: all
+showResultsSummary: true
+passingScore: 80
+
+### What should happen first after a serious hazard is found?
+as: choice
+points: 2
+required: true
+shuffle: true
+
+( ) Continue work and monitor
+feedback: Monitoring matters, but immediate hazard control comes first.
+(x) Stop work and secure the area
+feedback: Correct. Immediate control reduces risk quickly.
+( ) Wait until end-of-shift review
+
+### Select all required pre-task checks
+as: choice
+points: 3
+shuffle: true
+
+[x] PPE is inspected
+feedback: Correct. Equipment inspection is required before every task.
+[x] Exit routes are clear
+feedback: Correct. Unobstructed exits are a baseline safety requirement.
+[ ] Music system is active
+feedback: Audio entertainment is not a safety requirement.
+[x] Emergency contacts are posted
+
+### Match each hazard to a control
+as: match
+points: 4
+shuffle: true
+
+Chemical splash :: Face shield
+Fall risk :: Guard rail
+Electrical fault :: Lockout/tagout
+
+### Put the response process in order
+as: order
+points: 4
+shuffle: true
+
+1. Stop work
+2. Secure area
+3. Notify supervisor
+4. Document incident
+
+### Complete the procedure sentence
+as: fill-blank
+points: 2
+
+Before restarting equipment, verify {isolation} and confirm the {permit} is active.
+
+close: assessment-group
+
+---
+
+## Reflection
+
+### Describe one practical safety change for your team
+as: free-response
+points: 5
+required: true
+attempts: 1
+
+Mention one process change and one communication habit.
