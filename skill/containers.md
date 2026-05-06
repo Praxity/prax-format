@@ -21,7 +21,7 @@ Accordion items are `###` headings with `as: accordion` on the first heading. Su
 ```prax
 ### Hazard Signals
 as: accordion
-accordionStyle: contained
+style: contained
 allowMultipleOpen: false
 
 Red indicates immediate danger. Stop all nearby work.
@@ -40,7 +40,7 @@ Accordion with `separated` style:
 ```prax
 ### Module Overview
 as: accordion
-accordionStyle: separated
+style: separated
 
 Introduction to risk identification and control.
 
@@ -53,10 +53,8 @@ By the end, learners can categorize hazards by type and severity.
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `accordionStyle` | enum | `default`, `contained`, `separated` | default | Visual treatment of accordion panels |
+| `style` | enum | `default`, `contained`, `separated` | default | Visual treatment of accordion panels |
 | `allowMultipleOpen` | boolean | true / false | false | Allow multiple panels open simultaneously |
-
-Note: Use `accordionStyle` to change the visual appearance of panels. Do not use `style: contained` — `style` is not a valid accordion parameter.
 
 Planned style variants: `flip`, `stepped`, `plain`.
 
@@ -94,7 +92,7 @@ Assessments and content blocks can both appear inside accordion items:
 ```prax
 ### Safety Quiz Prep
 as: accordion
-accordionStyle: contained
+style: contained
 
 Review these key definitions before taking the quiz.
 
@@ -224,6 +222,8 @@ Confirm controls held throughout.
 | `variant` | enum | `numbered`, `timeline`, `plain` | numbered | Visual style of the sequence |
 | `orientation` | enum | `vertical`, `horizontal` | vertical | Layout direction |
 | `alignment` | enum | `left`, `center`, `right` | left | Text alignment within items |
+| `distribution` | enum | `uniform`, `scaled` | uniform | Controls spacing between steps |
+| `scrollable` | boolean | true / false | false | Whether the sequence is scrollable |
 
 Planned variant values: `scroll-journey`, `carousel`, `stepper`, `hero`.
 

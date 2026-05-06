@@ -8,7 +8,7 @@ Collapsible panels. Each `###` heading after `as: accordion` becomes a panel tha
 ```prax
 ### Hazard Types
 as: accordion
-accordionStyle: contained
+style: contained
 
 Chemical, electrical, and mechanical hazards.
 
@@ -22,7 +22,7 @@ File an incident report within 24 hours.
 ```
 
 **Parameters:**
-- `accordionStyle`: `default | contained | separated` — visual style of accordion panels.
+- `style`: `default | contained | separated` — visual style of accordion panels.
 - `allowMultipleOpen` (boolean) — whether multiple panels can be open at once.
 - `layout`: `wide | full | breakout`
 
@@ -97,6 +97,8 @@ Take photos and complete the incident form.
 - `variant`: `numbered | timeline | plain`
 - `orientation`: `vertical | horizontal`
 - `alignment`: `left | center | right` — controls text alignment within steps.
+- `distribution`: `uniform | scaled` — controls spacing between steps.
+- `scrollable` (boolean) — whether the sequence is scrollable.
 
 ## comparison
 

@@ -46,6 +46,10 @@ The image source is the bare media path or URL on its own line — it is not wri
 - `treatment` (string) — image treatment effect.
 - `filter` (string) — CSS-style filter applied to the image.
 - `opacity` (number) — opacity value.
+- `size` (string) — display size (`small`, `medium`, `large`, `full-width`). The serializer uses `size`; the manifest also accepts `width` as an alias — both are valid.
+- `x` (string) — horizontal position: `left`, `center`, `right`.
+- `order` (string) — display order for image galleries: `content`, `background`.
+- `motionBlur` (boolean) — apply motion blur effect to the image.
 - `layout`: `wide | full | breakout`
 
 **Variants:**
@@ -134,6 +138,8 @@ style: filled
 
 **Parameters:**
 - `layout`
+
+Universal parameters (`name`, `hide`, `reveal`, `visible`, `entrance`, `entranceDuration`) apply to notes as to all blocks. See [document-structure.md](document-structure.md) for details.
 
 **Variants:**
 - `style`: `outline | filled`
@@ -249,7 +255,7 @@ yLabel: Count
 - `showLines` (boolean) — show connecting lines between points. Default `true` for most chart types; default `false` for `scatter`.
 - `showPoints` (boolean) — show individual data point markers. Default `true` for `scatter`.
 - `sortOrder` (`none | asc | desc`) — sort data before rendering.
-- `colorScheme` (string) — color scheme name applied to the chart series.
+- `colors` (string) — color scheme name applied to the chart series.
 - `layout`: `wide | full | breakout`
 
 **Variants:**
