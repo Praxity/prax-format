@@ -2,7 +2,7 @@
 
 ## accordion
 
-Collapsible panels. Each `###` heading after `as: accordion` becomes a panel that expands/collapses.
+Collapsible panels. The heading with `as: accordion` opens the accordion; subsequent headings at the same level become additional panels. Any heading level works (`##`, `###`, `####`), though `###` is most common.
 
 **Syntax:**
 ```prax
@@ -28,7 +28,7 @@ File an incident report within 24 hours.
 
 ## tabs
 
-Tabbed content panels. Each `###` heading after `as: tab` becomes a tab.
+Tabbed content panels. The heading with `as: tab` opens the tab group; subsequent headings at the same level become additional tabs. Any heading level works.
 
 **Syntax:**
 ```prax
@@ -102,12 +102,13 @@ Take photos and complete the incident form.
 
 ## comparison
 
-Side-by-side comparison of two items. Currently supports `side-by-side` layout.
+Comparison of two items — text or images.
 
-**Syntax:**
+**Syntax (side-by-side text):**
 ```prax
 ### Before
 as: comparison
+style: side-by-side
 
 Manual triage with paper forms.
 
@@ -116,10 +117,25 @@ Manual triage with paper forms.
 Automated triage with digital checklists.
 ```
 
-**Variants:**
-- `style`: `side-by-side`
+**Syntax (image slider):**
+```prax
+### Before renovation
+as: comparison
+style: slider
 
-Future styles (`slider` for image comparison) are planned but not yet implemented.
+/assets/before.jpg
+alt: Office before renovation
+
+### After renovation
+
+/assets/after.jpg
+alt: Office after renovation
+```
+
+The `slider` style renders an interactive drag handle that reveals the before/after images. Supports keyboard (arrow keys) and pointer drag. Includes ARIA `role="slider"`.
+
+**Variants:**
+- `style`: `side-by-side | slider`
 
 ## card
 

@@ -211,11 +211,9 @@ as: assessment-group
 passingScore: 80
 ```
 
-### Wrong accordion visual variant
+### Accordion `style:` values
 
-The `style` axis on `disclosure` selects the mode (accordion vs tabs), not the visual treatment. To change the visual style of accordion panels, use `accordionStyle`.
-
-Wrong:
+The `style:` parameter on accordions controls the visual treatment. Valid values are `default`, `contained`, `separated`.
 
 ```prax
 ### Panel Title
@@ -223,45 +221,11 @@ as: accordion
 style: contained
 ```
 
-Right:
-
-```prax
-### Panel Title
-as: accordion
-accordionStyle: contained
-```
-
-Valid `accordionStyle` values: `default`, `contained`, `separated`.
-
 ### `as: branch` is not recognized by the parser
 
 `as: branch` is **not recognized by the parser** — it falls through to an unknown `as:` value and renders as a plain heading. No error is shown, but the block will not behave as a branching scenario.
 
 Do not use `as: branch` in generated `.prax` output. Use conditional visibility (`visible:` with variables) and `when:`/`then:` logic rules for branching behavior instead.
-
-### Using deprecated v2 fences
-
-Do not use old `:::` block fences in v3 output. Use heading + `as:` or standalone `as:` syntax.
-
-Wrong:
-
-```prax
-::: choose-one
-Which is correct?
-- Correct ✓
-- Incorrect
-:::
-```
-
-Right:
-
-```prax
-### Which is correct?
-as: choice
-
-(x) Correct
-( ) Incorrect
-```
 
 ### Forgetting page breaks
 
