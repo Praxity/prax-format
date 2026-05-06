@@ -274,7 +274,7 @@ Standard markdown pipe-delimited table (separator row `|---|---|` is optional):
 | Q2      | 150     | 90    |
 ```
 
-Add `chart:` to render as a chart: `bar`, `line`, `pie`, `donut`, `area`, `radial`. Additional keys: `xLabel:`, `yLabel:`, `caption:`, `colors:`.
+Add `chart:` to render as a chart: `bar`, `line`, `scatter`, `area`, `radar`, `stacked`. Note: `pie` and `donut` are not supported. Additional keys: `xLabel:`, `yLabel:`, `title:`, `altText:`, `orientation:` (bar only), `sortOrder:`, `colorScheme:`.
 
 ### Embed
 
@@ -662,6 +662,8 @@ as: discuss
 ```
 
 Other interactive `as:` values: `qa` (Q&A format), `poll`, `contribute` (share prompt), `ai-chat` (with `topic:` and `prompt:` keys).
+
+**Note:** `discuss`, `qa`, `poll`, `contribute`, and `ai-chat` require Cloud publish to function. They will not render in standalone SCORM or HTML exports.
 
 
 ## Inline formatting

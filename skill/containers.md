@@ -14,11 +14,9 @@ Key rules:
 - `close: card` and `close: flashcard` are required when opened with standalone `as:`.
 - A page break (`---`) closes all still-open containers on that page.
 
-## disclosure (accordion / tabs)
+## accordion
 
-The `disclosure` keyword covers both accordion and tab modes. The `style` axis selects accordion vs tabs. The `accordionStyle` axis selects the visual treatment of the accordion.
-
-### Accordion
+Accordion items are `###` headings with `as: accordion` on the first heading. Subsequent sibling headings at the same level join automatically.
 
 ```prax
 ### Hazard Signals
@@ -51,7 +49,20 @@ Introduction to risk identification and control.
 By the end, learners can categorize hazards by type and severity.
 ```
 
-### Tabs
+### accordion parameters
+
+| Parameter | Type | Valid values | Default | Description |
+|---|---|---|---|---|
+| `accordionStyle` | enum | `default`, `contained`, `separated` | default | Visual treatment of accordion panels |
+| `allowMultipleOpen` | boolean | true / false | false | Allow multiple panels open simultaneously |
+
+Note: Use `accordionStyle` to change the visual appearance of panels. Do not use `style: contained` — `style` is not a valid accordion parameter.
+
+Planned style variants: `flip`, `stepped`, `plain`.
+
+## tabs
+
+Tab items are `###` headings with `as: tab` on the first heading. Subsequent sibling headings at the same level join the same tab group automatically.
 
 ```prax
 ### Before Shift
@@ -68,17 +79,13 @@ Follow the inspection checklist at each station.
 Log any observations in the safety management system.
 ```
 
-### disclosure parameters
+### tabs parameters
+
+Tabs have no additional visual-treatment parameters beyond the universal parameters.
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `style` | enum | `accordion`, `tabs` | accordion | Selects accordion vs tabs mode |
-| `accordionStyle` | enum | `default`, `contained`, `separated` | default | Visual treatment of accordion panels |
-| `allowMultipleOpen` | boolean | true / false | false | Allow multiple panels open simultaneously |
-
-Note: Do not write `style: accordion` to control the visual treatment — that axis selects the mode, not the look. Use `accordionStyle: contained` or `accordionStyle: separated` to change the panel appearance.
-
-Planned style variants: `flip`, `stepped`, `plain`.
+| `layout` | enum | `wide`, `full`, `breakout` | — | Content width override |
 
 ### Accordion nesting example
 

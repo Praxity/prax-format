@@ -1,5 +1,6 @@
 ---
 title: Full .prax Feature Tour
+description: Demonstrates every grammar-supported block type. Blocks marked with (Cloud) require Praxity Cloud publish. Branch (as: branch) is defined in the grammar but does not yet render.
 lang: en
 design:
   palette: bold

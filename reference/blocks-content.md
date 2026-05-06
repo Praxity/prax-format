@@ -231,9 +231,25 @@ yLabel: Count
 ```
 
 **Parameters:**
-- `chart` (string) — chart type (`bar`, `line`, `pie`, etc.). When present, renders as a chart instead of a table.
-- `xLabel` (string) — horizontal axis label (chart mode).
-- `yLabel` (string) — vertical axis label (chart mode).
+- `chart` (string) — chart type. When present, renders as a chart instead of a table. Valid values:
+  - `bar` — vertical bar chart (default orientation)
+  - `line` — line chart
+  - `scatter` — scatter plot (renders as line with individual points, no connecting lines)
+  - `area` — area chart (line with filled area below)
+  - `radar` — radar / spider chart
+  - `stacked` — stacked bar chart
+  - Note: `pie` and `donut` are **not** supported — they were intentionally omitted.
+- `orientation` (`vertical | horizontal`) — bar chart axis orientation. Only applies to `chart: bar`. Default is `vertical`; use `horizontal` for horizontal bars.
+- `title` (string) — chart title displayed above the visualization.
+- `subtitle` (string) — chart subtitle displayed below the title.
+- `altText` (string) — accessible description of the chart for screen readers.
+- `xLabel` (string) — horizontal axis label.
+- `yLabel` (string) — vertical axis label.
+- `stacked` (boolean) — stack multiple data series.
+- `showLines` (boolean) — show connecting lines between points. Default `true` for most chart types; default `false` for `scatter`.
+- `showPoints` (boolean) — show individual data point markers. Default `true` for `scatter`.
+- `sortOrder` (`none | asc | desc`) — sort data before rendering.
+- `colorScheme` (string) — color scheme name applied to the chart series.
 - `layout`: `wide | full | breakout`
 
 **Variants:**

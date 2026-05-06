@@ -146,7 +146,7 @@ PPE:
 
 ## assessment-group
 
-Group multiple assessments. `as: assessment-group` conventionally goes on a `##` heading (H2), which matches how the parser closes implicit groups at heading-level boundaries.
+Group multiple assessments. `as: assessment-group` conventionally goes on a `##` heading (H2), which matches how the parser closes implicit groups at heading-level boundaries. Each assessment inside the group uses a `###` heading (H3) as its question title, since the group itself uses a `##` heading (H2).
 
 **Syntax:**
 ```prax
@@ -165,28 +165,44 @@ as: choice
 close: assessment-group
 ```
 
+**`mode: oneOf`** allows assessment choice — the learner picks which question(s) to answer rather than completing all of them. For example, in a group of 5 questions with `mode: oneOf`, the learner can choose any single question to answer.
+
 Note: `passingScore:` is the correct parameter name (not `passing:`).
+
+**Parameters:**
+
+| Parameter | Type | Description |
+|---|---|---|
+| `mode` | `all \| oneOf` | `all` (default): learner must answer every question. `oneOf`: learner chooses which to answer. |
+| `passingScore` | number | Minimum score (0–100) to pass the group. |
+| `showResultsSummary` | boolean | Show a results summary after all questions are answered. |
+| `pointsOverride` | number | Override total point value for the group (instead of summing individual question points). |
+| `requireAll` | boolean | Whether all questions must be attempted before submitting. |
 
 ## Shared scoring parameters
 
-| Parameter | Type |
-|---|---|
-| `points` | number |
-| `required` | boolean |
-| `timed` | number |
-| `pass` | number |
-| `attempts` | number |
-| `shuffle` | boolean (supported by choice/match/order/categorize) |
+These parameters are available on all assessment types:
+
+| Parameter | Type | Description |
+|---|---|---|
+| `points` | number | Point value awarded for a correct answer. Used in scored assessment groups and SCORM/xAPI reporting. |
+| `required` | boolean | Whether the learner must answer this question before proceeding. |
+| `timed` | number | Time limit in seconds. When set, a countdown timer appears. |
+| `pass` | number | Minimum score (0–100) required to pass this individual question. |
+| `attempts` | number | Maximum number of attempts allowed before the answer is locked. |
+| `shuffle` | boolean | Randomize option/item order on each attempt. Available on: choose-one, choose-many, match, order, categorize. |
 
 ## Decorator parameters
 
-| Parameter | Type |
-|---|---|
-| `scored` | boolean |
-| `competency` | text |
-| `confidence` | boolean |
-| `retrieval` | boolean |
-| `feedback` | enum/text |
+Decorator parameters add metadata for learning analytics and adaptive behavior:
+
+| Parameter | Type | Description |
+|---|---|---|
+| `scored` | boolean | Whether this assessment contributes to the overall course score. Default: `true` for assessments inside an assessment-group. |
+| `competency` | text | Competency tag or identifier this question maps to (e.g. `"fire-safety"`). Used in xAPI reporting. |
+| `confidence` | boolean | Enables confidence-based marking — the learner rates how sure they are of their answer. |
+| `retrieval` | boolean | Marks this as a retrieval practice question (spaced repetition). Affects analytics reporting. |
+| `feedback` | enum | Feedback display mode. Controls when and how feedback is shown to the learner. |
 
 ## Variant summary from manifest
 

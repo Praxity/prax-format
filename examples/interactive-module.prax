@@ -75,10 +75,15 @@ variant: outline
 openInNewTab: true
 
 ### Decision Scenario
-as: branch
-style: scenario-cards
+as: choice
+points: 5
 
 A solvent leak appears near a heat source. Choose the safest first response.
+
+(x) Shut off the heat source and contain the spill
+feedback: Correct — eliminate the ignition source first, then contain.
+( ) Evacuate immediately without containment
+feedback: Evacuation may be needed, but containment prevents escalation.
 
 ---
 
