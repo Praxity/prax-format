@@ -87,6 +87,10 @@ Reusable templates for common eLearning designs:
 - ChatGPT: paste `skill/SKILL.md`, then add relevant sub-skills.
 - Other LLMs: use `skill/SKILL.md` as base context and load sub-skill docs per task.
 
+## Contributing
+
+This specification is maintained by [Praxity](https://praxity.io). We are not accepting pull requests at this time. If you have questions, suggestions, or find an error in the spec, please [open an issue](https://github.com/Praxity/prax-format/issues) or email [hello@praxity.io](mailto:hello@praxity.io).
+
 ## License
 
 Specification docs are CC BY 4.0, examples are CC0 1.0, and skill files/code are MIT. See [`LICENSE`](LICENSE).
