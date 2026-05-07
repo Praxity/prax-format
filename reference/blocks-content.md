@@ -43,20 +43,29 @@ The image source is the bare media path or URL on its own line — it is not wri
 - `alt` (string) — descriptive text for screen readers. A warning is issued if missing.
 - `decorative` (boolean) — set `decorative: true` for purely decorative images that convey no information. Either `alt` or `decorative: true` should be provided.
 - `caption` (string) — visible caption below the image.
-- `treatment` (string) — image treatment effect.
-- `filter` (string) — CSS-style filter applied to the image.
-- `opacity` (number) — opacity value.
-- `size` (string) — display size (`small`, `medium`, `large`, `full-width`). The serializer uses `size`; the manifest also accepts `width` as an alias — both are valid.
-- `x` (string) — horizontal position: `left`, `center`, `right`.
-- `order` (string) — display order for image galleries: `content`, `background`.
-- `motionBlur` (boolean) — apply motion blur effect to the image.
+- `treatment` (string, deprecated) — legacy image treatment. Use `effects` instead.
+- `effects` (`none` or map) — per-image composable effects override.
 - `layout`: `wide | full | breakout`
 
 **Variants:**
 - `width`: `small | medium | large`
 - `alignment`: `left | center | right`
 
-**Design system image effects** can also be applied at the course level via frontmatter `design.imageEffects`. See [frontmatter-design.md](frontmatter-design.md) for `grayscale`, `colorWash`, `accentLighting`, `progressiveBlur`, `grain`, `halftone`, and other composable effects.
+Supported effects map keys:
+
+- `grayscale: { intensity }`
+- `colorWash: { intensity, color }`
+- `accentLighting: { intensity }`
+- `progressiveBlur: { intensity }`
+- `accentBlur: { intensity }`
+- `motionBlur: { intensity, direction }`
+- `grain: { intensity }`
+- `halftone: { intensity }`
+- `dithering: { intensity }`
+
+Each effect takes an `intensity` number; `colorWash` also accepts `color`, and `motionBlur` also accepts `direction`.
+
+Course-level image effects can also be applied via frontmatter `design.imageEffects`. Per-image `effects` overrides the course-level defaults.
 
 ## video
 
