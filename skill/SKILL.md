@@ -388,11 +388,12 @@ Uses implicit heading grouping. Typically two items.
 
 ### Card
 
-A grid of styled cards (`columns:` number, `style:` `outline`/`filled`/`elevated`). Requires `close: card`.
+A card container that supports static grids and front/back cards with `card: back`. Requires `close: card`.
 
 ```
 ### Types of PPE
 as: card
+layout: grid
 columns: 3
 style: outline
 
@@ -405,18 +406,25 @@ Safety goggles and face shields...
 close: card
 ```
 
-Add `flip: true` for front/back flashcard behavior. Each `###` heading is the card front; content below it is the back. Multiple headings create multiple cards.
+Use `card: back` for front/back cards. Front content is everything before `card: back`.
 
 ```
 ### What is lockout/tagout?
 as: card
-flip: true
+layout: single
+transition: slide
 
 Energy isolation before maintenance on energized equipment.
+
+card: back
+Lockout/tagout prevents accidental startup and is required before servicing equipment.
 
 ### When is a confined space permit required?
 
 Before entering any space with limited entry/exit and potential hazardous atmosphere.
+
+card: back
+Permits are required when atmospheric, engulfment, or mechanical hazards are present.
 
 close: card
 ```
@@ -428,7 +436,7 @@ close: card
 | Required `close:` | Optional `close:` |
 |--------------------|-------------------|
 | `close: col` | `close: accordion` |
-| `close: assessment-group` | `close: tab` |
+| `close: assessment-group` | `close: tabs` |
 | `close: card` | `close: sequence` |
 | | `close: comparison` |
 
@@ -891,6 +899,6 @@ This root skill covers the most common blocks and patterns. For advanced usage, 
 | Sub-skill | Load when... |
 |-----------|-------------|
 | `assessments.md` | Building complex assessments: matrix questions, hotspot authoring details, assessment groups with passing scores, detailed feedback strategies |
-| `containers.md` | Advanced container nesting, card layouts, flip cards (`flip: true`), comparison variants, sequence orientations |
+| `containers.md` | Advanced container nesting, card layouts, front/back cards with `card: back`, comparison variants, sequence orientations |
 | `design.md` | Fine-tuning the design system: custom fonts, color tokens, image effects, section palettes, background textures, motion and animation |
 | `validation.md` | Checking a `.prax` file for errors: required fields (alt text), assessment structure, container balance, frontmatter schema |

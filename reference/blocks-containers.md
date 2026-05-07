@@ -139,46 +139,68 @@ The `slider` style renders an interactive drag handle that reveals the before/af
 
 ## card
 
-Card container for grouped rich content. Items are `###` headings, rendered in a grid layout with configurable columns. Requires explicit `close: card`.
+Card container for grouped content, flip cards, and slide-like card flows. Items are `###` headings and the container requires explicit `close: card`.
 
-**Syntax:**
+`as: flashcard` is accepted as an alias for `as: card` but is not recommended for new content.
+
+**Static card grid (no back side):**
 ```prax
-### Fire Safety
+### Safety Categories
 as: card
-columns: 2
+layout: grid
+columns: 3
+style: outline
+shadow: subtle
 
-Know your nearest exit and extinguisher location.
+### Chemical
+Label, store, and segregate chemicals by compatibility.
 
-### Chemical Safety
+### Electrical
+De-energize equipment and verify zero-energy state before service.
 
-Always check the SDS before handling chemicals.
+### Ergonomic
+Adjust workstation height and posture to reduce strain.
 
-### Electrical Safety
+close: card
+```
 
-Lock out/tag out before any maintenance work.
+**Flip card carousel (front is implicit, `card: back` defines back side):**
+```prax
+### Hazard Drill
+as: card
+layout: single
+transition: slide
+advance: 0
+showProgress: true
+trackCompletion: true
+
+### What is lockout/tagout?
+Energy isolation before maintenance on energized equipment.
+
+card: back
+Lockout/tagout prevents accidental startup and must be verified before work begins.
+
+### When is a confined space permit required?
+Before entering any space with limited entry/exit and potential hazardous atmosphere.
+
+card: back
+A permit is required when atmospheric, engulfment, or mechanical hazards are present.
 
 close: card
 ```
 
 **Parameters:**
-- `columns` (number) — number of grid columns.
-- `flip` (boolean) — enables front/back flashcard behavior. Each `###` heading is the card front; content below it is the back. Multiple headings create multiple cards.
-- `layout`: `wide | full | breakout`
-
-**Flashcard syntax (using `as: card` with `flip: true`):**
-```prax
-### What is lockout/tagout?
-as: card
-flip: true
-
-Energy isolation before maintenance on energized equipment.
-
-### When is a confined space permit required?
-
-Before entering any space with limited entry/exit and potential hazardous atmosphere.
-
-close: card
-```
+| Param | Values | Default |
+|---|---|---|
+| `layout` | `single` / `grid` / `masonry` | `grid` |
+| `columns` | number | `1` |
+| `style` | `none` / `outline` / `filled` | `none` |
+| `shadow` | `theme` / `none` / `subtle` / `elevated` | `theme` |
+| `advance` | number (seconds, `0` = manual) | `0` |
+| `transition` | `none` / `fade` / `slide` / `zoom` | `fade` |
+| `showProgress` | boolean | `true` |
+| `shuffle` | boolean | `false` |
+| `trackCompletion` | boolean | `false` |
 
 ## Nesting rules
 
@@ -190,9 +212,10 @@ close: card
 
 | Container | Closing | Notes |
 |---|---|---|
-| `accordion` / `tabs` | Implicit | Closed by next heading at same or higher level, or page break |
+| `accordion` | `close: accordion` optional | Implicit closing by next heading at same or higher level, or page break still works |
+| `tabs` | `close: tabs` optional | Implicit closing by next heading at same or higher level, or page break still works |
+| `sequence` | `close: sequence` optional | Implicit closing by next heading at same or higher level, or page break still works |
+| `comparison` | `close: comparison` optional | Implicit closing still works |
 | `col` | `close: col` required | Must explicitly close the column layout |
 | `assessment-group` | `close: assessment-group` required | Must explicitly close |
-| `card` | `close: card` required | Must explicitly close; applies to both grid cards and flip cards |
-| `sequence` | Implicit | Closed by next heading at same or higher level, or page break |
-| `comparison` | Implicit | Closed after second item |
+| `card` | `close: card` required | Must explicitly close |

@@ -11,7 +11,7 @@ Key rules:
 - Columns use standalone `as: col` sections (no heading needed).
 - `close: col` is required for columns.
 - `close: assessment-group` is required for assessment groups.
-- `close: card` is required when opened with standalone `as: card` (including `flip: true` cards).
+- `close: card` is required for card containers.
 - A page break (`---`) closes all still-open containers on that page.
 
 ## accordion
@@ -253,31 +253,44 @@ Planned style variants: `slider`, `toggle`, `diff`.
 
 ## card
 
-Card can be opened from a heading or from a standalone `as: card`. Requires `close: card`.
+Card supports static grids, masonry layouts, and front/back cards using `card: back`. Front content is implicit (everything before `card: back`). Requires `close: card`.
 
 ```prax
-### Incident Simulation
+### Incident Categories
 as: card
+layout: grid
+columns: 2
+style: outline
+shadow: subtle
 
-Read the scenario details below.
+### Chemical
+Segregate incompatible materials and verify SDS availability.
 
-A worker notices a leaking chemical drum near the loading bay. No one else is present.
+### Electrical
+Apply lockout/tagout and verify zero-energy state before service.
 
 close: card
 ```
 
-Add `flip: true` for front/back flashcard behavior. Each `###` heading is the card front; content below it is the back. Multiple headings create multiple cards.
+Use `card: back` to define the back side of each card.
 
 ```prax
 ### What is lockout/tagout?
 as: card
-flip: true
+layout: single
+transition: slide
 
 Energy isolation procedure required before servicing equipment.
+
+card: back
+Lockout/tagout is mandatory before servicing energized equipment to prevent accidental startup.
 
 ### What is a near miss?
 
 An unplanned event that did not result in injury but had the potential to.
+
+card: back
+Near misses should be reported and investigated to prevent recurrence.
 
 close: card
 ```
@@ -286,9 +299,15 @@ close: card
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `columns` | number | any integer | — | Number of grid columns |
-| `layout` | enum | `wide`, `full`, `breakout` | — | Content width override |
-| `flip` | boolean | true / false | false | Enables front/back flip behavior |
+| `layout` | enum | `single`, `grid`, `masonry` | grid | Card layout mode |
+| `columns` | number | any number | 1 | Number of columns when layout supports columns |
+| `style` | enum | `none`, `outline`, `filled` | none | Card surface style |
+| `shadow` | enum | `theme`, `none`, `subtle`, `elevated` | theme | Shadow treatment |
+| `advance` | number | seconds (`0` = manual) | 0 | Auto-advance interval |
+| `transition` | enum | `none`, `fade`, `slide`, `zoom` | fade | Card transition style |
+| `showProgress` | boolean | true / false | true | Show progress indicator |
+| `shuffle` | boolean | true / false | false | Shuffle card order |
+| `trackCompletion` | boolean | true / false | false | Track completion state |
 
 ## Nesting rules
 
@@ -297,7 +316,7 @@ Safe nesting patterns:
 - Any content block (text, image, note, quote, video, button) inside accordion, tab, or sequence items.
 - Assessments inside accordion or sequence items.
 - Columns inside normal page flow.
-- Card items (including flip cards) can hold content blocks inside each item.
+- Card items can hold content blocks inside each item, including front/back cards with `card: back`.
 
 Avoid nesting containers inside containers (accordion inside accordion) unless required for pedagogy.
 
@@ -307,12 +326,12 @@ Summary of which containers require explicit `close:` and which are closed by st
 
 | Container | Close required | Closed by |
 |---|---|---|
-| accordion | No | Next `##` heading or page break |
-| tab | No | Next `##` heading or page break |
-| sequence | No | Next `##` heading or page break |
-| comparison | No | Next `##` heading or page break |
+| accordion | No | Next `##` heading or page break (or optional `close: accordion`) |
+| tab | No | Next `##` heading or page break (or optional `close: tabs`) |
+| sequence | No | Next `##` heading or page break (or optional `close: sequence`) |
+| comparison | No | Next `##` heading or page break (or optional `close: comparison`) |
 | columns | Yes | `close: col` |
-| card (any variant, including `flip: true`) | Yes | `close: card` |
+| card | Yes | `close: card` |
 | assessment-group | Yes | `close: assessment-group` |
 
 Page breaks (`---`) close all open containers on the current page regardless of type.

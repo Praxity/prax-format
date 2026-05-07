@@ -1,41 +1,29 @@
 ---
-title: Safety Vocabulary Drill
-description: Flashcard study drill for core safety terms. Each card shows a term on the front and its definition on the back. Use this pattern before a quiz to build retrieval fluency.
+title: Vocabulary Drill
 lang: en
-design:
-  palette: universal
-  colorMode: light
-  accentHue: 210
 ---
 
-## Safety Vocabulary
-
-Review each term, then flip the card to check your understanding. Try to recall the definition before flipping.
-
-### Lockout/Tagout (LOTO)
+## Key Terms
 as: card
-flip: true
+layout: single
+shuffle: true
 
-A procedure that isolates hazardous energy sources before maintenance or servicing begins. All energy — electrical, hydraulic, pneumatic, thermal — must be isolated and verified at zero energy state before work proceeds.
+### Mitosis
+The process of cell division producing identical daughter cells.
 
-### Hierarchy of Controls
+card: back
+Mitosis produces two genetically identical cells. It occurs in somatic cells for growth and repair.
 
-A framework for selecting hazard controls, ranked from most to least effective: elimination, substitution, engineering controls, administrative controls, and personal protective equipment (PPE).
+### Meiosis
+The process of cell division producing gametes.
 
-### Near Miss
+card: back
+Meiosis produces four genetically diverse cells. It occurs only in reproductive cells.
 
-An unplanned event that did not result in injury, illness, or damage but clearly had the potential to do so. Near misses must be reported and investigated to prevent recurrence.
+### Homeostasis
+The maintenance of stable internal conditions.
 
-### Job Hazard Analysis (JHA)
-
-A technique that examines the steps of a task to identify hazards and determine the safest way to perform each step. Also called a Job Safety Analysis (JSA) in some sectors.
-
-### Confined Space
-
-An enclosed or partially enclosed space large enough for a worker to enter and perform work, with limited means of entry or exit, that is not designed for continuous occupancy. Entry typically requires a permit.
-
-### SDS (Safety Data Sheet)
-
-A standardized document that provides information about a hazardous material's properties, health effects, handling, storage, and emergency procedures. Required for all controlled products in the workplace.
+card: back
+Body temperature, blood pH, and glucose levels are all regulated through homeostasis.
 
 close: card
