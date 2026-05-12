@@ -139,68 +139,95 @@ The `slider` style renders an interactive drag handle that reveals the before/af
 
 ## card
 
-Card container for grouped content, flip cards, and slide-like card flows. Items are `###` headings and the container requires explicit `close: card`.
+Unified card container for static cards, carousels, and flip cards. Requires explicit `close: card`.
 
-`as: flashcard` is accepted as an alias for `as: card` but is not recommended for new content.
+When a card container is opened from a heading, that heading is the card group title. It is rendered around the group, not inside an individual card face.
 
-**Static card grid (no back side):**
+Card items are created by headings one level below the group heading. For a `##` card group, each `###` heading starts a new card item. The item heading becomes the card label/header. It is not part of the flippable front or back face.
+
+**Syntax:**
 ```prax
-### Safety Categories
-as: card
-layout: grid
-columns: 3
-style: outline
-shadow: subtle
-
-### Chemical
-Label, store, and segregate chemicals by compatibility.
-
-### Electrical
-De-energize equipment and verify zero-energy state before service.
-
-### Ergonomic
-Adjust workstation height and posture to reduce strain.
-
-close: card
-```
-
-**Flip card carousel (front is implicit, `card: back` defines back side):**
-```prax
-### Hazard Drill
+### Safety Concepts
 as: card
 layout: single
 transition: slide
-advance: 0
 showProgress: true
-trackCompletion: true
 
-### What is lockout/tagout?
-Energy isolation before maintenance on energized equipment.
+### Hazard Identification
 
-card: back
-Lockout/tagout prevents accidental startup and must be verified before work begins.
-
-### When is a confined space permit required?
-Before entering any space with limited entry/exit and potential hazardous atmosphere.
+Recognize potential injury sources before work begins.
 
 card: back
-A permit is required when atmospheric, engulfment, or mechanical hazards are present.
+Start with the task, environment, tools, and materials. Document anything with harm potential.
+
+### Risk Control
+
+Apply controls in order: elimination, substitution, engineering controls, administrative controls, then PPE.
+
+card: back
+Use the hierarchy of controls to choose the strongest feasible mitigation.
 
 close: card
 ```
 
 **Parameters:**
-| Param | Values | Default |
-|---|---|---|
-| `layout` | `single` / `grid` / `masonry` | `grid` |
-| `columns` | number | `1` |
-| `style` | `none` / `outline` / `filled` | `none` |
-| `shadow` | `theme` / `none` / `subtle` / `elevated` | `theme` |
-| `advance` | number (seconds, `0` = manual) | `0` |
-| `transition` | `none` / `fade` / `slide` / `zoom` | `fade` |
-| `showProgress` | boolean | `true` |
-| `shuffle` | boolean | `false` |
-| `trackCompletion` | boolean | `false` |
+- `layout`: `single | grid | masonry` — card presentation mode.
+- `columns` (number) — number of columns when `layout` is `grid` or `masonry`.
+- `style`: `none | outline | filled` — card item chrome treatment.
+- `shadow`: `theme | none | subtle | elevated` — card depth treatment.
+- `advance` (number, seconds) — auto-advance interval for `layout: single`; `0` = manual.
+- `transition`: `none | fade | slide | zoom` — transition style for `layout: single`.
+- `showProgress` (boolean) — show pagination/progress controls in `layout: single`.
+- `shuffle` (boolean) — randomize card item order.
+- `trackCompletion` (boolean) — track learner interaction/completion at card level.
+
+Use `card: back` to mark the back face of an item. Content before `card: back` is the front face.
+
+Do not put the next item heading immediately after `card: back` if you intend that heading to appear on the back face. A same-level item heading starts the next card. Use paragraph text or a lower-level heading for back-face content.
+
+`as: flashcard` is a deprecated parser alias for `as: card` and should not be used for new content.
+
+**Flip-card syntax (`card: back`):**
+```prax
+## Safety Terms
+as: card
+layout: single
+style: outline
+
+### What is lockout/tagout?
+Energy isolation before maintenance on energized equipment.
+
+card: back
+#### Answer
+A formal energy-isolation procedure required before servicing machinery.
+
+### When is a confined space permit required?
+
+Before entering any space with limited entry/exit and potential hazardous atmosphere.
+
+card: back
+#### Answer
+Permits are required when atmospheric or entrapment risks are present.
+
+close: card
+```
+
+**Headingless single-card syntax:**
+```prax
+as: card
+layout: single
+style: outline
+
+/assets/control-panel.png
+alt: Control panel with emergency stop highlighted
+
+card: back
+This panel includes the emergency stop, lockout point, and status indicator.
+
+close: card
+```
+
+Headingless `as: card` is useful for a single card whose front face is image or paragraph content. Multiple cards in one group currently need item headings; another standalone `as: card` inside an open card creates a nested card, not a sibling card item.
 
 ## Nesting rules
 
@@ -212,10 +239,9 @@ close: card
 
 | Container | Closing | Notes |
 |---|---|---|
-| `accordion` | `close: accordion` optional | Implicit closing by next heading at same or higher level, or page break still works |
-| `tabs` | `close: tabs` optional | Implicit closing by next heading at same or higher level, or page break still works |
-| `sequence` | `close: sequence` optional | Implicit closing by next heading at same or higher level, or page break still works |
-| `comparison` | `close: comparison` optional | Implicit closing still works |
+| `accordion` / `tabs` | Implicit | Closed by next heading at same or higher level, or page break |
 | `col` | `close: col` required | Must explicitly close the column layout |
 | `assessment-group` | `close: assessment-group` required | Must explicitly close |
-| `card` | `close: card` required | Must explicitly close |
+| `card` | `close: card` required | Must explicitly close; applies to all card layouts |
+| `sequence` | Implicit | Closed by next heading at same or higher level, or page break |
+| `comparison` | Implicit | Closed after second item |

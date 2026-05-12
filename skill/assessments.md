@@ -266,6 +266,7 @@ Use an image path followed by `as: hotspot` and repeated `spot:` params. Each sp
 ```prax
 /assets/extinguisher-diagram.png
 as: hotspot
+question: Select the pull pin.
 alt: Extinguisher diagram with labeled parts
 scored: true
 points: 4
@@ -279,6 +280,7 @@ spot: Discharge horn; 65%; 40%
 
 | Parameter | Type | Valid values | Default |
 |---|---|---|---|
+| `question` | string | learner-facing prompt | — |
 | `alt` | string | descriptive text | — |
 | `scored` | boolean | true / false | false |
 | `points` | number | any positive number | — |
@@ -321,6 +323,42 @@ Common mistake: writing `as: rate` — the parser only accepts `as: rating`.
 | `style` | enum | `likert` | likert |
 
 Planned style variants: `stars`, `slider`.
+
+## matrix
+
+Use `as: matrix` for a table-style Likert assessment. The heading is the matrix question, numbered `N: label` lines define the scale, and list items define the statements.
+
+```prax
+### How confident are you?
+as: matrix
+
+1: Not at all confident
+2: Slightly confident
+3: Moderately confident
+4: Very confident
+5: Extremely confident
+
+- Using PPE correctly
+- Reading warning labels
+- Following emergency procedures
+```
+
+Shorter scales are valid:
+
+```prax
+### How confident are you?
+as: matrix
+
+1: Not confident
+2: Somewhat confident
+3: Confident
+
+- Using PPE correctly
+- Reading warning labels
+- Following emergency procedures
+```
+
+Consecutive `as: matrix` headings are also collapsed into one matrix assessment.
 
 ## categorize
 

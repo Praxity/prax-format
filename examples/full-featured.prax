@@ -234,6 +234,7 @@ Before restart, verify {isolation} and confirm {authorization}.
 
 /assets/extinguisher-diagram.png
 as: hotspot
+question: Select the pull pin.
 alt: Fire extinguisher diagram
 points: 4
 spot: Gauge; 28%; 18%
@@ -292,11 +293,6 @@ as: contribute
 
 ### What is your highest-priority risk this week?
 as: poll
-
-### Ask for a quick hazard-control explanation
-as: ai-chat
-topic: Hazard Controls
-prompt: You are a safety coach. Explain hazard controls in concise, practical terms.
 
 ### Branching Scenario
 as: card

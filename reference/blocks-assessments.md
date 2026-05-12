@@ -109,10 +109,13 @@ Image hotspot assessment.
 ```prax
 /assets/diagram.png
 as: hotspot
+question: Select the release pin.
 alt: Labeled safety diagram
 spot: Valve; 30%; 15%
 spot: Release pin; 45%; 25%; correct
 ```
+
+Use `question:` for the learner-facing assessment title/stem. `alt:` is only the image alternative text.
 
 > **Important:** All parameters — including `spot:` lines — must be contiguous with no blank lines between them. `collectParams` stops at the first blank line, so any `spot:` entries after a blank line are silently dropped.
 
@@ -133,6 +136,43 @@ as: rating
 4: Very confident
 5: Expert
 ```
+
+## matrix
+
+Matrix-style Likert assessment. The heading is the matrix question, numbered `N: label` lines define the scale, and list items define the statements.
+
+**Syntax:**
+```prax
+### How confident are you?
+as: matrix
+
+1: Not at all confident
+2: Slightly confident
+3: Moderately confident
+4: Very confident
+5: Extremely confident
+
+- Using PPE correctly
+- Reading warning labels
+- Following emergency procedures
+```
+
+Shorter scales are valid:
+
+```prax
+### How confident are you?
+as: matrix
+
+1: Not confident
+2: Somewhat confident
+3: Confident
+
+- Using PPE correctly
+- Reading warning labels
+- Following emergency procedures
+```
+
+Consecutive `as: matrix` headings are also collapsed into one table-style matrix assessment.
 
 ## categorize
 

@@ -82,7 +82,7 @@ Common uses:
 
 - `as: choice`, `as: match`, `as: order`, `as: free-response`
 - `as: accordion`, `as: tab`, `as: sequence`, `as: comparison`
-- `as: signature`, `as: discuss`, `as: ai-chat`
+- `as: signature`, `as: checklist`
 
 ## Section divider vs page break
 

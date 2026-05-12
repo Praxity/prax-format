@@ -1,0 +1,43 @@
+{
+  "blocks": [
+    { "id": "text", "category": "content", "syntax": "default paragraph text", "reference": "blocks-content.md#text" },
+    { "id": "heading", "category": "content", "syntax": "#, ##, ###, ####", "reference": "blocks-content.md#heading" },
+    { "id": "image", "category": "content", "syntax": "media path or URL", "reference": "blocks-content.md#image" },
+    { "id": "video", "category": "content", "syntax": "media path or URL", "reference": "blocks-content.md#video" },
+    { "id": "audio", "category": "content", "syntax": "media path", "reference": "blocks-content.md#audio" },
+    { "id": "divider", "category": "content", "syntax": "--", "reference": "blocks-content.md#divider" },
+    { "id": "embed", "category": "content", "syntax": "as: embed", "reference": "blocks-content.md#embed" },
+    { "id": "note", "category": "content", "syntax": "as: note", "reference": "blocks-content.md#note" },
+    { "id": "quote", "category": "content", "syntax": "blockquote", "reference": "blocks-content.md#quote" },
+    { "id": "code", "category": "content", "syntax": "fenced code block", "reference": "blocks-content.md#code" },
+    { "id": "equation", "category": "content", "syntax": "$$ fence", "reference": "blocks-content.md#equation" },
+    { "id": "button", "category": "content", "syntax": "as: button", "reference": "blocks-content.md#button" },
+    { "id": "data-table", "category": "content", "syntax": "pipe table", "reference": "blocks-content.md#data-table" },
+    { "id": "accordion", "category": "container", "syntax": "as: accordion", "reference": "blocks-containers.md#accordion" },
+    { "id": "tabs", "category": "container", "syntax": "as: tab", "reference": "blocks-containers.md#tabs" },
+    { "id": "columns", "category": "container", "syntax": "as: col", "reference": "blocks-containers.md#columns" },
+    { "id": "sequence", "category": "container", "syntax": "as: sequence", "reference": "blocks-containers.md#sequence" },
+    { "id": "comparison", "category": "container", "syntax": "as: comparison", "reference": "blocks-containers.md#comparison" },
+    { "id": "card", "category": "container", "syntax": "as: card", "reference": "blocks-containers.md#card" },
+    { "id": "choose-one", "category": "assessment", "syntax": "as: choice with ( ) markers", "reference": "blocks-assessments.md#choose-one" },
+    { "id": "choose-many", "category": "assessment", "syntax": "as: choice with [ ] markers", "reference": "blocks-assessments.md#choose-many" },
+    { "id": "match", "category": "assessment", "syntax": "as: match", "reference": "blocks-assessments.md#match" },
+    { "id": "order", "category": "assessment", "syntax": "as: order", "reference": "blocks-assessments.md#order" },
+    { "id": "free-response", "category": "assessment", "syntax": "as: free-response", "reference": "blocks-assessments.md#free-response" },
+    { "id": "fill-blank", "category": "assessment", "syntax": "as: fill-blank", "reference": "blocks-assessments.md#fill-blank" },
+    { "id": "hotspot", "category": "assessment", "syntax": "as: hotspot", "reference": "blocks-assessments.md#hotspot" },
+    { "id": "rate", "category": "assessment", "syntax": "as: rating", "reference": "blocks-assessments.md#rate" },
+    {
+      "id": "matrix",
+      "category": "assessment",
+      "syntax": "as: matrix",
+      "reference": "blocks-assessments.md#matrix",
+      "summary": "Table-style Likert assessment. The heading is the matrix question, numbered N: label lines define scale points, and bullet list items define statements.",
+      "example": "### How confident are you?\nas: matrix\n\n1: Not confident\n2: Somewhat confident\n3: Confident\n\n- Using PPE correctly\n- Reading warning labels\n- Following emergency procedures"
+    },
+    { "id": "categorize", "category": "assessment", "syntax": "as: categorize", "reference": "blocks-assessments.md#categorize" },
+    { "id": "assessment-group", "category": "assessment", "syntax": "as: assessment-group", "reference": "blocks-assessments.md#assessment-group" },
+    { "id": "checklist", "category": "interactive", "syntax": "as: checklist", "reference": "blocks-interactive.md#checklist" },
+    { "id": "signature", "category": "interactive", "syntax": "as: signature", "reference": "blocks-interactive.md#signature" }
+  ]
+}

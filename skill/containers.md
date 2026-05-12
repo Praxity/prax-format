@@ -253,61 +253,62 @@ Planned style variants: `slider`, `toggle`, `diff`.
 
 ## card
 
-Card supports static grids, masonry layouts, and front/back cards using `card: back`. Front content is implicit (everything before `card: back`). Requires `close: card`.
+Card can be opened from a heading or from a standalone `as: card`. Requires `close: card`.
+
+When opened from a heading, that heading is the card group title. Card items are created by headings one level below the group heading. For a `##` card group, each `###` heading starts a new card item and becomes that card's label/header.
 
 ```prax
-### Incident Categories
+### Incident Simulation
 as: card
-layout: grid
-columns: 2
-style: outline
-shadow: subtle
 
-### Chemical
-Segregate incompatible materials and verify SDS availability.
+Read the scenario details below.
 
-### Electrical
-Apply lockout/tagout and verify zero-energy state before service.
+A worker notices a leaking chemical drum near the loading bay. No one else is present.
 
 close: card
 ```
 
-Use `card: back` to define the back side of each card.
+Use `card: back` for front/back behavior. Content before `card: back` is the front; content after it is the back.
 
 ```prax
-### What is lockout/tagout?
+## Safety Terms
 as: card
 layout: single
-transition: slide
+style: outline
 
+### What is lockout/tagout?
 Energy isolation procedure required before servicing equipment.
 
 card: back
-Lockout/tagout is mandatory before servicing energized equipment to prevent accidental startup.
+#### Answer
+A formal energy-isolation procedure required before maintenance.
 
 ### What is a near miss?
 
 An unplanned event that did not result in injury but had the potential to.
 
 card: back
-Near misses should be reported and investigated to prevent recurrence.
+#### Answer
+Report and investigate it to prevent a future incident.
 
 close: card
 ```
+
+Do not put a same-level item heading immediately after `card: back` unless you mean to start the next card. Use paragraph text or a lower-level heading for back-face content. Headingless standalone `as: card` is useful for one card; multiple cards in a group need item headings.
 
 ### card parameters
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `layout` | enum | `single`, `grid`, `masonry` | grid | Card layout mode |
-| `columns` | number | any number | 1 | Number of columns when layout supports columns |
-| `style` | enum | `none`, `outline`, `filled` | none | Card surface style |
-| `shadow` | enum | `theme`, `none`, `subtle`, `elevated` | theme | Shadow treatment |
-| `advance` | number | seconds (`0` = manual) | 0 | Auto-advance interval |
-| `transition` | enum | `none`, `fade`, `slide`, `zoom` | fade | Card transition style |
-| `showProgress` | boolean | true / false | true | Show progress indicator |
-| `shuffle` | boolean | true / false | false | Shuffle card order |
-| `trackCompletion` | boolean | true / false | false | Track completion state |
+| `columns` | number | any integer | — | Number of grid columns |
+| `layout` | enum | `single`, `grid`, `masonry` | grid | Card presentation mode |
+| `style` | enum | `none`, `outline`, `filled` | none | Card item chrome treatment |
+| `shadow` | enum | `theme`, `none`, `subtle`, `elevated` | theme | Card depth treatment |
+| `advance` | number | any number >= 0 | 0 | Auto-advance interval in seconds for `layout: single` |
+| `transition` | enum | `none`, `fade`, `slide`, `zoom` | fade | Transition style for `layout: single` |
+| `showProgress` | boolean | true / false | true | Show progress controls for `layout: single` |
+| `shuffle` | boolean | true / false | false | Randomize card order |
+| `trackCompletion` | boolean | true / false | false | Track interaction/completion for cards |
 
 ## Nesting rules
 
@@ -316,7 +317,7 @@ Safe nesting patterns:
 - Any content block (text, image, note, quote, video, button) inside accordion, tab, or sequence items.
 - Assessments inside accordion or sequence items.
 - Columns inside normal page flow.
-- Card items can hold content blocks inside each item, including front/back cards with `card: back`.
+- Card items (including flip cards) can hold content blocks inside each item.
 
 Avoid nesting containers inside containers (accordion inside accordion) unless required for pedagogy.
 
@@ -326,12 +327,12 @@ Summary of which containers require explicit `close:` and which are closed by st
 
 | Container | Close required | Closed by |
 |---|---|---|
-| accordion | No | Next `##` heading or page break (or optional `close: accordion`) |
-| tab | No | Next `##` heading or page break (or optional `close: tabs`) |
-| sequence | No | Next `##` heading or page break (or optional `close: sequence`) |
-| comparison | No | Next `##` heading or page break (or optional `close: comparison`) |
+| accordion | No | Next `##` heading or page break |
+| tab | No | Next `##` heading or page break |
+| sequence | No | Next `##` heading or page break |
+| comparison | No | Next `##` heading or page break |
 | columns | Yes | `close: col` |
-| card | Yes | `close: card` |
+| card (any variant, including `card: back`) | Yes | `close: card` |
 | assessment-group | Yes | `close: assessment-group` |
 
 Page breaks (`---`) close all open containers on the current page regardless of type.

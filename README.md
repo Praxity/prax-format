@@ -53,6 +53,8 @@ Confirm emergency exits are clear and protective gear is available.
 
 - [`reference/document-structure.md`](reference/document-structure.md): Frontmatter, pages, headings, `as:`, breaks.
 - [`reference/inline-formatting.md`](reference/inline-formatting.md): Bold/italic/links/variables/lists/tables.
+- [`reference/blocks.md`](reference/blocks.md): Block index with links to each detailed reference section.
+- [`reference/blocks.json`](reference/blocks.json): Machine-readable block index.
 - [`reference/blocks-content.md`](reference/blocks-content.md): Content block syntax and options.
 - [`reference/blocks-containers.md`](reference/blocks-containers.md): Containers and close rules.
 - [`reference/blocks-assessments.md`](reference/blocks-assessments.md): Assessment syntax and scoring params.
@@ -77,9 +79,41 @@ Reusable templates for common eLearning designs:
 - [`patterns/multicol-signature.prax`](examples/patterns/multicol-signature.prax): Completion page with summary and signoff.
 - [`patterns/horizontal-timeline.prax`](examples/patterns/horizontal-timeline.prax): Process steps on a horizontal timeline.
 - [`patterns/assessment-choice.prax`](examples/patterns/assessment-choice.prax): Learner picks which question to answer.
+- [`patterns/matrix-likert.prax`](examples/patterns/matrix-likert.prax): Likert matrix with scale points and statements.
 - [`patterns/scenario-feedback.prax`](examples/patterns/scenario-feedback.prax): Scenario with conditional feedback via variables.
 - [`patterns/guided-reading.prax`](examples/patterns/guided-reading.prax): Read-then-test across multiple pages.
 - [`patterns/image-comparison.prax`](examples/patterns/image-comparison.prax): Before/after slider comparison.
+
+## Card syntax (v3.1)
+
+Use `as: card` for both static card grids and flip-card carousels.
+
+```prax
+## Safety Terms
+as: card
+layout: single
+style: outline
+shadow: subtle
+advance: 0
+transition: fade
+showProgress: true
+shuffle: false
+trackCompletion: true
+
+### PPE
+Personal Protective Equipment
+
+card: back
+Helmet, eye protection, gloves
+
+close: card
+```
+
+The `## Safety Terms` heading is the card group title. Each `###` heading starts a card item and becomes that card's label/header; it is not part of the flippable face content.
+
+For non-flip cards, omit `card: back` and use `layout: grid` (or `masonry`) plus `columns`.
+
+`as: flashcard` is a deprecated backward-compat alias and should not be used for new content.
 
 ## Using with LLMs
 
