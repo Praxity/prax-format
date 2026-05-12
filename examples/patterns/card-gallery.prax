@@ -12,9 +12,11 @@ design:
 
 These are the people you contact when you have a hazard to report, a question about procedure, or a concern that hasn't been resolved. `columns: 3` keeps the grid scannable without requiring scrolling on a standard display.
 
-### Fatima Osei — Safety Lead
+## Safety Team Cards
 as: card
 columns: 3
+
+### Fatima Osei — Safety Lead
 
 /assets/team/fatima-osei.png
 alt: Portrait photo of Fatima Osei

@@ -1,12 +1,6 @@
----
-title: Vocabulary Drill
-lang: en
----
-
-## Key Terms
+## Vocabulary Review
 as: card
 layout: single
-shuffle: true
 
 ### Mitosis
 The process of cell division producing identical daughter cells.
@@ -19,11 +13,5 @@ The process of cell division producing gametes.
 
 card: back
 Meiosis produces four genetically diverse cells. It occurs only in reproductive cells.
-
-### Homeostasis
-The maintenance of stable internal conditions.
-
-card: back
-Body temperature, blood pH, and glucose levels are all regulated through homeostasis.
 
 close: card

@@ -50,7 +50,7 @@ design:
 ---
 ```
 
-Key design fields: `palette` (see values below), `colorMode` (`light`, `dark`, `auto`), `accentHue` (0--360), `density` (`compact`, `comfortable`, `spacious`), `navArchetype` (`sidebar`, `bottomBar`, `slides`, `scroll`, `minimal`, `none`), `dividerStyle` (`none`, `thin`, `gradient`, `wave`, `angle`, `curve`), `motionEntrance` (`none`, `fade`, `slide`, `scale`).
+Key design fields: `palette` (see values below), `colorMode` (`light`, `dark`, `auto`), `accentHue` (0--360), `density` (`compact`, `comfortable`, `spacious`), `blockSpacing` (`compact`, `default`, `spacious`), `navArchetype` (`sidebar`, `bottomBar`, `slides`, `scroll`, `minimal`, `none`), `dividerStyle` (`none`, `thin`, `gradient`, `wave`, `angle`, `curve`), `motionEntrance` (`none`, `fade`, `slide`, `scale`).
 
 Valid palette values (all 13): `standard`, `minimal`, `universal`, `editorial`, `bold`, `cinematic`, `ocean`, `warm`, `dark`, `nature`, `pastel`, `corporate`, `playful`. Some map to the same underlying theme (e.g. `minimal` and `universal` share one base), but all 13 are valid author-facing names.
 
@@ -388,12 +388,11 @@ Uses implicit heading grouping. Typically two items.
 
 ### Card
 
-A card container that supports static grids and front/back cards with `card: back`. Requires `close: card`.
+A grid of styled cards (`columns:` number, `style:` `outline`/`filled`/`elevated`). Requires `close: card`.
 
 ```
 ### Types of PPE
 as: card
-layout: grid
 columns: 3
 style: outline
 
@@ -406,28 +405,33 @@ Safety goggles and face shields...
 close: card
 ```
 
-Use `card: back` for front/back cards. Front content is everything before `card: back`.
+Use `card: back` for front/back behavior. Content before `card: back` is the front; content after it is the back.
 
 ```
-### What is lockout/tagout?
+## Safety Terms
 as: card
 layout: single
-transition: slide
+style: outline
 
+### What is lockout/tagout?
 Energy isolation before maintenance on energized equipment.
 
 card: back
-Lockout/tagout prevents accidental startup and is required before servicing equipment.
+#### Answer
+A formal energy-isolation procedure required before maintenance.
 
 ### When is a confined space permit required?
 
 Before entering any space with limited entry/exit and potential hazardous atmosphere.
 
 card: back
-Permits are required when atmospheric, engulfment, or mechanical hazards are present.
+#### Answer
+Permits are required when atmospheric or entrapment risks are present.
 
 close: card
 ```
+
+The card group heading is not part of the card face. Each item heading starts a new card and becomes its label/header. After `card: back`, use paragraph text or a lower-level heading for back-face content; a same-level item heading starts the next card.
 
 ### The `close:` keyword
 
@@ -436,7 +440,7 @@ close: card
 | Required `close:` | Optional `close:` |
 |--------------------|-------------------|
 | `close: col` | `close: accordion` |
-| `close: assessment-group` | `close: tabs` |
+| `close: assessment-group` | `close: tab` |
 | `close: card` | `close: sequence` |
 | | `close: comparison` |
 
@@ -583,6 +587,40 @@ as: rating
 5: Extremely confident
 ```
 
+### Matrix
+
+`as: matrix` renders a table-style Likert assessment. The heading is the matrix question, numbered lines define the scale, and list items define the statements.
+
+```
+### How confident are you?
+as: matrix
+
+1: Not at all confident
+2: Slightly confident
+3: Moderately confident
+4: Very confident
+5: Extremely confident
+
+- Using PPE correctly
+- Reading warning labels
+- Following emergency procedures
+```
+
+Shorter scales are valid:
+
+```
+### How confident are you?
+as: matrix
+
+1: Not confident
+2: Somewhat confident
+3: Confident
+
+- Using PPE correctly
+- Reading warning labels
+- Following emergency procedures
+```
+
 ### Categorize
 
 ```
@@ -608,6 +646,7 @@ An image path with `as: hotspot`. Spots use semicolon-separated values:
 ```
 /assets/fire-extinguisher-diagram.webp
 as: hotspot
+question: Select the handle.
 alt: Fire extinguisher parts diagram
 spot: Pressure gauge; 30%; 15%
 spot: Handle; 45%; 25%; correct
@@ -683,9 +722,9 @@ mode: draw
 as: discuss
 ```
 
-Other interactive `as:` values: `qa` (Q&A format), `poll`, `contribute` (share prompt), `ai-chat` (with `topic:` and `prompt:` keys).
+Other interactive `as:` values: `qa` (Q&A format), `poll`, `contribute` (share prompt).
 
-**Note:** `discuss`, `qa`, `poll`, `contribute`, and `ai-chat` require Cloud publish to function. They will not render in standalone SCORM or HTML exports.
+**Note:** `discuss`, `qa`, `poll`, and `contribute` require Cloud publish to function. They will not render in standalone SCORM or HTML exports.
 
 
 ## Inline formatting
@@ -899,6 +938,6 @@ This root skill covers the most common blocks and patterns. For advanced usage, 
 | Sub-skill | Load when... |
 |-----------|-------------|
 | `assessments.md` | Building complex assessments: matrix questions, hotspot authoring details, assessment groups with passing scores, detailed feedback strategies |
-| `containers.md` | Advanced container nesting, card layouts, front/back cards with `card: back`, comparison variants, sequence orientations |
+| `containers.md` | Advanced container nesting, card layouts, flip cards (`card: back`), comparison variants, sequence orientations |
 | `design.md` | Fine-tuning the design system: custom fonts, color tokens, image effects, section palettes, background textures, motion and animation |
 | `validation.md` | Checking a `.prax` file for errors: required fields (alt text), assessment structure, container balance, frontmatter schema |
