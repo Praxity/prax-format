@@ -19,6 +19,7 @@ A `.prax` file has two parts: optional YAML frontmatter and a body.
 ---
 title: Course Title
 lang: en
+kicker: Module 1
 design:
   palette: standard
   colorMode: light
@@ -28,6 +29,9 @@ Body content starts here...
 ```
 
 The first `---` at byte position 0 opens YAML frontmatter. The next `---` closes it. All subsequent `---` tokens in the body are page breaks, not frontmatter.
+
+`title` names the lesson/module. Optional `kicker` sets the short navigation label above it
+(`kicker: Module 1`). Omit it or leave it blank to show no kicker.
 
 
 ## Frontmatter
