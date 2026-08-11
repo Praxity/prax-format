@@ -217,11 +217,17 @@ A blockquote with `as: note` becomes a styled callout:
 ```
 > Always wear PPE in designated zones.
 as: note
+title: Safety reminder
+icon: alert-triangle
 color: warning
 style: filled
 ```
 
-`color:` options: `accent` (default), `primary`, `success`, `warning`, `error`, `grey`. `style:` options: `filled` (default), `outline`.
+`color:` options: `accent` (default), `primary`, `secondary`, `success`, `warning`, `error`,
+`grey`. `style:` options: `filled` (default), `outline`. `title:` overrides the visible
+label. `icon:` accepts `alert-triangle`, `bell`, `bulb`, `circle-check`, `help-circle`,
+`info-circle`, `message-circle`, `note`, `sparkles`, or `none`; omit it to derive the icon
+from the color.
 
 ### Quote
 

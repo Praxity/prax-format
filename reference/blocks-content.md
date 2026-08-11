@@ -141,18 +141,25 @@ Callout note. Write content as a blockquote (`>`), then add `as: note` to transf
 ```prax
 > Wear PPE in this zone.
 as: note
+title: Safety reminder
+icon: alert-triangle
 color: warning
 style: filled
 ```
 
 **Parameters:**
+- `title` (string) — visible callout label; overrides the label derived from `color`.
+- `icon`: `alert-triangle | bell | bulb | circle-check | help-circle | info-circle | message-circle | note | sparkles | none`. Omit it to use the icon derived from `color`; use `none` for no icon.
 - `layout`
 
 Universal parameters (`name`, `hide`, `reveal`, `visible`, `entrance`, `entranceDuration`) apply to notes as to all blocks. See [document-structure.md](document-structure.md) for details.
 
 **Variants:**
 - `style`: `outline | filled`
-- `color`: `accent | primary | success | warning | error | grey`
+- `color`: `accent | primary | secondary | success | warning | error | grey`
+
+When `title` or `icon` is omitted, Praxity derives its default from `color`. These controls are
+independent: changing the callout label or icon does not change its color.
 
 ## quote
 
