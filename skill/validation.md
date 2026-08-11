@@ -285,6 +285,7 @@ Leading text before the first page heading becomes awkward floating content. Sta
 - Is `passingScore` used (not `passing`) in `assessment-group`?
 - Are shared assessment params typed correctly (numbers as numbers, booleans as true/false)?
 - Is frontmatter valid YAML?
+- If present, is `kicker` a short text label such as `Course` or `Module 1`?
 - Are fill-blank blanks using single braces `{word}`?
 
 ## Final parser gate

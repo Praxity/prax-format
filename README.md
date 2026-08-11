@@ -12,6 +12,7 @@ Plain-text eLearning courses: human-readable, LLM-friendly, and version-control 
 ---
 title: Workspace Safety Starter
 lang: en
+kicker: Module 1
 design:
   palette: standard
   colorMode: light

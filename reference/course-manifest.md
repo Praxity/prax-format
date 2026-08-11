@@ -105,6 +105,7 @@ Each lesson file is a standalone `.prax` document. Frontmatter is optional:
 ```
 ---
 title: Introduction to Safety
+kicker: Module 1
 ---
 
 Welcome to the safety training program.
@@ -117,6 +118,10 @@ Content for page 2...
 ```
 
 The `title:` in lesson frontmatter is the canonical lesson title. If absent, the filename (minus `.prax`) is the fallback.
+
+Optional lesson `kicker:` text appears above the lesson title in learner navigation. Use a
+short value such as `Course` or `Module 1`. Omit it or leave it blank to show the lesson title
+without a kicker.
 
 `# H1` headings are content headings in multi-file courses — they do not define lesson boundaries (each file is already one lesson).
 

@@ -8,6 +8,7 @@ Frontmatter is optional YAML at the top of the file.
 ---
 title: Workplace Safety 101
 lang: en
+kicker: Module 1
 design:
   palette: standard
   colorMode: light
@@ -19,6 +20,17 @@ Rules:
 - Must start at the first line.
 - Uses `---` opening and closing fences.
 - Body content starts after closing fence.
+
+`title` is the lesson or module name. `kicker` controls the short label shown above that
+title in learner navigation:
+
+```yaml
+kicker: Module 1
+```
+
+When `kicker` is omitted or blank, no kicker is shown. In a multi-file course, `course.yaml`
+supplies the overall course title while each lesson's `title` and optional `kicker` supply its
+navigation identity.
 
 ## H1 heading — module/lesson title
 
