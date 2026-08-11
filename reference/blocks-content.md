@@ -42,7 +42,7 @@ The image source is the bare media path or URL on its own line — it is not wri
 **Parameters:**
 - `alt` (string) — descriptive text for screen readers. A warning is issued if missing.
 - `decorative` (boolean) — set `decorative: true` for purely decorative images that convey no information. Either `alt` or `decorative: true` should be provided.
-- `caption` (string) — visible caption below the image.
+- `caption` (string) — visible caption below the image; inline Markdown, including named links, is supported.
 - `treatment` (string, deprecated) — legacy image treatment. Use `effects` instead.
 - `effects` (`none` or map) — per-image composable effects override.
 - `layout`: `wide | full | breakout`
@@ -274,5 +274,21 @@ yLabel: Count
 - `colors` (string) — color scheme name applied to the chart series.
 - `layout`: `wide | full | breakout`
 
-**Variants:**
-- `visual`: `table | chart | stats`
+## stats
+
+Use a two-column pipe table followed by `as: stats`. The first cell is the prominent value and the second is the statement that explains it.
+
+**Syntax:**
+```prax
+| 41% | of people experiencing homelessness in the City of Toronto identify as women. |
+as: stats
+size: large
+caption: Source: [2024 Street Needs Assessment](https://www.toronto.ca)
+```
+
+A single row renders as a responsive value-and-statement pair. Two or more rows render as a grid.
+
+**Parameters:**
+- `size` (`default | large | very-large`) — size of the prominent value. Default is `default`.
+- `columns` (`2 | 3 | 4`) — optional grid-column override for multiple statistics. By default, the block infers the column count from the number of rows, up to four.
+- `caption` (string) — optional source or note. Named Markdown links are supported.

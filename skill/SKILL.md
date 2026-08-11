@@ -296,6 +296,17 @@ Standard markdown pipe-delimited table (separator row `|---|---|` is optional):
 
 Add `chart:` to render as a chart: `bar`, `line`, `scatter`, `area`, `radar`, `stacked`. Note: `pie` and `donut` are not supported. Additional keys: `xLabel:`, `yLabel:`, `title:`, `altText:`, `orientation:` (bar only), `sortOrder:`, `colors:`.
 
+### Statistics
+
+Use a two-column table followed by `as: stats`. The first cell is the prominent value and the second explains it. One row renders as a value-and-statement pair; multiple rows render as a responsive grid. Optional keys: `size:` (`default`, `large`, or `very-large`), `columns:` (`2`, `3`, or `4`), and `caption:`.
+
+```
+| 41% | of people experiencing homelessness identify as women. |
+as: stats
+size: large
+caption: Source: [City of Toronto](https://www.toronto.ca)
+```
+
 ### Embed
 
 An external URL with `as: embed`:

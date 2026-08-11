@@ -98,6 +98,11 @@ chart: bar
 xLabel: Quarter
 yLabel: Findings
 
+| 41% | of people experiencing homelessness identify as women. |
+as: stats
+size: large
+caption: Source: [City of Toronto](https://www.toronto.ca)
+
 --
 
 ## Flow Blocks
