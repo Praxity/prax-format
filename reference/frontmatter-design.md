@@ -31,10 +31,42 @@ Color tokens:
 
 ## Typography
 
-- `bodyFont` (string)
-- `headingFont` (string)
+- `typography.fontDisplay`: `auto | block | swap | fallback | optional`
+- `typography.body` (font role)
+- `typography.headings` (font role plus optional `h1` through `h6` overrides)
+- `fontFamily` (ordered array of up to four family names)
+- `fontWeight`: `400 | 500 | 600 | 700 | 800`
+- `fontStyle`: `normal | italic`
 - `headingSize` (number)
 - `lineHeight` (number)
+
+```yaml
+typography:
+  fontDisplay: swap
+  body:
+    fontFamily: [Inter, "DM Sans", sans-serif]
+    fontWeight: 400
+    fontStyle: normal
+  headings:
+    fontFamily: [Inter, "DM Sans", sans-serif]
+    fontWeight: 600
+    fontStyle: normal
+    h1:
+      fontWeight: 700
+    h2:
+      fontFamily: [Merriweather, Inter, serif]
+      fontWeight: 500
+      fontStyle: italic
+```
+
+The `headings` role supplies defaults for all six levels. Each `h1` through `h6`
+object can override any combination of family, weight, or style. Family names must
+come from Praxity's existing font catalogue; `serif`, `sans-serif`, `monospace`, and
+`system-ui` are also valid generic fallbacks. Praxity loads and packages every
+catalogue family in the ordered list. `fontDisplay` is global because it controls
+the packaged `@font-face` rules rather than an individual text element.
+If a family does not ship the exact requested face, exports embed its nearest
+available weight and style so the browser can synthesize the requested rendering.
 
 ## Spacing and layout
 
@@ -119,8 +151,18 @@ design:
   palette: universal
   colorMode: auto
   accentHue: 205
-  bodyFont: Inter
-  headingFont: Inter
+  typography:
+    fontDisplay: swap
+    body:
+      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontWeight: 400
+      fontStyle: normal
+    headings:
+      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontWeight: 600
+      fontStyle: normal
+      h1: { fontWeight: 700 }
+      h2: { fontWeight: 700 }
   headingSize: 1.1
   lineHeight: 1.6
   density: comfortable

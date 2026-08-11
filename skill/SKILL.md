@@ -42,8 +42,18 @@ design:
   palette: standard
   colorMode: light
   accentHue: 220
-  bodyFont: Inter
-  headingFont: DM Sans
+  typography:
+    fontDisplay: swap
+    body:
+      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontWeight: 400
+      fontStyle: normal
+    headings:
+      fontFamily: ["DM Sans", Inter, sans-serif]
+      fontWeight: 600
+      fontStyle: normal
+      h1: { fontWeight: 700 }
+      h2: { fontWeight: 700 }
   density: comfortable
   navArchetype: scroll
   motionEntrance: fade

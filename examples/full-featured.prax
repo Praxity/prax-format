@@ -6,8 +6,18 @@ design:
   palette: bold
   colorMode: auto
   accentHue: 196
-  bodyFont: Inter
-  headingFont: Inter
+  typography:
+    fontDisplay: swap
+    body:
+      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontWeight: 400
+      fontStyle: normal
+    headings:
+      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontWeight: 600
+      fontStyle: normal
+      h1: { fontWeight: 700 }
+      h2: { fontWeight: 700 }
   headingSize: 1.1
   lineHeight: 1.55
   density: comfortable

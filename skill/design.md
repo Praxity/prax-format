@@ -61,10 +61,18 @@ Note: `colorBackground` is deprecated. Use `colorBackgroundLight` and `colorBack
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `bodyFont` | string | — | Font family name for body text |
-| `headingFont` | string | — | Font family name for headings |
+| `typography.fontDisplay` | enum | `swap` | `auto`, `block`, `swap`, `fallback`, or `optional`; applies to packaged font faces |
+| `typography.body` | font role | preset | Body `fontFamily`, `fontWeight`, and `fontStyle` |
+| `typography.headings` | font role | preset | Heading defaults plus optional `h1`–`h6` overrides |
+| `fontFamily` | string array | preset | Ordered primary and fallback catalogue families; maximum four |
+| `fontWeight` | enum | role-specific | `400`, `500`, `600`, `700`, or `800` |
+| `fontStyle` | enum | `normal` | `normal` or `italic` |
 | `headingSize` | number | — | Heading size multiplier (e.g. 1.1) |
 | `lineHeight` | number | — | Line height multiplier (e.g. 1.55) |
+
+`typography.headings` is inherited by every heading level. An `h1`–`h6` object may
+override any role field. Valid generic family fallbacks are `serif`, `sans-serif`,
+`monospace`, and `system-ui`; other values must name an existing Praxity font.
 
 ## Spacing and layout
 
@@ -215,8 +223,18 @@ design:
   palette: standard
   colorMode: light
   accentHue: 210
-  bodyFont: Inter
-  headingFont: Inter
+  typography:
+    fontDisplay: swap
+    body:
+      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontWeight: 400
+      fontStyle: normal
+    headings:
+      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontWeight: 600
+      fontStyle: normal
+      h1: { fontWeight: 700 }
+      h2: { fontWeight: 700 }
   headingSize: 1.1
   lineHeight: 1.55
   density: comfortable
