@@ -225,9 +225,9 @@ style: filled
 
 `color:` options: `accent` (default), `primary`, `secondary`, `success`, `warning`, `error`,
 `grey`. `style:` options: `filled` (default), `outline`. `title:` overrides the visible
-label. `icon:` accepts `alert-triangle`, `bell`, `bulb`, `circle-check`, `help-circle`,
-`info-circle`, `message-circle`, `note`, `sparkles`, or `none`; omit it to derive the icon
-from the color.
+label. `icon:` accepts any kebab-case [Tabler Icons](https://tabler.io/icons) outline icon name,
+such as `thinking-high` or `sparkles`; use `none` for no icon, or omit it to derive the icon from
+the color. Exports embed only the icons used by the document and do not require an icon CDN.
 
 ### Quote
 
@@ -586,11 +586,15 @@ The numbered list defines the correct order. The display is shuffled for the lea
 ```
 ### Describe three ways to improve workplace safety.
 as: free-response
-
-Consider both physical and procedural improvements.
+buttonLabel: Keep this in mind
+description: Consider both physical and procedural improvements.
+placeholder: Type your reflection
+downloadAs: both
 ```
 
-Body text serves as placeholder/helper text.
+Keep instructions visible with `description:` and use `placeholder:` only for a brief hint.
+`buttonLabel:` overrides the visible action; an ungraded response otherwise uses **Complete
+reflection**. `downloadAs:` accepts `txt`, `docx`, or `both`.
 
 ### Fill in the blank
 
@@ -695,6 +699,7 @@ Wraps multiple assessments into a scored unit:
 as: assessment-group
 passingScore: 80
 mode: all
+buttonLabel: Check all answers
 
 ### Which PPE is required?
 as: choice
@@ -715,6 +720,7 @@ close: assessment-group
 |-----|--------|---------|
 | `passingScore:` | percentage (0--100) | none |
 | `mode:` | `all`, `any` | `all` |
+| `buttonLabel:` | text | `Check all` when ungraded; `Submit all` when graded |
 
 
 ## Interactive blocks

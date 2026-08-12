@@ -85,9 +85,18 @@ Open response.
 ### Describe one improvement
 as: free-response
 required: true
+buttonLabel: Keep this in mind
+description: Mention one process and one communication change.
+placeholder: Type your reflection
+downloadAs: both
 
-Mention one process and one communication change.
 ```
+
+`buttonLabel` overrides the visible action text. An ungraded free response defaults to
+**Complete reflection**; a graded response defaults to **Submit**.
+Keep the question and supporting instructions visible in the heading and `description`. Use
+`placeholder` only for a brief input hint. `downloadAs` is optional: use `txt`, `docx`, or `both`
+to let the learner download their response.
 
 ## fill-blank
 
@@ -227,6 +236,9 @@ Note: `passingScore:` is the correct parameter name (not `passing:`).
 | `showResultsSummary` | boolean | Show a results summary after all questions are answered. |
 | `pointsOverride` | number | Override total point value for the group (instead of summing individual question points). |
 | `requireAll` | boolean | Whether all questions must be attempted before submitting. |
+| `buttonLabel` | text | Override the visible group action text. |
+
+Ungraded groups default to **Check all**; graded groups default to **Submit all**.
 
 ## Shared scoring parameters
 
@@ -237,7 +249,6 @@ These parameters are available on all assessment types:
 | `points` | number | Point value awarded for a correct answer. Used in scored assessment groups and SCORM/xAPI reporting. |
 | `required` | boolean | Whether the learner must answer this question before proceeding. |
 | `timed` | number | Time limit in seconds. When set, a countdown timer appears. |
-| `pass` | number | Minimum score (0–100) required to pass this individual question. |
 | `attempts` | number | Maximum number of attempts allowed before the answer is locked. |
 | `shuffle` | boolean | Randomize option/item order on each attempt. Available on: choose-one, choose-many, match, order, categorize. |
 
