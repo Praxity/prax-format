@@ -44,7 +44,6 @@ These parameters are available across all assessment blocks.
 | `points` | number | — | Points awarded for correct answer |
 | `required` | boolean | false | Must be completed before continuing |
 | `timed` | number | — | Time budget in seconds |
-| `pass` | number | — | Pass threshold (percentage) |
 | `attempts` | number | — | Maximum attempts allowed |
 | `layout` | enum | — | `wide`, `full`, `breakout` |
 
@@ -94,7 +93,6 @@ incorrect: Review the emergency spill response procedure.
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
 | `style` | enum | `radio` | radio |
 
@@ -130,7 +128,6 @@ feedback: Exits must always be unobstructed.
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
 | `style` | enum | `checkbox` | checkbox |
 
@@ -162,7 +159,6 @@ Noise exposure :: Hearing protection
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
 | `style` | enum | `drag-drop` | drag-drop |
 
@@ -194,7 +190,6 @@ shuffle: true
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
 | `style` | enum | `drag-sort` | drag-sort |
 
@@ -211,8 +206,10 @@ scored: true
 points: 5
 required: true
 attempts: 1
-
-Name one process change and one communication change.
+buttonLabel: Submit response
+description: Name one process change and one communication change.
+placeholder: Type your response
+downloadAs: both
 ```
 
 ### free-response parameters
@@ -223,8 +220,11 @@ Name one process change and one communication change.
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
+| `description` | text | visible supporting instructions | — |
+| `placeholder` | text | brief input hint | Type your answer |
+| `buttonLabel` | text | visible action text | Complete reflection (ungraded), Submit (graded) |
+| `downloadAs` | enum | `txt` \| `docx` \| `both` | — |
 | `style` | enum | `textarea` | textarea |
 
 Planned style variants: `rich-text`, `recording`.
@@ -253,7 +253,6 @@ Note: Use `{word}` — single braces — not double braces or angle brackets.
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
 | `style` | enum | `inline-inputs` | inline-inputs |
 
@@ -286,7 +285,6 @@ spot: Discharge horn; 65%; 40%
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
 | `style` | enum | `click-regions` | click-regions |
 
@@ -318,7 +316,6 @@ Common mistake: writing `as: rate` — the parser only accepts `as: rating`.
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
 | `style` | enum | `likert` | likert |
 
@@ -393,7 +390,6 @@ Hand Protection:
 | `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
-| `pass` | number | percentage | — |
 | `attempts` | number | integer | — |
 
 ## assessment-group
@@ -407,6 +403,7 @@ mode: all
 showResultsSummary: true
 passingScore: 80
 requireAll: true
+buttonLabel: Check all answers
 
 ### Which action is safest first?
 as: choice
@@ -443,6 +440,7 @@ close: assessment-group
 | `pointsOverride` | number | any positive number | — |
 | `passingScore` | number | 0–100 | — |
 | `requireAll` | boolean | true / false | false |
+| `buttonLabel` | text | visible action text | Check all (ungraded), Submit all (graded) |
 | `layout` | enum | `wide`, `full`, `breakout` | — |
 
 Note: The parameter is `passingScore`, not `passing` or `pass-score`.
@@ -509,6 +507,6 @@ incorrect: Review section 3 of the safety manual before continuing.
 - Are `correct:` and `incorrect:` placed after all options (not after any individual option)?
 - Does every `assessment-group` end with `close: assessment-group`?
 - Is `passingScore` used (not `passing` or `pass-score`) for assessment-group?
-- Are `points`, `pass`, `attempts`, and `timed` numeric?
+- Are `points`, `attempts`, and `timed` numeric?
 - Are `shuffle` and `required` boolean (`true`/`false`)?
 - Are fill-blank blanks using `{word}` single braces?

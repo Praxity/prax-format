@@ -149,7 +149,7 @@ style: filled
 
 **Parameters:**
 - `title` (string) — visible callout label; overrides the label derived from `color`.
-- `icon`: `alert-triangle | bell | bulb | circle-check | help-circle | info-circle | message-circle | note | sparkles | none`. Omit it to use the icon derived from `color`; use `none` for no icon.
+- `icon` (string) — any kebab-case [Tabler Icons](https://tabler.io/icons) outline icon name, for example `thinking-high`, `bulb`, or `sparkles`. Omit it to use the icon derived from `color`; use `none` for no icon.
 - `layout`
 
 Universal parameters (`name`, `hide`, `reveal`, `visible`, `entrance`, `entranceDuration`) apply to notes as to all blocks. See [document-structure.md](document-structure.md) for details.
@@ -159,7 +159,9 @@ Universal parameters (`name`, `hide`, `reveal`, `visible`, `entrance`, `entrance
 - `color`: `accent | primary | secondary | success | warning | error | grey`
 
 When `title` or `icon` is omitted, Praxity derives its default from `color`. These controls are
-independent: changing the callout label or icon does not change its color.
+independent: changing the callout label or icon does not change its color. HTML and SCORM exports
+embed only the vector data for icons the document uses; exported courses do not depend on an icon
+CDN.
 
 ## quote
 
