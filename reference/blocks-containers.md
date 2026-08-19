@@ -45,6 +45,11 @@ Use the checklist and escalate unresolved hazards.
 **Parameters:**
 - `layout`: `wide | full | breakout`
 
+The tab strip and active panel share a neutral surface and continuous hairline boundary, so the
+selected tab remains visibly attached to its content without relying on color. The first tab label
+starts on the page content spine. Published tabs use manual activation: arrow keys move focus,
+and Enter or Space selects the focused tab.
+
 ## columns
 
 Column layout. Each `as: col` starts a new column. Columns must be explicitly closed with `close: col`.
@@ -117,6 +122,10 @@ Manual triage with paper forms.
 Automated triage with digital checklists.
 ```
 
+The two authored headings label the columns. Preset labels such as “Option A” / “Option B”
+or “Before” / “After” are used only when a stored column has no authored heading; authored
+headings always win while keeping the preset accent rule.
+
 **Syntax (image slider):**
 ```prax
 ### Before renovation
@@ -131,6 +140,8 @@ alt: Office before renovation
 /assets/after.jpg
 alt: Office after renovation
 ```
+
+Image sliders are authored with `as: comparison` and `style: slider`. There is no separate public `as: imageComparison` block.
 
 The `slider` style renders an interactive drag handle that reveals the before/after images. Supports keyboard (arrow keys) and pointer drag. Includes ARIA `role="slider"`.
 

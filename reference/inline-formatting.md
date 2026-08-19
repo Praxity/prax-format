@@ -91,25 +91,39 @@ Pipe tables use standard markdown syntax. The separator row (`| --- | --- |`) is
 
 Add `chart:` below a table to render it as a chart. See [blocks-content.md — data-table](blocks-content.md#data-table) for chart parameters.
 
-## Tooltips
+## Tooltips and the glossary
 
-Inline tooltips show a definition on hover. Brackets contain the visible term, braces contain the tooltip text:
+Brackets contain the visible term, braces contain its definition:
 
 ```prax
 Workers must wear [PPE]{Personal Protective Equipment — clothing and gear designed to protect the wearer from injury or infection.} at all times.
 ```
 
-Renders "PPE" as underlined text that reveals the definition on hover/focus.
+"PPE" renders as a dotted-underlined trigger announced as having a definition. Selecting it
+(pointer, Enter, or Space) opens the programmatically associated definition; Escape closes it
+and returns focus to the term. It is a toggletip, not a hover-only tooltip, so it works on touch
+and by keyboard.
+
+Every defined term is also collected into a **glossary page**, published alongside the course pages and linked from the course menu. Terms are sorted A–Z and deduplicated case-insensitively, so defining `PPE` once and writing `ppe` later produces one entry — the first definition wins. Define a term where a learner first meets it.
+
+Set `design.glossaryPage: false` in the frontmatter to keep the inline tooltips but not publish the aggregated page.
+
+Definitions are plain inline text. Do not nest another tooltip, a link, or a block inside one — a definition that needs that much is a paragraph, not a tooltip.
 
 ## Doodles
 
-Inline doodle annotations add hand-drawn decorative marks:
+Inline doodle annotations add hand-drawn decorative marks. Underline doodles use stronger text
+weight as well as the hand-drawn stroke so they remain visibly decorative rather than looking
+like glossary triggers or links:
 
 ```prax
 @underline.scribble{Important}
 @circle{key concept}
 @highlight{remember this}
+@highlight{Review the [HousingTO plan]{Toronto's ten-year housing action plan}.}
 ```
+
+A doodle can wrap a phrase containing a glossary term or link; the annotation remains continuous while the nested term keeps its own interaction.
 
 Types: `@circle`, `@underline`, `@highlight`, `@arrow`, `@box`. Modifiers: `.wavy`, `.thick`, `.thin`, `.dashed`, `.scribble`.
 

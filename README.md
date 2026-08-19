@@ -4,7 +4,7 @@ Plain-text eLearning courses: human-readable, LLM-friendly, and version-control 
 
 ## What is .prax
 
-`.prax` is Praxity's grammar-based course format. A file contains optional YAML frontmatter plus structured body content that can be exported to SCORM, xAPI, or standalone HTML.
+`.prax` is Praxity Studio's grammar-based course format. A file contains optional YAML frontmatter plus structured body content that can be exported to SCORM, xAPI, or standalone HTML.
 
 ## Quick example
 
@@ -116,6 +116,39 @@ For non-flip cards, omit `card: back` and use `layout: grid` (or `masonry`) plus
 
 `as: flashcard` is a deprecated backward-compat alias and should not be used for new content.
 
+## Image syntax (v3.1)
+
+Image blocks support `width` and `alignment` variants plus standard content params:
+
+- Variants: `width: small|medium|large`, `alignment: left|center|right`
+- Params: `alt`, `decorative`, `caption`
+- `treatment` is deprecated; use `effects` instead
+
+For a full-frame image, use the universal `layout: full`; `full` is not an image `width` value.
+
+`effects` is composable and accepts either `none` or an effects map. Supported effects:
+
+- `grayscale: { intensity }`
+- `colorWash: { intensity, color }`
+- `accentLighting: { intensity }`
+- `progressiveBlur: { intensity }`
+- `accentBlur: { intensity }`
+- `motionBlur: { intensity, direction }`
+- `grain: { intensity }`
+- `halftone: { intensity }`
+- `dithering: { intensity }`
+
+Design-level `design.imageEffects` (frontmatter) applies to all images. Per-image `effects:` overrides that default.
+
+Not supported image params:
+
+- `filter`
+- `opacity`
+- `size` (use `width`)
+- `x` (use `alignment`)
+- `order`
+- standalone `motionBlur` boolean (use `effects.motionBlur`)
+
 ## Using with LLMs
 
 - Claude Code: point the model to `skill/` and load `skill/SKILL.md` first.
@@ -124,7 +157,7 @@ For non-flip cards, omit `card: back` and use `layout: grid` (or `masonry`) plus
 
 ## Contributing
 
-This specification is maintained by [Praxity](https://praxity.io). We are not accepting pull requests at this time. If you have questions, suggestions, or find an error in the spec, please [open an issue](https://github.com/Praxity/prax-format/issues) or email [hello@praxity.io](mailto:hello@praxity.io).
+This specification is maintained by [Praxity Studio](https://praxity.io). We are not accepting pull requests at this time. If you have questions, suggestions, or find an error in the spec, please [open an issue](https://github.com/Praxity/prax-format/issues) or email [hello@praxity.io](mailto:hello@praxity.io).
 
 ## License
 

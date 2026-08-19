@@ -1,43 +1,1270 @@
 {
+  "generatedFrom": "packages/grammar/src/manifest.ts",
   "blocks": [
-    { "id": "text", "category": "content", "syntax": "default paragraph text", "reference": "blocks-content.md#text" },
-    { "id": "heading", "category": "content", "syntax": "#, ##, ###, ####", "reference": "blocks-content.md#heading" },
-    { "id": "image", "category": "content", "syntax": "media path or URL", "reference": "blocks-content.md#image" },
-    { "id": "video", "category": "content", "syntax": "media path or URL", "reference": "blocks-content.md#video" },
-    { "id": "audio", "category": "content", "syntax": "media path", "reference": "blocks-content.md#audio" },
-    { "id": "divider", "category": "content", "syntax": "--", "reference": "blocks-content.md#divider" },
-    { "id": "embed", "category": "content", "syntax": "as: embed", "reference": "blocks-content.md#embed" },
-    { "id": "note", "category": "content", "syntax": "as: note", "reference": "blocks-content.md#note" },
-    { "id": "quote", "category": "content", "syntax": "blockquote", "reference": "blocks-content.md#quote" },
-    { "id": "code", "category": "content", "syntax": "fenced code block", "reference": "blocks-content.md#code" },
-    { "id": "equation", "category": "content", "syntax": "$$ fence", "reference": "blocks-content.md#equation" },
-    { "id": "button", "category": "content", "syntax": "as: button", "reference": "blocks-content.md#button" },
-    { "id": "data-table", "category": "content", "syntax": "pipe table", "reference": "blocks-content.md#data-table" },
-    { "id": "accordion", "category": "container", "syntax": "as: accordion", "reference": "blocks-containers.md#accordion" },
-    { "id": "tabs", "category": "container", "syntax": "as: tab", "reference": "blocks-containers.md#tabs" },
-    { "id": "columns", "category": "container", "syntax": "as: col", "reference": "blocks-containers.md#columns" },
-    { "id": "sequence", "category": "container", "syntax": "as: sequence", "reference": "blocks-containers.md#sequence" },
-    { "id": "comparison", "category": "container", "syntax": "as: comparison", "reference": "blocks-containers.md#comparison" },
-    { "id": "card", "category": "container", "syntax": "as: card", "reference": "blocks-containers.md#card" },
-    { "id": "choose-one", "category": "assessment", "syntax": "as: choice with ( ) markers", "reference": "blocks-assessments.md#choose-one" },
-    { "id": "choose-many", "category": "assessment", "syntax": "as: choice with [ ] markers", "reference": "blocks-assessments.md#choose-many" },
-    { "id": "match", "category": "assessment", "syntax": "as: match", "reference": "blocks-assessments.md#match" },
-    { "id": "order", "category": "assessment", "syntax": "as: order", "reference": "blocks-assessments.md#order" },
-    { "id": "free-response", "category": "assessment", "syntax": "as: free-response", "reference": "blocks-assessments.md#free-response" },
-    { "id": "fill-blank", "category": "assessment", "syntax": "as: fill-blank", "reference": "blocks-assessments.md#fill-blank" },
-    { "id": "hotspot", "category": "assessment", "syntax": "as: hotspot", "reference": "blocks-assessments.md#hotspot" },
-    { "id": "rate", "category": "assessment", "syntax": "as: rating", "reference": "blocks-assessments.md#rate" },
+    {
+      "id": "text",
+      "label": "Text",
+      "category": "Content",
+      "syntax": "paragraph text",
+      "reference": "blocks-content.md#text",
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "heading",
+      "label": "Heading",
+      "category": "Content",
+      "syntax": "## Heading",
+      "reference": "blocks-content.md#heading",
+      "parameters": [
+        {
+          "name": "level",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "image",
+      "label": "Image",
+      "category": "Content",
+      "syntax": "/assets/image.png",
+      "reference": "blocks-content.md#image",
+      "parameters": [
+        {
+          "name": "src",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "alt",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "decorative",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "effects",
+          "type": "map|none",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "video",
+      "label": "Video",
+      "category": "Content",
+      "syntax": "/assets/video.mp4",
+      "reference": "blocks-content.md#video",
+      "parameters": [
+        {
+          "name": "src",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "transcript",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "start",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "end",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "captionEnabled",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "autoplay",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "audio",
+      "label": "Audio",
+      "category": "Content",
+      "syntax": "/assets/audio.mp3",
+      "reference": "blocks-content.md#audio",
+      "parameters": [
+        {
+          "name": "src",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "divider",
+      "label": "Divider",
+      "category": "Content",
+      "syntax": "--",
+      "reference": "blocks-content.md#divider",
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "embed",
+      "label": "Embed",
+      "category": "Content",
+      "syntax": "as: embed",
+      "reference": "blocks-content.md#embed",
+      "parameters": [
+        {
+          "name": "src",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "bookmark",
+      "label": "Bookmark",
+      "category": "Content",
+      "syntax": "as: bookmark",
+      "reference": "blocks-content.md#bookmark",
+      "parameters": [
+        {
+          "name": "href",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "note",
+      "label": "Note",
+      "category": "Content",
+      "syntax": "as: note",
+      "reference": "blocks-content.md#note",
+      "parameters": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "quote",
+      "label": "Quote",
+      "category": "Content",
+      "syntax": "> quote",
+      "reference": "blocks-content.md#quote",
+      "parameters": [
+        {
+          "name": "speaker",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "work",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "sourceUrl",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "button",
+      "label": "Button",
+      "category": "Content",
+      "syntax": "[label](url) + as: button",
+      "reference": "blocks-content.md#button",
+      "parameters": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "href",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "openInNewTab",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "data-table",
+      "label": "Data Table",
+      "category": "Content",
+      "syntax": "| table |",
+      "reference": "blocks-content.md#data-table",
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "accordion",
+      "label": "Accordion",
+      "category": "Container",
+      "syntax": "as: accordion",
+      "reference": "blocks-containers.md#accordion",
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "tabs",
+      "label": "Tabs",
+      "category": "Container",
+      "syntax": "as: tab",
+      "reference": "blocks-containers.md#tabs",
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "columns",
+      "label": "Columns",
+      "category": "Container",
+      "syntax": "as: col",
+      "reference": "blocks-containers.md#columns",
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "card",
+      "label": "Card",
+      "category": "Container",
+      "syntax": "as: card",
+      "reference": "blocks-containers.md#card",
+      "parameters": [
+        {
+          "name": "columns",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "advance",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "showProgress",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "shuffle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "trackCompletion",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "comparison",
+      "label": "Comparison",
+      "category": "Container",
+      "syntax": "as: comparison",
+      "reference": "blocks-containers.md#comparison",
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "choose-one",
+      "label": "Single Choice",
+      "category": "Assessment",
+      "syntax": "as: choice + (x)/( )",
+      "reference": "blocks-assessments.md#choose-one",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "shuffle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "choose-many",
+      "label": "Multiple Choice",
+      "category": "Assessment",
+      "syntax": "as: choice + [x]/[ ]",
+      "reference": "blocks-assessments.md#choose-many",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "shuffle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "match",
+      "label": "Matching",
+      "category": "Assessment",
+      "syntax": "as: match",
+      "reference": "blocks-assessments.md#match",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "shuffle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "order",
+      "label": "Ordering",
+      "category": "Assessment",
+      "syntax": "as: order",
+      "reference": "blocks-assessments.md#order",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "shuffle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "free-response",
+      "label": "Free Response",
+      "category": "Assessment",
+      "syntax": "as: free-response",
+      "reference": "blocks-assessments.md#free-response",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "buttonLabel",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "private",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "downloadAs",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "hotspot",
+      "label": "Hotspot",
+      "category": "Assessment",
+      "syntax": "as: hotspot",
+      "reference": "blocks-assessments.md#hotspot",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "fill-blank",
+      "label": "Fill in the Blank",
+      "category": "Assessment",
+      "syntax": "as: fill-blank",
+      "reference": "blocks-assessments.md#fill-blank",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "placeholder",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "categorize",
+      "label": "Categorize",
+      "category": "Assessment",
+      "syntax": "as: categorize",
+      "reference": "blocks-assessments.md#categorize",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "shuffle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
     {
       "id": "matrix",
-      "category": "assessment",
+      "label": "Matrix",
+      "category": "Assessment",
       "syntax": "as: matrix",
       "reference": "blocks-assessments.md#matrix",
       "summary": "Table-style Likert assessment. The heading is the matrix question, numbered N: label lines define scale points, and bullet list items define statements.",
-      "example": "### How confident are you?\nas: matrix\n\n1: Not confident\n2: Somewhat confident\n3: Confident\n\n- Using PPE correctly\n- Reading warning labels\n- Following emergency procedures"
+      "example": "### How confident are you?\nas: matrix\n\n1: Not confident\n2: Somewhat confident\n3: Confident\n\n- Using PPE correctly\n- Reading warning labels\n- Following emergency procedures",
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
     },
-    { "id": "categorize", "category": "assessment", "syntax": "as: categorize", "reference": "blocks-assessments.md#categorize" },
-    { "id": "assessment-group", "category": "assessment", "syntax": "as: assessment-group", "reference": "blocks-assessments.md#assessment-group" },
-    { "id": "checklist", "category": "interactive", "syntax": "as: checklist", "reference": "blocks-interactive.md#checklist" },
-    { "id": "signature", "category": "interactive", "syntax": "as: signature", "reference": "blocks-interactive.md#signature" }
+    {
+      "id": "assessment-group",
+      "label": "Assessment Group",
+      "category": "Assessment",
+      "syntax": "as: assessment-group",
+      "reference": "blocks-assessments.md#assessment-group",
+      "parameters": [
+        {
+          "name": "buttonLabel",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "showResultsSummary",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "pointsOverride",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "passingScore",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "requireAll",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "checklist",
+      "label": "Checklist",
+      "category": "Interactive",
+      "syntax": "as: checklist",
+      "reference": "blocks-interactive.md#checklist",
+      "parameters": [
+        {
+          "name": "shuffle",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "reveal",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
   ]
 }

@@ -34,7 +34,7 @@ navigation identity.
 
 ## H1 heading — module/lesson title
 
-Praxity's parser recognizes `#` (H1) separately from H2–H4. An H1 produces a `heading` block with `level: 1` and also closes all open implicit groups. Use it for module or lesson titles at the top of a file or section.
+Praxity Studio's parser recognizes `#` (H1) separately from H2–H4. An H1 produces a `heading` block with `level: 1` and also closes all open implicit groups. Use it for module or lesson titles at the top of a file or section.
 
 ```prax
 # Module 1: SCORM Round-Trip Coverage
@@ -42,9 +42,9 @@ Praxity's parser recognizes `#` (H1) separately from H2–H4. An H1 produces a `
 
 H1 is treated as a structural boundary — it does not start a container and takes no `as:` transform.
 
-## Pages and lesson markers
+## Pages and navigation labels
 
-Pages are separated with `---` on its own line. Optionally append a label to create a named lesson/section marker.
+Pages are separated with `---` on its own line. Text after the dashes labels the new page in navigation; it is not rendered as a heading. Use an authored `#` heading when the page needs a visible title.
 
 ```prax
 ## Page One
@@ -60,16 +60,69 @@ Parser behavior:
 
 - `---` creates a `pageBreak` block.
 - `--- Label` creates a `pageBreak` block with `title: "Label"`.
+- An unlabelled visible page uses the plain text of its first heading as its navigation label; it appears as `Untitled` only when it has no heading.
+- `hide: true` immediately after a page break hides that whole page.
 - A page break also closes all open containers and implicit groups.
+
+```prax
+--- Internal navigation label
+hide: true
+
+# Visible page title
+```
+
+Page 1 has no preceding page break, so its explicit navigation label and other page fields live
+in frontmatter. Without an explicit label, its first heading provides the same fallback. Narration
+is an optional MP3 asset with an optional WebVTT transcript:
+
+```yaml
+---
+title: Example lesson
+firstPage:
+  title: Introduction
+  narration: assets/introduction-a1b2c3.mp3
+  captions: assets/introduction-a1b2c3.vtt
+---
+```
+
+Later pages put the same fields after the page break that starts the page:
+
+```prax
+--- Handling a complaint
+narration: assets/complaint-d4e5f6.mp3
+captions: assets/complaint-d4e5f6.vtt
+```
+
+`narration` must point to audio and `captions` must point to WebVTT. Narration never
+autoplays or affects completion, scoring, content access, or navigation.
+
+An optional pronunciation lexicon maps exact written terms to spoken aliases during online
+narration generation. It does not change learner-visible text:
+
+```yaml
+pronunciation:
+  lexemes:
+    - grapheme: WCAG
+      alias: W C A G
+      lang: en
+```
+
+Matches are literal, case-sensitive, language-specific, and longest-first. Use separate entries
+for capitalization or inflection variants. Course manifests may use the same
+`pronunciation.lexemes` shape; lesson-frontmatter entries override matching course entries.
 
 ## Headings
 
 Heading levels drive hierarchy and structure.
 
-- `#` module/lesson title (H1) — structural boundary
+- `#` page or module content title (H1) — structural boundary
 - `##` page-level title
 - `###` section/item heading
 - `####` subsection heading
+
+Published HTML preserves these authored levels exactly: `#` → `h1`, `##` → `h2`,
+`###` → `h3`, and `####` → `h4`. Course and lesson labels stay in navigation and
+do not shift content headings down. No heading is synthesized when a page has no authored H1.
 
 ```prax
 # Module Title
@@ -127,7 +180,7 @@ All manifest blocks support the following parameters:
 | `layout` | enum | `wide \| full \| breakout` | Overrides the default content width for this block |
 | `name` | string | any | Assigns a name to the block for cross-referencing. Used in logic rules (`then: show @myBlock`), assessment-group scoring, and anchor links. Use `camelCase` with no spaces — e.g. `name: safetyTip`. Avoid colons, quotes, and special characters. |
 | `hide` | boolean | `true \| false` | Hides the block from rendered output. The block is preserved in the grammar and can be shown later via logic rules (`then: show @name`). |
-| `reveal` | number, `each`, `true`, or variable name | none | Progressive reveal step. `reveal: 3` means this block appears on step 3 of a click-to-advance sequence. `reveal: each` staggers list items one per click. `reveal: true` reveals on any step. `reveal: someVar` reveals when the variable is truthy. See the language reference Section 10 for full details. |
+| `reveal` | number, `MM:SS`, or `each` | none | On a narrated page, a number or timestamp reveals the block at that playback time. On a bulleted or numbered list, `reveal: each` shows one item at a time with an accessible learner control. It does not apply to containers such as accordions and is independent of the theme's entrance Motion setting. |
 | `visible` | condition expression | always | Conditional visibility based on variable state. Example: `visible: score >= 80`. The block renders only when the condition is true. |
 | `entrance` | enum | `fade \| slide \| scale \| none` | Block entrance animation; overrides course-level `motionEntrance`. |
 | `entranceDuration` | CSS duration | `250ms` | Duration of the entrance animation. |
@@ -136,7 +189,7 @@ All manifest blocks support the following parameters:
 
 ## Escaping reserved lines
 
-If text needs to start with a reserved key (`as:`, `close:`, `when:`), escape it with `\`.
+If text needs to start with a reserved key (`as:`, `close:`, `if:`, `when:`), escape it with `\`.
 
 ```prax
 \as: this is literal text, not a block transform

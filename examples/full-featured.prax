@@ -1,6 +1,6 @@
 ---
 title: Full .prax Feature Tour
-description: Demonstrates every grammar-supported block type. Blocks marked with (Cloud) require Praxity Cloud publish.
+description: Demonstrates every grammar-supported block type. Blocks marked with (Cloud) require Praxity Studio Cloud publish.
 lang: en
 design:
   palette: bold
@@ -49,6 +49,8 @@ caption: Main inspection zone
 
 https://www.youtube.com/embed/aqz-KE-bpKQ
 caption: Facility walkthrough
+start: 12
+end: 90
 
 /assets/briefing.mp3
 title: Safety audio briefing
@@ -97,11 +99,6 @@ openInNewTab: true
 chart: bar
 xLabel: Quarter
 yLabel: Findings
-
-| 41% | of people experiencing homelessness identify as women. |
-as: stats
-size: large
-caption: Source: [City of Toronto](https://www.toronto.ca)
 
 --
 
@@ -181,9 +178,11 @@ close: card
 
 ### What is lockout/tagout?
 as: card
-flip: true
 
 Energy isolation before maintenance.
+
+card: back
+A lockout/tagout procedure isolates hazardous energy before maintenance starts.
 
 close: card
 
@@ -294,20 +293,6 @@ required: true
 ### I confirm this module was reviewed
 as: signature
 mode: type
-
-### Share one implementation challenge
-as: discuss
-
-Name the challenge and one workaround.
-
-### Ask one question for your safety lead
-as: qa
-
-### Share a team best practice
-as: contribute
-
-### What is your highest-priority risk this week?
-as: poll
 
 ### Branching Scenario
 as: card
