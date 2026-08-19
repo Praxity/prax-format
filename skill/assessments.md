@@ -37,15 +37,23 @@ These parameters are available across all assessment blocks.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `scored` | boolean | false | Marks block for scoring/tracking |
-| `competency` | text | — | Competency tag for reporting |
-| `confidence` | boolean | false | Captures learner confidence |
-| `retrieval` | boolean | false | Tags block as retrieval practice |
+| `competency` | text | — | Competency tag for reporting *(not applied yet)* |
+| `confidence` | boolean | false | Captures learner confidence *(not applied yet)* |
+| `retrieval` | boolean | false | Tags block as retrieval practice *(not applied yet)* |
 | `feedback` | enum/text | — | Feedback mode or global message |
 | `points` | number | — | Points awarded for correct answer |
 | `required` | boolean | false | Must be completed before continuing |
-| `timed` | number | — | Time budget in seconds |
+| `timed` | number | — | Time budget in seconds *(not applied yet)* |
 | `attempts` | number | — | Maximum attempts allowed |
 | `layout` | enum | — | `wide`, `full`, `breakout` |
+
+> **Not applied yet.** `competency`, `confidence`, `retrieval` and `timed` parse and
+> validate, so a course using them stays valid, but nothing reads them and they make
+> no difference to exported output.
+>
+> A pass threshold is a group-level concept: use `assessment-group` with
+> `passingScore`. There is no per-question `pass`.
+
 
 `shuffle` is additionally available for: choose-one, choose-many, match, order, categorize.
 
@@ -160,9 +168,10 @@ Noise exposure :: Hearing protection
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
 | `attempts` | number | integer | — |
-| `style` | enum | `drag-drop` | drag-drop |
+| `style` | enum | `select-dropdowns` | select-dropdowns |
 
-Planned style variants: `select-dropdowns`, `line-drawing`.
+Matching renders as labelled native select controls; the browser owns keyboard interaction, popup
+state, option movement, selection, and dismissal. Planned style variant: `line-drawing`.
 
 ## order
 
@@ -191,13 +200,13 @@ shuffle: true
 | `required` | boolean | true / false | false |
 | `timed` | number | seconds | — |
 | `attempts` | number | integer | — |
-| `style` | enum | `drag-sort` | drag-sort |
+| `style` | enum | `up-down-arrows` | up-down-arrows |
 
-Planned style variants: `numbered-input`, `up-down-arrows`.
+Ordering renders with accessible move-up and move-down controls. Planned style variant: `numbered-input`.
 
 ## free-response
 
-Use `as: free-response`. The heading is the question. Optional prompt text appears in the body.
+Use `as: free-response`. The heading is the question; `description:` adds visible instructions.
 
 ```prax
 ### Describe one safety improvement for your team
@@ -212,6 +221,10 @@ placeholder: Type your response
 downloadAs: both
 ```
 
+Keep placeholders brief. Bare body text remains supported as legacy placeholder shorthand, but
+visible instructions should use the heading and `description:` so they remain available while the
+learner writes.
+
 ### free-response parameters
 
 | Parameter | Type | Valid values | Default |
@@ -225,13 +238,19 @@ downloadAs: both
 | `placeholder` | text | brief input hint | Type your answer |
 | `buttonLabel` | text | visible action text | Complete reflection (ungraded), Submit (graded) |
 | `downloadAs` | enum | `txt` \| `docx` \| `both` | — |
+| `private` | boolean | true / false | false |
 | `style` | enum | `textarea` | textarea |
+
+Use `private: true` for a personal reflection that must stay on the learner's device. Omit it
+for a response that should be submitted to the LMS. Private responses are never included in
+SCORM or xAPI interaction data.
 
 Planned style variants: `rich-text`, `recording`.
 
 ## fill-blank
 
-Use `as: fill-blank`. Blanks are wrapped in single braces: `{word}`. Each brace creates one input.
+Use `as: fill-blank`. `{word}` creates an input with a configured correct answer. A run of
+four or more underscores (`____`) creates an open input with no predefined answer.
 
 ```prax
 ### Complete the safety procedure
@@ -244,6 +263,20 @@ Workers must wear {gloves} and {eye protection} at all times.
 ```
 
 Note: Use `{word}` — single braces — not double braces or angle brackets.
+Use `____` when the author intentionally does not supply a correct answer. The surrounding
+sentence is rendered with bottom-rule inputs inline. Known answers size the field to the
+expected answer length (clamped to 8–32 characters); open blanks use a 12-character default.
+
+With `scored: true`, all known answers must match. Comparison is case-insensitive, trims
+surrounding whitespace, collapses internal whitespace, accepts canonically equivalent Unicode,
+and accepts alternatives present in imported course data. Punctuation and accents remain
+significant; fuzzy and edit-distance matching are not used. Learners see correct/incorrect status
+for each known blank after submission, never the expected answer.
+
+Open `____` blanks do not affect correctness. They still count when a required mixed activity is
+checked for completeness. An all-open activity is completion-only even if `scored: true`; it emits
+no score, is excluded from assessment-group percentages and scored SCORM interactions, and is
+flagged by the editor as an authoring issue.
 
 ### fill-blank parameters
 
@@ -256,7 +289,7 @@ Note: Use `{word}` — single braces — not double braces or angle brackets.
 | `attempts` | number | integer | — |
 | `style` | enum | `inline-inputs` | inline-inputs |
 
-Planned style variants: `word-bank-drag`, `dropdown`.
+Planned style variants: `word-bank`, `dropdown`.
 
 ## hotspot
 
@@ -403,7 +436,6 @@ mode: all
 showResultsSummary: true
 passingScore: 80
 requireAll: true
-buttonLabel: Check all answers
 
 ### Which action is safest first?
 as: choice
@@ -445,9 +477,16 @@ close: assessment-group
 
 Note: The parameter is `passingScore`, not `passing` or `pass-score`.
 
+Group progress counts committed member completions. When every member is complete, the group action
+is removed and the localized result is announced.
+
 ## Feedback patterns
 
 Feedback attaches to individual options or to the block as a whole.
+
+Auto-scored work always shows and announces a localized **Correct** or **Incorrect** result, even
+when no feedback was authored. Authored feedback is optional and additive. Completion-only work
+announces **Completed** instead of a score or correctness result.
 
 ### Per-option feedback
 
@@ -509,4 +548,4 @@ incorrect: Review section 3 of the safety manual before continuing.
 - Is `passingScore` used (not `passing` or `pass-score`) for assessment-group?
 - Are `points`, `attempts`, and `timed` numeric?
 - Are `shuffle` and `required` boolean (`true`/`false`)?
-- Are fill-blank blanks using `{word}` single braces?
+- Are fill-blank blanks using `{word}` for known answers or `____` for open answers?

@@ -11,7 +11,7 @@ Key rules:
 - Columns use standalone `as: col` sections (no heading needed).
 - `close: col` is required for columns.
 - `close: assessment-group` is required for assessment groups.
-- `close: card` is required for card containers.
+- `close: card` is required when opened with standalone `as: card` (including flip cards that use `card: back`).
 - A page break (`---`) closes all still-open containers on that page.
 
 ## accordion
@@ -80,6 +80,8 @@ Log any observations in the safety management system.
 ### tabs parameters
 
 Tabs have no additional visual-treatment parameters beyond the universal parameters.
+The tab strip and panel share a neutral surface and continuous hairline boundary. Arrow keys move
+focus between tabs; Enter or Space activates the focused tab.
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
@@ -242,6 +244,9 @@ Paper forms with 48-hour reporting delay.
 
 Live alerts and same-day resolution.
 ```
+
+Authored headings are the visible column labels. The comparison or before/after preset label
+is only a fallback when a stored column has no heading; the preset accent rule applies either way.
 
 ### comparison parameters
 

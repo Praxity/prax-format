@@ -166,7 +166,7 @@ Some containers require an explicit close statement. Forgetting it will include 
 |---|---|
 | columns | `close: col` |
 | assessment-group | `close: assessment-group` |
-| card (standalone, including `flip: true`) | `close: card` |
+| card, including flip cards using `card: back` | `close: card` |
 
 Wrong:
 
@@ -192,7 +192,8 @@ close: col
 
 ### Wrong `assessment-group` parameter names
 
-The parameter for a group's passing threshold is `passingScore`, not `passing` or `pass-score`.
+The parameter for a group's passing threshold is `passingScore`, not `passing`, `pass`
+or `pass-score`. There is no per-question pass threshold.
 
 Wrong:
 
@@ -220,12 +221,6 @@ as: accordion
 style: contained
 ```
 
-### `as: branch` is not recognized by the parser
-
-`as: branch` is **not recognized by the parser** — it falls through to an unknown `as:` value and renders as a plain heading. No error is shown, but the block will not behave as a branching scenario.
-
-Do not use `as: branch` in generated `.prax` output. Use conditional visibility (`visible:` with variables) and `when:`/`then:` logic rules for branching behavior instead.
-
 ### Forgetting page breaks
 
 Without `---`, everything stays in one page flow. Use page breaks deliberately between modules.
@@ -242,9 +237,10 @@ Content for module 1.
 Content for module 2.
 ```
 
-### Wrong fill-blank brace syntax
+### Wrong fill-blank marker syntax
 
-Fill-blank blanks use single braces: `{word}`. Do not use double braces, angle brackets, or underscores.
+Fill-blank blanks use `{word}` for a known answer or `____` for an open answer. Do not use
+double braces, angle brackets, or fewer than four underscores.
 
 Wrong:
 
@@ -281,12 +277,12 @@ Leading text before the first page heading becomes awkward floating content. Sta
 - Is `feedback:` on its own line, flush to the left margin?
 - Does every `assessment-group` end with `close: assessment-group`?
 - Does every column set end with `close: col`?
-- Does every standalone `as: card` (including `flip: true` variants) have a matching `close: card`?
+- Does every standalone `as: card` or flip card using `card: back` have a matching `close: card`?
 - Is `passingScore` used (not `passing`) in `assessment-group`?
 - Are shared assessment params typed correctly (numbers as numbers, booleans as true/false)?
 - Is frontmatter valid YAML?
 - If present, is `kicker` a short text label such as `Course` or `Module 1`?
-- Are fill-blank blanks using single braces `{word}`?
+- Are fill-blank blanks using single braces `{word}` for known answers or `____` for open answers?
 
 ## Final parser gate
 

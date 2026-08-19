@@ -1,6 +1,6 @@
 ---
 name: prax-format
-description: Generate and edit .prax course files — the plain-text eLearning format used by Praxity
+description: Generate and edit .prax course files — the plain-text eLearning format used by Praxity Studio
 version: "3.0"
 ---
 
@@ -8,7 +8,7 @@ version: "3.0"
 
 ## What is .prax
 
-The `.prax` format is a plain-text course authoring format used by Praxity, a desktop eLearning authoring tool. It uses augmented markdown: standard markdown with a small set of keywords (`as:`, `close:`, `var:`, `when:`) that transform plain elements into interactive learning blocks. A `.prax` file can be exported to SCORM, xAPI, or standalone HTML for deployment in any LMS. The format is designed to be human-readable, git-diffable, and LLM-friendly -- you can generate a complete interactive course in a single text file.
+The `.prax` format is a plain-text course authoring format used by Praxity Studio, a desktop eLearning authoring tool. It uses augmented markdown: standard markdown with a small set of keywords (`as:`, `close:`, `var:`, `if:`) that transform plain elements into interactive learning blocks. A `.prax` file can be exported to SCORM, xAPI, or standalone HTML for deployment in any LMS. The format is designed to be human-readable, git-diffable, and LLM-friendly -- you can generate a complete interactive course in a single text file.
 
 
 ## File structure
@@ -56,15 +56,13 @@ design:
       fontFamily: ["DM Sans", Inter, sans-serif]
       fontWeight: 600
       fontStyle: normal
-      h1: { fontWeight: 700 }
-      h2: { fontWeight: 700 }
   density: comfortable
   navArchetype: scroll
   motionEntrance: fade
 ---
 ```
 
-Key design fields: `palette` (see values below), `colorMode` (`light`, `dark`, `auto`), `accentHue` (0--360), `density` (`compact`, `comfortable`, `spacious`), `blockSpacing` (`compact`, `default`, `spacious`), `navArchetype` (`sidebar`, `bottomBar`, `slides`, `scroll`, `minimal`, `none`), `dividerStyle` (`none`, `thin`, `gradient`, `wave`, `angle`, `curve`), `motionEntrance` (`none`, `fade`, `slide`, `scale`).
+Key design fields: `palette` (see values below), `colorMode` (`light`, `dark`, `auto`), `accentHue` (0--360), semantic `color*` values (six-digit hex or opaque numeric `oklch()`), `density` (`compact`, `comfortable`, `spacious`), `blockSpacing` (`compact`, `default`, `spacious`), `navArchetype` (`sidebar`, `bottomBar`, `slides`, `scroll`, `minimal`, `none`), `dividerStyle` (`none`, `thin`, `gradient`, `wave`, `angle`, `curve`), `motionEntrance` (`none`, `fade`, `slide`, `scale`).
 
 Valid palette values (all 13): `standard`, `minimal`, `universal`, `editorial`, `bold`, `cinematic`, `ocean`, `warm`, `dark`, `nature`, `pastel`, `corporate`, `playful`. Some map to the same underlying theme (e.g. `minimal` and `universal` share one base), but all 13 are valid author-facing names.
 
@@ -104,7 +102,44 @@ Content before the first `# H1` or `---` is implicit page 1 of an implicit first
 transition: slide-left
 ```
 
-The page title appears in navigation but is NOT rendered as a visible heading unless `title: show` is set. A page break always closes all open containers.
+The page-break label appears only in navigation. An unlabelled visible page uses the plain text
+of its first heading as its navigation label, or `Untitled` when it has no heading. The authored
+heading remains visible; no fallback heading is synthesized.
+A page break always closes all open containers. `hide: true` directly after a page break
+hides the whole page.
+
+Put the opening page's explicit navigation label and other fields in frontmatter because page 1
+has no preceding break. Without an explicit label, its first heading provides the same fallback.
+Optional narration uses an MP3 plus an optional WebVTT transcript:
+
+```yaml
+firstPage:
+  title: Introduction
+  narration: assets/introduction-a1b2c3.mp3
+  captions: assets/introduction-a1b2c3.vtt
+```
+
+Put later-page fields directly after the page break:
+
+```prax
+--- Safety Equipment
+narration: assets/safety-d4e5f6.mp3
+captions: assets/safety-d4e5f6.vtt
+```
+
+Narration never autoplays or affects learner progress. A pronunciation lexicon may be stored in
+lesson frontmatter or, with the same shape, in `course.yaml`:
+
+```yaml
+pronunciation:
+  lexemes:
+    - grapheme: WCAG
+      alias: W C A G
+      lang: en
+```
+
+Aliases match literal graphemes longest-first in the matching language. Lesson entries override
+matching course entries; transcripts keep the original grapheme.
 
 ### Section dividers
 
@@ -126,7 +161,7 @@ Four patterns create blocks:
 1. **Bare markdown** -- paragraphs, headings, lists, code blocks, equations, tables work as standard markdown.
 2. **`as:` transformer** -- placed after an element (`> text` then `as: note`) or before content (`as: col`).
 3. **Content-block paths** -- a file path or URL on its own line creates a media block (extension determines type).
-4. **Key-value parameters** -- `key: value` pairs on lines after a block, consumed greedily. Pipe-separated inline format also works: `treatment: duotone | size: full-width`.
+4. **Key-value parameters** -- `key: value` pairs on lines after a block, consumed greedily. Pipe-separated inline format also works: `width: large | alignment: center`.
 
 Blank lines between parameters and content are optional.
 
@@ -139,7 +174,7 @@ These keys work on any block:
 | `name:` | Unique identifier for targeting (logic rules, anchor links) |
 | `layout:` | Width override: `wide`, `full`, `breakout` |
 | `hide:` | `true` to hide from rendered output |
-| `reveal:` | Progressive reveal: number (step), `each` (list stagger), `true` (auto), or variable name |
+| `reveal:` | Narration time (seconds or `MM:SS`), or `each` to reveal list items one at a time |
 | `visible:` | Conditional visibility expression (e.g. `visible: passedQuiz`) |
 | `entrance:` | Animation: `none`, `fade`, `slide`, `scale` |
 
@@ -163,7 +198,9 @@ It can span multiple lines.
 #### Minor heading
 ```
 
-`# H1` is reserved for lesson boundaries (see Document Structure). Do not use H1 for content headings.
+`# H1` defines a lesson boundary in a single-file course and is the visible H1 for
+that page. In a multi-file course, use it as the page title. Published heading
+levels match the authored `#` depth without an export-time shift.
 
 ### Image
 
@@ -172,19 +209,19 @@ A file path ending in an image extension (`.webp`, `.jpg`, `.jpeg`, `.png`, `.gi
 ```
 /assets/hero-ppe.webp
 alt: Workers wearing safety gear on a construction site
-size: full-width
-caption: show
+layout: full
+caption: Workers inspect their protective equipment before a shift
 ```
 
 | Key | Values | Default |
 |-----|--------|---------|
 | `alt:` | description (required for non-decorative) | -- |
 | `decorative:` | `true`/`false` | `false` |
-| `size:` | `small`, `medium`, `large`, `full-width` | `large` |
-| `x:` | `left`, `center`, `right` | `center` |
-| `treatment:` | `none`, `duotone`, `grayscale`, `sepia`, `blur` | `none` |
-| `caption:` | `show`, `hide`, or custom string | `hide` |
-| `order:` | `content`, `background` | `content` |
+| `width:` | `small`, `medium`, `large` | -- |
+| `alignment:` | `left`, `center`, `right` | `center` |
+| `layout:` | `wide`, `full`, `breakout` | -- |
+| `caption:` | custom string | -- |
+| `effects:` | `none` or an effects map | -- |
 
 ### Video
 
@@ -192,14 +229,20 @@ A file path ending in `.mp4`, `.webm`, `.mov`, `.avi` or a URL from YouTube, Vim
 
 ```
 /assets/safety-intro.mp4
-subtitles: /assets/safety-intro-en.srt
+caption: Safety walkthrough
+transcript: /assets/safety-intro-transcript.txt
+start: 12
+end: 90
 ```
 
 ```
 https://www.youtube.com/embed/aqz-KE-bpKQ
+caption: Platform description and author
+start: 12
+end: 90
 ```
 
-Keys: `subtitles:` (path to `.srt`/`.vtt`), `transcript:` (file path), `autoplay:` (`true`/`false`, default `false`).
+Keys: `title:`, `caption:`, `transcript:`, `start:`, `end:`. `start:` and `end:` are seconds and work for YouTube, Vimeo, local/direct video, and Mux. Loom embeds render but do not expose reliable playback timing control.
 
 ### Audio
 
@@ -223,11 +266,16 @@ color: warning
 style: filled
 ```
 
-`color:` options: `accent` (default), `primary`, `secondary`, `success`, `warning`, `error`,
-`grey`. `style:` options: `filled` (default), `outline`. `title:` overrides the visible
-label. `icon:` accepts any kebab-case [Tabler Icons](https://tabler.io/icons) outline icon name,
-such as `thinking-high` or `sparkles`; use `none` for no icon, or omit it to derive the icon from
-the color. Exports embed only the icons used by the document and do not require an icon CDN.
+`color:` options are `accent` (default), `primary`, `secondary`, `success`, `warning`,
+`error`, and `grey`. They publish as Note, Info, Info, Success, Warning, Warning, and Tip
+respectively when `title:` is omitted.
+`style: outline` is low emphasis; `filled` is high emphasis. Legacy `light` maps to low
+emphasis and `shaded` to high emphasis. `title:` overrides the visible label. `icon:` accepts any
+kebab-case [Tabler Icons](https://tabler.io/icons) outline icon name, such as `thinking-high` or
+`sparkles`; use `none` for no icon, or omit it to derive the icon from the color. Exports embed only
+the icons used by the document and do not require an icon CDN.
+Every treatment keeps a tint and the same 1px semantic border. Legacy `emoji` values remain
+parseable but published output uses the project icon.
 
 ### Quote
 
@@ -235,11 +283,16 @@ A plain blockquote (without `as: note`) renders as a styled quotation:
 
 ```
 > The only way to do great work is to love what you do.
-attribution: Steve Jobs
-decorator: quotation-marks
+speaker: Steve Jobs
+work: Stanford commencement address
+sourceUrl: https://news.stanford.edu/stories/2005/06/youve-got-find-love-jobs-says
 ```
 
-Keys: `attribution:` (string), `size:` (`default`, `large`, `very-large`), `decorator:` (`line-left`, `quotation-marks`, `cinematic`).
+Keys: `speaker:` (person or organisation), `work:` (title, rendered as `<cite>`), and
+`sourceUrl:` (visible link and blockquote `cite` URL). Quotes have one unfilled visual
+treatment with a logical start rule and one hanging opening mark.
+Legacy `attribution` maps to `speaker`; legacy `decorator`, `size`, and pull-quote `style`
+values are accepted but ignored without dropping quote content.
 
 ### Code block
 
@@ -284,6 +337,9 @@ A standalone link with `as: bookmark` renders as a rich preview card:
 as: bookmark
 ```
 
+The card prints the domain plus a detectable resource type, not the full URL. The full URL
+remains available from the title and accessible link text.
+
 ### Table
 
 Standard markdown pipe-delimited table (separator row `|---|---|` is optional):
@@ -295,17 +351,6 @@ Standard markdown pipe-delimited table (separator row `|---|---|` is optional):
 ```
 
 Add `chart:` to render as a chart: `bar`, `line`, `scatter`, `area`, `radar`, `stacked`. Note: `pie` and `donut` are not supported. Additional keys: `xLabel:`, `yLabel:`, `title:`, `altText:`, `orientation:` (bar only), `sortOrder:`, `colors:`.
-
-### Statistics
-
-Use a two-column table followed by `as: stats`. The first cell is the prominent value and the second explains it. One row renders as a value-and-statement pair; multiple rows render as a responsive grid. Optional keys: `size:` (`default`, `large`, or `very-large`), `columns:` (`2`, `3`, or `4`), and `caption:`.
-
-```
-| 41% | of people experiencing homelessness identify as women. |
-as: stats
-size: large
-caption: Source: [City of Toronto](https://www.toronto.ca)
-```
 
 ### Embed
 
@@ -592,9 +637,9 @@ placeholder: Type your reflection
 downloadAs: both
 ```
 
-Keep instructions visible with `description:` and use `placeholder:` only for a brief hint.
-`buttonLabel:` overrides the visible action; an ungraded response otherwise uses **Complete
-reflection**. `downloadAs:` accepts `txt`, `docx`, or `both`.
+Keep instructions visible with `description:` and use `placeholder:` only for a brief hint. Bare
+body text is legacy placeholder shorthand. `buttonLabel:` overrides the visible action; an ungraded
+response otherwise uses **Complete reflection**. `downloadAs:` accepts `txt`, `docx`, or `both`.
 
 ### Fill in the blank
 
@@ -607,7 +652,9 @@ Before entering a confined space, workers must complete a
 oxygen concentration is {19.5}%.
 ```
 
-`{word}` marks blanks. The text inside braces is the correct answer. NOTE: Inside `as: fill-blank` blocks, `{}` marks answer blanks, not variable interpolation.
+`{word}` marks a blank whose correct answer is `word`. `____` marks an open blank with no
+predefined answer. Both render inline without discarding the surrounding sentence. NOTE:
+Inside `as: fill-blank` blocks, `{}` marks answer blanks, not variable interpolation.
 
 ### Rating / Likert
 
@@ -752,27 +799,15 @@ mode: draw
 
 `mode:` options: `draw` (default), `type`.
 
-### Discussion / Poll / AI Chat
-
-```
-### Share your experience
-as: discuss
-```
-
-Other interactive `as:` values: `qa` (Q&A format), `poll`, `contribute` (share prompt).
-
-**Note:** `discuss`, `qa`, `poll`, and `contribute` require Cloud publish to function. They will not render in standalone SCORM or HTML exports.
-
-
 ## Inline formatting
 
 Standard markdown: `**bold**`, `*italic*`, `~~strikethrough~~`, `==highlight==`, `` `inline code` ``, `[link text](url)`.
 
 Variable interpolation: `{{userName}}` inserts variable values inline. Exception: inside `as: fill-blank`, single `{braces}` marks answer blanks — not interpolation.
 
-Tooltips: `[PPE]{Personal Protective Equipment -- gear that protects.}` -- brackets for visible text, braces for tooltip.
+Tooltips: `[PPE]{Personal Protective Equipment -- gear that protects.}` -- brackets for visible text, braces for the definition. Every defined term is also collected into a published glossary page; set `design.glossaryPage: false` to keep the tooltips without the page.
 
-Doodle annotations: `@circle{important}`, `@underline.wavy{pay attention}`. Types: `@circle`, `@underline`, `@highlight`, `@arrow`, `@box`. Modifiers: `.wavy`, `.thick`, `.thin`, `.dashed`.
+Doodle annotations: `@circle{important}`, `@underline.wavy{pay attention}`. Types: `@circle`, `@underline`, `@highlight`, `@arrow`, `@box`. Modifiers: `.wavy`, `.thick`, `.thin`, `.dashed`. Doodles can wrap glossary terms or links, for example `@highlight{Review [PPE]{Protective equipment}.}`.
 
 
 ## Variables and logic
@@ -805,15 +840,15 @@ visible: attempts >= 3
 ### Logic rules
 
 ```
-when: passedQuiz is false
+if: passedQuiz is false
 and: attempts >= 2
-then: show @remediation
+then: show @remediation, @retry-help
 then: set attempts = 0
 ```
 
 Condition operators: `is`, `isNot`, `>`, `<`, `>=`, `<=`, `contains`, `isEmpty`, `isNotEmpty`, `isAnyOf`.
 
-Action types: `show @name`, `hide @name`, `jump @page`, `set variable = value`, `add variable + n`, `subtract variable - n`, `require @name`, `disableCompletion`.
+Action types: `show @name, @other`, `hide @name, @other`, `jump @page`, `set variable = value`, `add variable + n`, `subtract variable - n`, `require @name, @other`, `disableCompletion`. `when:` is accepted as a compatibility alias for `if:`.
 
 `and:` and `or:` chain conditions but cannot be mixed in one rule.
 
@@ -851,7 +886,7 @@ PPE selection, hazard identification, and emergency procedures.
 
 /assets/hero-ppe.webp
 alt: Workers wearing safety gear on a construction site
-size: full-width
+layout: full
 
 > This course meets OSHA 10-hour training requirements.
 as: note
@@ -918,7 +953,7 @@ mode: draw
 | Section divider | `--` |
 | Lesson boundary | `# Lesson Title` |
 | Image | `/path/to/image.webp` + `alt: description` |
-| Video | `/path/to/video.mp4` or YouTube URL |
+| Video | `/path/to/video.mp4` or YouTube URL, optionally with `start:` / `end:` |
 | Note callout | `> text` + `as: note` |
 | Quote | `> text` + `attribution: Author` |
 | Button | `[text](url)` + `as: button` |
@@ -930,10 +965,10 @@ mode: draw
 | Matching | `### Q` + `as: match` + `left :: right` pairs |
 | Ordering | `### Q` + `as: order` + numbered list |
 | Free response | `### Q` + `as: free-response` |
-| Fill in blank | `### Q` + `as: fill-blank` + `{answer}` blanks |
+| Fill in blank | `### Q` + `as: fill-blank` + `{answer}` or `____` blanks |
 | Checklist | `- [ ] items` + `as: checklist` |
 | Variable | `var: name = value` |
-| Logic rule | `when: condition` + `then: action` |
+| Logic rule | `if: condition` + `then: action` (`when:` is an alias) |
 | Escape a keyword | `\keyword: treated as text` |
 
 
@@ -962,7 +997,6 @@ lessons:
 design:
   palette: ocean
   navArchetype: sidebar
-badge: true
 ```
 
 Each `.prax` file is a standalone lesson. Settings cascade: `course.yaml` design applies to all lessons unless a lesson's frontmatter overrides it. See `reference/course-manifest.md` for the full schema.

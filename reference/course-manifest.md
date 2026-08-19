@@ -34,8 +34,6 @@ design:
   accentHue: 200
   density: comfortable
   navArchetype: sidebar
-
-badge: true
 ```
 
 ### Fields
@@ -48,7 +46,6 @@ badge: true
 | `theme` | string | no | — | Theme name from `shared/themes/` or built-in |
 | `lessons` | string[] | yes | `[]` | Ordered list of `.prax` lesson filenames |
 | `design` | object | no | `{}` | Design overrides (same keys as frontmatter `design:`) |
-| `badge` | boolean | no | `true` | Show "Made with Praxity" badge on free exports |
 
 ### `lessons` list
 
