@@ -11,7 +11,7 @@ Before returning any `.prax` content:
 - Confirm required `close:` statements exist.
 - Confirm parameter values use valid types.
 - Confirm `as: choice` is used (not `as: choose-one` or `as: choose-many`).
-- Confirm `as: rating` is used for the rate block (not `as: rate`).
+- Confirm `as: rating` is used for the rate block rather than `as: rate`.
 - Confirm `feedback:` lines are flush left, not indented.
 - Confirm `passingScore:` is used in `assessment-group` (not `passing:`).
 
@@ -63,7 +63,7 @@ as: choice
 
 ### Wrong `as:` value for rating block
 
-The manifest keyword is `rate`, but the parser `as:` value is `rating`. Writing `as: rate` will not parse correctly.
+The manifest keyword is `rate`, and the parser `as:` value is `rating`. Writing `as: rate` will not parse correctly.
 
 Wrong:
 
@@ -272,7 +272,7 @@ Leading text before the first page heading becomes awkward floating content. Sta
 - Does every page section begin with a clear `##` or `###` heading?
 - Are all `as:` values valid for grammar v3?
 - Is `as: choice` used for both single- and multiple-choice questions?
-- Is `as: rating` used for rating blocks (not `as: rate`)?
+- Does each rating block use `as: rating` rather than `as: rate`?
 - Are choose-one markers `(x)` / `( )` and choose-many markers `[x]` / `[ ]`?
 - Is `feedback:` on its own line, flush to the left margin?
 - Does every `assessment-group` end with `close: assessment-group`?

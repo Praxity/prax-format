@@ -23,6 +23,7 @@ title: Safety Training Fundamentals
 description: Comprehensive workplace safety program
 locale: en
 theme: brand-theme
+narrationEnabled: true
 
 lessons:
   - intro.prax
@@ -44,6 +45,7 @@ design:
 | `description` | string | no | — | Course description |
 | `locale` | string | no | inherited | Default locale (`en`, `fr`, etc.) |
 | `theme` | string | no | — | Theme name from `shared/themes/` or built-in |
+| `narrationEnabled` | boolean | no | `false` | Enables block-level narration unless a lesson overrides it |
 | `lessons` | string[] | yes | `[]` | Ordered list of `.prax` lesson filenames |
 | `design` | object | no | `{}` | Design overrides (same keys as frontmatter `design:`) |
 
@@ -73,6 +75,10 @@ lesson frontmatter      (design overrides)
 ```
 
 A lesson's frontmatter `design:` block takes highest precedence. If absent, the course-level `design:` from `course.yaml` applies. If that's also absent, workspace defaults apply.
+
+`course.yaml` may enable narration for the course with `narrationEnabled`. Lesson enablement,
+generation defaults, scripts, anchors, and assets live in the Studio-managed `narration.yaml`
+sidecar rather than lesson frontmatter.
 
 ## Manifest integrity
 

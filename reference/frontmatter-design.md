@@ -141,6 +141,7 @@ Unknown block pairs use `normal`, so future block types have a stable fallback.
 | text ↔ text or checklist | close |
 | text ↔ note or quote | normal |
 | text ↔ heavy block | section |
+| prose ↔ floated image | normal inline and block-end gutter while prose wraps |
 | consecutive note/quote or heavy blocks | section |
 | divider in either direction | section |
 | text → button / button → text / button → button | close / normal / tight |

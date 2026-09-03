@@ -108,26 +108,20 @@ heading remains visible; no fallback heading is synthesized.
 A page break always closes all open containers. `hide: true` directly after a page break
 hides the whole page.
 
-Put the opening page's explicit navigation label and other fields in frontmatter because page 1
+Put the opening page's explicit navigation label and page defaults in frontmatter because page 1
 has no preceding break. Without an explicit label, its first heading provides the same fallback.
-Optional narration uses an MP3 plus an optional WebVTT transcript:
 
 ```yaml
 firstPage:
   title: Introduction
-  narration: assets/introduction-a1b2c3.mp3
-  captions: assets/introduction-a1b2c3.vtt
 ```
 
-Put later-page fields directly after the page break:
-
-```prax
---- Safety Equipment
-narration: assets/safety-d4e5f6.mp3
-captions: assets/safety-d4e5f6.vtt
-```
-
-Narration never autoplays or affects learner progress. A pronunciation lexicon may be stored in
+Narration is a Studio-managed layer in the project-root `narration.yaml`; it is not `.prax`
+grammar. Generate clean visible content in `.prax`. Use Studio for narration scripts, cues,
+anchors, generation settings, and audio. The CLI reads the sidecar when it bundles the course.
+Enable playback with `narrationEnabled: true` in `course.yaml`. Narration never autoplays or
+affects learner progress.
+A pronunciation lexicon may be stored in
 lesson frontmatter or, with the same shape, in `course.yaml`:
 
 ```yaml
@@ -174,7 +168,7 @@ These keys work on any block:
 | `name:` | Unique identifier for targeting (logic rules, anchor links) |
 | `layout:` | Width override: `wide`, `full`, `breakout` |
 | `hide:` | `true` to hide from rendered output |
-| `reveal:` | Narration time (seconds or `MM:SS`), or `each` to reveal list items one at a time |
+| `reveal:` | `each` reveals list items one at a time; numeric and timestamp values are retired |
 | `visible:` | Conditional visibility expression (e.g. `visible: passedQuiz`) |
 | `entrance:` | Animation: `none`, `fade`, `slide`, `scale` |
 
@@ -352,6 +346,23 @@ Standard markdown pipe-delimited table (separator row `|---|---|` is optional):
 
 Add `chart:` to render as a chart: `bar`, `line`, `scatter`, `area`, `radar`, `stacked`. Note: `pie` and `donut` are not supported. Additional keys: `xLabel:`, `yLabel:`, `title:`, `altText:`, `orientation:` (bar only), `sortOrder:`, `colors:`.
 
+### Stats
+
+Write one statistic per table row. Put the value in the first cell and its label in the remaining cells.
+
+```
+| Over 1 in 4 | Indigenous households have experienced homelessness |
+| 3x | the rate experienced by the total population |
+| 35% | people counted as homeless who identified as Indigenous |
+| 5% | of the national population identified as Indigenous |
+as: stats
+columns: 2
+size: large
+caption: Source: [Source title](https://example.com)
+```
+
+Set `size:` to `default`, `large`, or `very-large`. It changes the value only. Studio applies the heading font, heavy weight, and contrast-safe accent text color. This scale is separate from heading levels, so a value can render larger than an `h1`. Do not add a `color:` parameter; stats do not support one. Set `columns:` to `2`, `3`, or `4`. Studio chooses up to four columns when it is omitted. One row renders as a statement, and two or more rows render as a grid.
+
 ### Embed
 
 An external URL with `as: embed`:
@@ -482,6 +493,8 @@ close: card
 ```
 
 Use `card: back` for front/back behavior. Content before `card: back` is the front; content after it is the back.
+
+Card item labels are semantic headings by default and keep their authored level. Standalone card groups use level 3 unless `headingLevel: 2` through `headingLevel: 6` is set. Use `headings: false` for presentation-only or storytelling cards whose labels should not appear in heading navigation.
 
 ```
 ## Safety Terms
@@ -957,6 +970,7 @@ mode: draw
 | Note callout | `> text` + `as: note` |
 | Quote | `> text` + `attribution: Author` |
 | Button | `[text](url)` + `as: button` |
+| Stats | `\| value \| label \|` + `as: stats` |
 | Accordion | `### Title` + `as: accordion` |
 | Tabs | `### Title` + `as: tab` |
 | Columns | `as: col` ... `close: col` |

@@ -71,30 +71,22 @@ hide: true
 # Visible page title
 ```
 
-Page 1 has no preceding page break, so its explicit navigation label and other page fields live
-in frontmatter. Without an explicit label, its first heading provides the same fallback. Narration
-is an optional MP3 asset with an optional WebVTT transcript:
+Page 1 has no preceding page break, so its explicit navigation label and page defaults live in
+frontmatter. Without an explicit label, its first heading provides the same fallback.
 
 ```yaml
 ---
 title: Example lesson
 firstPage:
   title: Introduction
-  narration: assets/introduction-a1b2c3.mp3
-  captions: assets/introduction-a1b2c3.vtt
 ---
 ```
 
-Later pages put the same fields after the page break that starts the page:
-
-```prax
---- Handling a complaint
-narration: assets/complaint-d4e5f6.mp3
-captions: assets/complaint-d4e5f6.vtt
-```
-
-`narration` must point to audio and `captions` must point to WebVTT. Narration never
-autoplays or affects completion, scoring, content access, or navigation.
+Studio narration is a project layer stored in `narration.yaml`, not grammar syntax. Studio owns
+that machine-managed sidecar and links its scripts and audio to the visible page title and logical
+blocks. Authors and agents should edit the `.prax` source for visible content, then use Studio to
+edit narration. The CLI reads the same sidecar and bundles referenced MP3 and optional WebVTT
+assets. Narration never autoplays or affects completion, scoring, content access, or navigation.
 
 An optional pronunciation lexicon maps exact written terms to spoken aliases during online
 narration generation. It does not change learner-visible text:
@@ -145,9 +137,9 @@ as: choice
 
 Common uses:
 
-- `as: choice`, `as: match`, `as: order`, `as: free-response`
+- `as: choice`, `as: match`, `as: order`, `as: free-response`, `as: rating`
 - `as: accordion`, `as: tab`, `as: sequence`, `as: comparison`
-- `as: signature`, `as: checklist`
+- `as: stats`, `as: signature`, `as: checklist`
 
 ## Section divider vs page break
 
@@ -180,12 +172,12 @@ All manifest blocks support the following parameters:
 | `layout` | enum | `wide \| full \| breakout` | Overrides the default content width for this block |
 | `name` | string | any | Assigns a name to the block for cross-referencing. Used in logic rules (`then: show @myBlock`), assessment-group scoring, and anchor links. Use `camelCase` with no spaces — e.g. `name: safetyTip`. Avoid colons, quotes, and special characters. |
 | `hide` | boolean | `true \| false` | Hides the block from rendered output. The block is preserved in the grammar and can be shown later via logic rules (`then: show @name`). |
-| `reveal` | number, `MM:SS`, or `each` | none | On a narrated page, a number or timestamp reveals the block at that playback time. On a bulleted or numbered list, `reveal: each` shows one item at a time with an accessible learner control. It does not apply to containers such as accordions and is independent of the theme's entrance Motion setting. |
+| `reveal` | `each` | none | On a bulleted or numbered list, shows one item at a time with an accessible learner control. Numeric and timestamp values are retired, leave content visible, and produce an audit warning. |
 | `visible` | condition expression | always | Conditional visibility based on variable state. Example: `visible: score >= 80`. The block renders only when the condition is true. |
 | `entrance` | enum | `fade \| slide \| scale \| none` | Block entrance animation; overrides course-level `motionEntrance`. |
 | `entranceDuration` | CSS duration | `250ms` | Duration of the entrance animation. |
 
-`layout` is the only universal parameter defined in the manifest (`UNIVERSAL_PARAMETERS`). The others (`name`, `hide`, `reveal`, `visible`, `entrance`, `entranceDuration`) are runtime workflow metadata recognized by the published-output viewer.
+`layout`, `reveal`, and the narration fields are universal parameters in the manifest. The others (`name`, `hide`, `visible`, `entrance`, `entranceDuration`) are runtime workflow metadata recognized by the published-output viewer.
 
 ## Escaping reserved lines
 

@@ -336,7 +336,7 @@ standalone questions, grouped assessments, checklists, ratings, and signatures.
 | `points` | number | Point value awarded for a correct answer. Used in scored assessment groups and SCORM/xAPI reporting. |
 | `required` | boolean | Whether the learner must answer this question before proceeding. |
 | `timed` | number | Intended time limit in seconds. **Not applied yet** — no countdown is rendered. |
-| `attempts` | number | Maximum number of attempts allowed before the answer is locked. |
+| `attempts` | number | Maximum number of attempts before the answer is locked. Use `0` for unlimited attempts. |
 | `shuffle` | boolean | Randomize option/item order on each attempt. Available on: choose-one, choose-many, match, order, categorize. |
 
 Submitting auto-scored work always shows and announces a localized **Correct** or **Incorrect**
@@ -354,6 +354,8 @@ Decorator parameters add metadata for learning analytics and adaptive behavior:
 | `confidence` | boolean | Intended to enable confidence-based marking. **Not applied yet** — no confidence prompt is rendered. |
 | `retrieval` | boolean | Marks this as a retrieval practice question. **Not applied yet** — does not affect analytics. |
 | `feedback` | enum | Feedback display mode. Controls when and how feedback is shown to the learner. |
+| `description` | text | Supporting context shown between the question and response controls. |
+| `display` | enum | `standard` or `scenario`. Use `scenario` when a concise question needs longer context in the same assessment surface. |
 
 ## Variant summary from manifest
 

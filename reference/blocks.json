@@ -7,16 +7,25 @@
       "category": "Content",
       "syntax": "paragraph text",
       "reference": "blocks-content.md#text",
+      "variants": [],
       "parameters": [
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -26,6 +35,7 @@
       "category": "Content",
       "syntax": "## Heading",
       "reference": "blocks-content.md#heading",
+      "variants": [],
       "parameters": [
         {
           "name": "level",
@@ -35,12 +45,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -50,6 +68,28 @@
       "category": "Content",
       "syntax": "/assets/image.png",
       "reference": "blocks-content.md#image",
+      "variants": [
+        {
+          "name": "width",
+          "type": "enum",
+          "options": [
+            "small",
+            "medium",
+            "large"
+          ],
+          "default": ""
+        },
+        {
+          "name": "alignment",
+          "type": "enum",
+          "options": [
+            "left",
+            "center",
+            "right"
+          ],
+          "default": ""
+        }
+      ],
       "parameters": [
         {
           "name": "src",
@@ -72,6 +112,15 @@
           "required": false
         },
         {
+          "name": "wrap",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "start",
+            "end"
+          ]
+        },
+        {
           "name": "effects",
           "type": "map|none",
           "required": false
@@ -79,12 +128,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -94,6 +151,7 @@
       "category": "Content",
       "syntax": "/assets/video.mp4",
       "reference": "blocks-content.md#video",
+      "variants": [],
       "parameters": [
         {
           "name": "src",
@@ -138,12 +196,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -153,6 +219,7 @@
       "category": "Content",
       "syntax": "/assets/audio.mp3",
       "reference": "blocks-content.md#audio",
+      "variants": [],
       "parameters": [
         {
           "name": "src",
@@ -167,12 +234,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -182,16 +257,25 @@
       "category": "Content",
       "syntax": "--",
       "reference": "blocks-content.md#divider",
+      "variants": [],
       "parameters": [
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -201,6 +285,7 @@
       "category": "Content",
       "syntax": "as: embed",
       "reference": "blocks-content.md#embed",
+      "variants": [],
       "parameters": [
         {
           "name": "src",
@@ -210,12 +295,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -225,6 +318,7 @@
       "category": "Content",
       "syntax": "as: bookmark",
       "reference": "blocks-content.md#bookmark",
+      "variants": [],
       "parameters": [
         {
           "name": "href",
@@ -234,12 +328,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -249,6 +351,31 @@
       "category": "Content",
       "syntax": "as: note",
       "reference": "blocks-content.md#note",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "outline",
+            "filled"
+          ],
+          "default": "filled"
+        },
+        {
+          "name": "color",
+          "type": "enum",
+          "options": [
+            "accent",
+            "primary",
+            "secondary",
+            "success",
+            "warning",
+            "error",
+            "grey"
+          ],
+          "default": "accent"
+        }
+      ],
       "parameters": [
         {
           "name": "title",
@@ -263,12 +390,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -278,6 +413,7 @@
       "category": "Content",
       "syntax": "> quote",
       "reference": "blocks-content.md#quote",
+      "variants": [],
       "parameters": [
         {
           "name": "speaker",
@@ -297,12 +433,81 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "code",
+      "label": "Code",
+      "category": "Content",
+      "syntax": "fenced code block",
+      "reference": "blocks-content.md#code",
+      "variants": [],
+      "parameters": [
+        {
+          "name": "language",
+          "type": "string",
           "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
+        },
+        {
+          "name": "reveal",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "equation",
+      "label": "Equation",
+      "category": "Content",
+      "syntax": "$$",
+      "reference": "blocks-content.md#equation",
+      "variants": [],
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
+        },
+        {
+          "name": "reveal",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -312,6 +517,18 @@
       "category": "Content",
       "syntax": "[label](url) + as: button",
       "reference": "blocks-content.md#button",
+      "variants": [
+        {
+          "name": "variant",
+          "type": "enum",
+          "options": [
+            "filled",
+            "outline",
+            "light"
+          ],
+          "default": "filled"
+        }
+      ],
       "parameters": [
         {
           "name": "text",
@@ -331,12 +548,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -346,16 +571,84 @@
       "category": "Content",
       "syntax": "| table |",
       "reference": "blocks-content.md#data-table",
+      "variants": [
+        {
+          "name": "visual",
+          "type": "enum",
+          "options": [
+            "table",
+            "chart"
+          ],
+          "default": "table"
+        }
+      ],
       "parameters": [
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "stats",
+      "label": "Stats",
+      "category": "Content",
+      "syntax": "| value | label | + as: stats",
+      "reference": "blocks-content.md#stats",
+      "variants": [
+        {
+          "name": "size",
+          "type": "enum",
+          "options": [
+            "default",
+            "large",
+            "very-large"
+          ],
+          "default": "default"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "columns",
+          "type": "number",
           "required": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
+        },
+        {
+          "name": "reveal",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -365,16 +658,41 @@
       "category": "Container",
       "syntax": "as: accordion",
       "reference": "blocks-containers.md#accordion",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "default",
+            "contained",
+            "separated"
+          ],
+          "default": "default"
+        },
+        {
+          "name": "allowMultipleOpen",
+          "type": "boolean",
+          "default": false
+        }
+      ],
       "parameters": [
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -384,16 +702,25 @@
       "category": "Container",
       "syntax": "as: tab",
       "reference": "blocks-containers.md#tabs",
+      "variants": [],
       "parameters": [
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -403,16 +730,25 @@
       "category": "Container",
       "syntax": "as: col",
       "reference": "blocks-containers.md#columns",
+      "variants": [],
       "parameters": [
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -422,10 +758,64 @@
       "category": "Container",
       "syntax": "as: card",
       "reference": "blocks-containers.md#card",
+      "variants": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "options": [
+            "grid",
+            "masonry",
+            "single"
+          ],
+          "default": "grid"
+        },
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "none",
+            "outline",
+            "filled"
+          ],
+          "default": "none"
+        },
+        {
+          "name": "shadow",
+          "type": "enum",
+          "options": [
+            "theme",
+            "none",
+            "subtle",
+            "elevated"
+          ],
+          "default": "theme"
+        },
+        {
+          "name": "transition",
+          "type": "enum",
+          "options": [
+            "none",
+            "fade",
+            "slide",
+            "zoom"
+          ],
+          "default": "fade"
+        }
+      ],
       "parameters": [
         {
           "name": "columns",
           "type": "number",
+          "required": false
+        },
+        {
+          "name": "headingLevel",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "headings",
+          "type": "boolean",
           "required": false
         },
         {
@@ -451,12 +841,94 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sequence",
+      "label": "Sequence",
+      "category": "Container",
+      "syntax": "as: sequence",
+      "reference": "blocks-containers.md#sequence",
+      "variants": [
+        {
+          "name": "variant",
+          "type": "enum",
+          "options": [
+            {
+              "value": "scroll-journey",
+              "implemented": false
+            },
+            {
+              "value": "carousel",
+              "implemented": false
+            },
+            {
+              "value": "stepper",
+              "implemented": false
+            },
+            "numbered",
+            "timeline",
+            {
+              "value": "hero",
+              "implemented": false
+            },
+            "plain"
+          ],
+          "default": "numbered"
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "options": [
+            "vertical",
+            "horizontal"
+          ],
+          "default": "vertical"
+        },
+        {
+          "name": "alignment",
+          "type": "enum",
+          "options": [
+            "left",
+            "center",
+            "right"
+          ],
+          "default": "left"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
+        },
+        {
+          "name": "reveal",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -466,16 +938,43 @@
       "category": "Container",
       "syntax": "as: comparison",
       "reference": "blocks-containers.md#comparison",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "slider",
+            "side-by-side",
+            {
+              "value": "toggle",
+              "implemented": false
+            },
+            {
+              "value": "diff",
+              "implemented": false
+            }
+          ],
+          "default": "side-by-side"
+        }
+      ],
       "parameters": [
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -485,6 +984,28 @@
       "category": "Assessment",
       "syntax": "as: choice + (x)/( )",
       "reference": "blocks-assessments.md#choose-one",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "radio",
+            {
+              "value": "card-select",
+              "implemented": false
+            },
+            {
+              "value": "image-select",
+              "implemented": false
+            },
+            {
+              "value": "inline-dropdown",
+              "implemented": false
+            }
+          ],
+          "default": "radio"
+        }
+      ],
       "parameters": [
         {
           "name": "scored",
@@ -520,6 +1041,15 @@
           "required": false
         },
         {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
+        },
+        {
           "name": "shuffle",
           "type": "boolean",
           "required": false
@@ -548,12 +1078,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -563,6 +1101,24 @@
       "category": "Assessment",
       "syntax": "as: choice + [x]/[ ]",
       "reference": "blocks-assessments.md#choose-many",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "checkbox",
+            {
+              "value": "grid",
+              "implemented": false
+            },
+            {
+              "value": "tag-picker",
+              "implemented": false
+            }
+          ],
+          "default": "checkbox"
+        }
+      ],
       "parameters": [
         {
           "name": "scored",
@@ -596,6 +1152,15 @@
           "name": "description",
           "type": "text",
           "required": false
+        },
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
         },
         {
           "name": "shuffle",
@@ -626,12 +1191,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -641,6 +1214,20 @@
       "category": "Assessment",
       "syntax": "as: match",
       "reference": "blocks-assessments.md#match",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "select-dropdowns",
+            {
+              "value": "line-drawing",
+              "implemented": false
+            }
+          ],
+          "default": "select-dropdowns"
+        }
+      ],
       "parameters": [
         {
           "name": "scored",
@@ -674,6 +1261,15 @@
           "name": "description",
           "type": "text",
           "required": false
+        },
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
         },
         {
           "name": "placeholder",
@@ -709,12 +1305,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -724,6 +1328,20 @@
       "category": "Assessment",
       "syntax": "as: order",
       "reference": "blocks-assessments.md#order",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "up-down-arrows",
+            {
+              "value": "numbered-input",
+              "implemented": false
+            }
+          ],
+          "default": "up-down-arrows"
+        }
+      ],
       "parameters": [
         {
           "name": "scored",
@@ -757,6 +1375,15 @@
           "name": "description",
           "type": "text",
           "required": false
+        },
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
         },
         {
           "name": "shuffle",
@@ -787,12 +1414,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -802,6 +1437,24 @@
       "category": "Assessment",
       "syntax": "as: free-response",
       "reference": "blocks-assessments.md#free-response",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "textarea",
+            {
+              "value": "rich-text",
+              "implemented": false
+            },
+            {
+              "value": "recording",
+              "implemented": false
+            }
+          ],
+          "default": "textarea"
+        }
+      ],
       "parameters": [
         {
           "name": "scored",
@@ -835,6 +1488,15 @@
           "name": "description",
           "type": "text",
           "required": false
+        },
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
         },
         {
           "name": "buttonLabel",
@@ -849,7 +1511,12 @@
         {
           "name": "downloadAs",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "txt",
+            "docx",
+            "both"
+          ]
         },
         {
           "name": "placeholder",
@@ -880,12 +1547,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -895,6 +1570,24 @@
       "category": "Assessment",
       "syntax": "as: hotspot",
       "reference": "blocks-assessments.md#hotspot",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "click-regions",
+            {
+              "value": "labeled-diagram",
+              "implemented": false
+            },
+            {
+              "value": "description-list",
+              "implemented": false
+            }
+          ],
+          "default": "click-regions"
+        }
+      ],
       "parameters": [
         {
           "name": "scored",
@@ -928,6 +1621,15 @@
           "name": "description",
           "type": "text",
           "required": false
+        },
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
         },
         {
           "name": "points",
@@ -953,21 +1655,47 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
     {
-      "id": "fill-blank",
-      "label": "Fill in the Blank",
+      "id": "rate",
+      "label": "Rating",
       "category": "Assessment",
-      "syntax": "as: fill-blank",
-      "reference": "blocks-assessments.md#fill-blank",
+      "syntax": "as: rating",
+      "reference": "blocks-assessments.md#rate",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "likert",
+            {
+              "value": "stars",
+              "implemented": false
+            },
+            {
+              "value": "slider",
+              "implemented": false
+            }
+          ],
+          "default": "likert"
+        }
+      ],
       "parameters": [
         {
           "name": "scored",
@@ -1001,6 +1729,123 @@
           "name": "description",
           "type": "text",
           "required": false
+        },
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
+        },
+        {
+          "name": "points",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "timed",
+          "type": "number",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "attempts",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
+        },
+        {
+          "name": "reveal",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fill-blank",
+      "label": "Fill in the Blank",
+      "category": "Assessment",
+      "syntax": "as: fill-blank",
+      "reference": "blocks-assessments.md#fill-blank",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "inline-inputs",
+            {
+              "value": "word-bank",
+              "implemented": false
+            },
+            {
+              "value": "dropdown",
+              "implemented": false
+            }
+          ],
+          "default": "inline-inputs"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "scored",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "competency",
+          "type": "text",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "confidence",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "retrieval",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "feedback",
+          "type": "enum",
+          "required": false
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
         },
         {
           "name": "placeholder",
@@ -1031,12 +1876,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -1046,6 +1899,7 @@
       "category": "Assessment",
       "syntax": "as: categorize",
       "reference": "blocks-assessments.md#categorize",
+      "variants": [],
       "parameters": [
         {
           "name": "scored",
@@ -1079,6 +1933,15 @@
           "name": "description",
           "type": "text",
           "required": false
+        },
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
         },
         {
           "name": "shuffle",
@@ -1109,12 +1972,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -1126,6 +1997,16 @@
       "reference": "blocks-assessments.md#matrix",
       "summary": "Table-style Likert assessment. The heading is the matrix question, numbered N: label lines define scale points, and bullet list items define statements.",
       "example": "### How confident are you?\nas: matrix\n\n1: Not confident\n2: Somewhat confident\n3: Confident\n\n- Using PPE correctly\n- Reading warning labels\n- Following emergency procedures",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "likert"
+          ],
+          "default": "likert"
+        }
+      ],
       "parameters": [
         {
           "name": "scored",
@@ -1161,6 +2042,15 @@
           "required": false
         },
         {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "scenario"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -1184,12 +2074,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -1199,6 +2097,17 @@
       "category": "Assessment",
       "syntax": "as: assessment-group",
       "reference": "blocks-assessments.md#assessment-group",
+      "variants": [
+        {
+          "name": "mode",
+          "type": "enum",
+          "options": [
+            "all",
+            "oneOf"
+          ],
+          "default": "all"
+        }
+      ],
       "parameters": [
         {
           "name": "buttonLabel",
@@ -1228,12 +2137,20 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     },
@@ -1243,6 +2160,7 @@
       "category": "Interactive",
       "syntax": "as: checklist",
       "reference": "blocks-interactive.md#checklist",
+      "variants": [],
       "parameters": [
         {
           "name": "shuffle",
@@ -1257,12 +2175,63 @@
         {
           "name": "layout",
           "type": "enum",
-          "required": false
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
         },
         {
           "name": "reveal",
-          "type": "text",
-          "required": false
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "signature",
+      "label": "Signature",
+      "category": "Interactive",
+      "syntax": "as: signature",
+      "reference": "blocks-interactive.md#signature",
+      "variants": [
+        {
+          "name": "mode",
+          "type": "enum",
+          "options": [
+            "draw",
+            "type"
+          ],
+          "default": "draw"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "layout",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
+        },
+        {
+          "name": "reveal",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "each"
+          ]
         }
       ]
     }

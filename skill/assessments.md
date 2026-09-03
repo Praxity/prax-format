@@ -41,6 +41,8 @@ These parameters are available across all assessment blocks.
 | `confidence` | boolean | false | Captures learner confidence *(not applied yet)* |
 | `retrieval` | boolean | false | Tags block as retrieval practice *(not applied yet)* |
 | `feedback` | enum/text | — | Feedback mode or global message |
+| `description` | text | omitted | Supporting context shown between the question and response controls |
+| `display` | enum | `standard`, `scenario` | `scenario` keeps longer context visually attached to a concise question |
 | `points` | number | — | Points awarded for correct answer |
 | `required` | boolean | false | Must be completed before continuing |
 | `timed` | number | — | Time budget in seconds *(not applied yet)* |
@@ -56,6 +58,23 @@ These parameters are available across all assessment blocks.
 
 
 `shuffle` is additionally available for: choose-one, choose-many, match, order, categorize.
+
+### Scenario questions
+
+Keep the question short and place the scenario in `description:`. `display: scenario` keeps the
+context, question, and response controls in one assessment surface instead of splitting them across
+a card and a separate question.
+
+```prax
+### Which principle does this action most align with?
+as: choice
+display: scenario
+description: A municipality receives funding to support new housing and prioritizes supportive and affordable rental projects.
+
+( ) Meaningful engagement
+(x) Prioritizing those in greatest housing need
+( ) Long-term planning
+```
 
 ## choose-one
 

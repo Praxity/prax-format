@@ -275,6 +275,8 @@ close: card
 
 Use `card: back` for front/back behavior. Content before `card: back` is the front; content after it is the back.
 
+Card item labels are semantic headings by default and keep their authored level. Standalone card groups use level 3 unless `headingLevel: 2` through `headingLevel: 6` is set. Use `headings: false` for presentation-only or storytelling cards whose labels should not appear in heading navigation.
+
 ```prax
 ## Safety Terms
 as: card
@@ -308,6 +310,7 @@ Do not put a same-level item heading immediately after `card: back` unless you m
 | `columns` | number | any integer | — | Number of grid columns |
 | `layout` | enum | `single`, `grid`, `masonry` | grid | Card presentation mode |
 | `style` | enum | `none`, `outline`, `filled` | none | Card item chrome treatment |
+| `color` | enum | `primary`, `secondary` | omitted | Subtle brand tint for `style: filled` |
 | `shadow` | enum | `theme`, `none`, `subtle`, `elevated` | theme | Card depth treatment |
 | `advance` | number | any number >= 0 | 0 | Auto-advance interval in seconds for `layout: single` |
 | `transition` | enum | `none`, `fade`, `slide`, `zoom` | fade | Transition style for `layout: single` |

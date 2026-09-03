@@ -158,7 +158,7 @@ Card items are created by headings one level below the group heading. For a `##`
 
 **Syntax:**
 ```prax
-### Safety Concepts
+## Safety Concepts
 as: card
 layout: single
 transition: slide
@@ -184,7 +184,10 @@ close: card
 **Parameters:**
 - `layout`: `single | grid | masonry` — card presentation mode.
 - `columns` (number) — number of columns when `layout` is `grid` or `masonry`.
+- `headingLevel` (`2` to `6`). Sets the heading level for item labels in a standalone `as: card` group. The default is `3`.
+- `headings` (boolean). Controls whether item labels participate in heading navigation. The default is `true`; use `false` for presentation-only or storytelling cards.
 - `style`: `none | outline | filled` — card item chrome treatment.
+- `color`: `primary | secondary` - subtle brand tint for `style: filled`.
 - `shadow`: `theme | none | subtle | elevated` — card depth treatment.
 - `advance` (number, seconds) — auto-advance interval for `layout: single`; `0` = manual.
 - `transition`: `none | fade | slide | zoom` — transition style for `layout: single`.
@@ -193,6 +196,22 @@ close: card
 - `trackCompletion` (boolean) — track learner interaction/completion at card level.
 
 Use `card: back` to mark the back face of an item. Content before `card: back` is the front face.
+
+Card item headings keep the level authored in `.prax`. For example, a `##` card group with `###` items renders those labels as `<h3>`. To make standalone card items page-level sections, set `headingLevel: 2` and author each item with `##`. Use `headings: false` when labels should remain visual labels rather than document headings.
+
+```prax
+as: card
+headingLevel: 2
+style: outline
+
+## Who has been left behind?
+Identify the groups facing the greatest need.
+
+## Which standards are at stake?
+Identify the affected housing standards.
+
+close: card
+```
 
 Do not put the next item heading immediately after `card: back` if you intend that heading to appear on the back face. A same-level item heading starts the next card. Use paragraph text or a lower-level heading for back-face content.
 
