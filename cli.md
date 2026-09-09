@@ -54,8 +54,12 @@ Course and lesson settings take precedence over an immediate parent
 `praxity.json` supplies the completion threshold when valid; otherwise the fixed
 threshold is `0.8`. The command does not read Studio's global settings.
 
-The CLI reads the project but never updates or migrates it. Do not edit project files
-while export is running. Concurrent project writes are unsupported.
+The CLI uses Studio's project identity loader. It can add a missing course or lesson
+ID, create or update `.praxity/content-identity.json`, and migrate older generated
+page/block UUID rows out of lesson source into that sidecar. Preserve the whole
+project folder, including `.praxity`, when copying a course whose learner identity
+must stay the same. Do not edit project files while export is running. Concurrent
+project writes are unsupported.
 
 ## Machine-readable results
 

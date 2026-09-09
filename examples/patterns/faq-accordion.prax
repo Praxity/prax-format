@@ -3,7 +3,7 @@ title: Workplace Safety FAQ
 description: Common questions about safety policy, reporting, and PPE — answered in a scannable accordion. Learners open only what they need.
 lang: en
 design:
-  palette: universal
+  palette: clean
   colorMode: light
   accentHue: 210
 ---

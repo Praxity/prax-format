@@ -3,7 +3,7 @@ title: Module Completion and Signoff
 description: Two-column completion page — left summarises what was covered, right captures the learner's signature. Use this pattern for compliance training that requires a record of acknowledgement.
 lang: en
 design:
-  palette: editorial
+  palette: campfire
   colorMode: light
   accentHue: 145
 ---
@@ -28,7 +28,7 @@ This training satisfies the annual hazard awareness requirement under Section 3.
 
 > Keep this module accessible for reference. You can return to any section using the course navigation.
 as: note
-color: info
+color: primary
 style: outline
 
 as: col

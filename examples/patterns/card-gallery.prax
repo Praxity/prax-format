@@ -3,7 +3,7 @@ title: Safety Team Directory
 description: Card grid introducing team members or roles. Use columns to control how many cards appear per row — 3 is a reliable default for most screen widths.
 lang: en
 design:
-  palette: bold
+  palette: bauhaus
   colorMode: light
   accentHue: 196
 ---

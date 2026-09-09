@@ -3,7 +3,7 @@ title: Hazard Control Knowledge Check — Your Choice
 description: Assessment group with mode oneOf, giving learners agency over which question they answer. Use this when your audience has varied roles and no single question type fits everyone.
 lang: en
 design:
-  palette: universal
+  palette: clean
   colorMode: light
   accentHue: 210
 ---

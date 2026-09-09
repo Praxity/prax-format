@@ -845,7 +845,10 @@
           "options": [
             "grid",
             "masonry",
-            "single"
+            "single",
+            "wide",
+            "full",
+            "breakout"
           ],
           "default": "grid"
         },
@@ -886,6 +889,16 @@
       ],
       "parameters": [
         {
+          "name": "layoutMode",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "wide",
+            "full",
+            "breakout"
+          ]
+        },
+        {
           "name": "columns",
           "type": "number",
           "required": false
@@ -919,16 +932,6 @@
           "name": "trackCompletion",
           "type": "boolean",
           "required": false
-        },
-        {
-          "name": "layout",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "wide",
-            "full",
-            "breakout"
-          ]
         }
       ]
     },

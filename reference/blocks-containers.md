@@ -4,6 +4,12 @@ Containers use the normal content width by default. Set `layout: wide|full|break
 to widen a container. Cards use `layoutMode:` for width when `layout:` selects
 `grid`, `masonry`, or `single`. Sequences do not widen automatically as items are added.
 
+A blank line before `as: card`, its legacy alias `as: flashcard`, or `as: col`
+starts a standalone container and leaves the preceding heading or content outside.
+To attach a card to a heading, put `as: card` directly beneath that heading.
+Accordion, tab, sequence, comparison, and assessment-group declarations require a
+heading; their existing heading attachment also accepts intervening blank lines.
+
 ## accordion
 
 Collapsible panels. The heading with `as: accordion` opens the accordion; subsequent headings at the same level become additional panels. Any heading level works (`##`, `###`, `####`), though `###` is most common.
@@ -60,7 +66,7 @@ the first `as: tab` item to style the whole tab group. Defaults are `default` an
 
 ## columns
 
-Column layout. Each `as: col` starts a new column. Columns must be explicitly closed with `close: col`.
+Column layout. Each `as: col` starts a new column. Use `close: col` to end the column layout before following content on the same page.
 
 **Syntax:**
 ```prax
@@ -163,7 +169,7 @@ The `slider` style renders an interactive drag handle that reveals the before/af
 
 ## card
 
-Unified card container for static cards, carousels, and flip cards. Requires explicit `close: card`.
+Unified card container for static cards, carousels, and flip cards. Use `close: card` to mark the end of the group explicitly.
 
 When a card container is opened from a heading, that heading is the card group title. It is rendered around the group, not inside an individual card face.
 
@@ -195,7 +201,8 @@ close: card
 ```
 
 **Parameters:**
-- `layout`: `single | grid | masonry` — card presentation mode.
+- `layout`: `single | grid | masonry` — card presentation mode. Also accepts `wide | full | breakout` to set the container width with the default grid presentation.
+- `layoutMode`: `wide | full | breakout` — container width when `layout` selects a card presentation mode, for example `layout: single` with `layoutMode: wide`.
 - `columns` (number) — number of columns when `layout` is `grid` or `masonry`.
 - `headingLevel` (`2` to `6`). Sets the heading level for item labels in a standalone `as: card` group. The default is `3`.
 - `headings` (boolean). Controls whether item labels participate in heading navigation. The default is `true`; use `false` for presentation-only or storytelling cards.
@@ -275,18 +282,23 @@ Headingless `as: card` is useful for a single card whose front face is image or 
 
 - Containers may include content blocks and assessments as children.
 - Avoid deeply nested multi-container chains for readability.
-- Page breaks (`---`) close all open containers automatically.
+- Page breaks (`---`), H1 headings, and the end of the file close all open containers automatically.
 
 ## Closing rules
 
-| Container | Closing | Notes |
+All containers accept an explicit closer. Page breaks, H1 headings, and the end of
+file also close every open container; an omitted closer is not a syntax error.
+Use explicit closers when following content should sit outside a container on the
+same page. Additional boundaries depend on the container:
+
+| Container | Explicit closer | Other boundaries on the same page |
 |---|---|---|
-| `accordion` / `tab` | Optional explicit closer | `close: accordion` / `close: tab`, a higher-level heading, a same-level heading declaring another block type, or a page break |
-| `col` | `close: col` required | Must explicitly close the column layout |
-| `assessment-group` | `close: assessment-group` required | Must explicitly close |
-| `card` | `close: card` required | Must explicitly close; applies to all card layouts |
-| `sequence` | Optional explicit closer | `close: sequence`, a higher-level heading, a same-level heading declaring another block type, or a page break |
-| `comparison` | Optional explicit closer | `close: comparison` or a structural boundary; the second item does not automatically close the group |
+| `accordion` / `tab` | `close: accordion` / `close: tab` | A higher-level heading, or a same-level heading declaring another block type |
+| `col` | `close: col` | The next `as: col` starts a sibling column; ordinary H2–H4 headings remain inside the column |
+| `assessment-group` | `close: assessment-group` | Ordinary H2–H4 headings do not end the group |
+| `card` | `close: card` | A heading above the card item level, or an item-level heading declaring another block type |
+| `sequence` | `close: sequence` | A higher-level heading, or a same-level heading declaring another block type |
+| `comparison` | `close: comparison` | A higher-level heading, or a same-level heading declaring another block type; the second item does not automatically close the group |
 
 Same-level headings without a different `as:` declaration add items to heading-based
 containers. Use an explicit closer before following prose or columns that belong

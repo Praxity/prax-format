@@ -64,7 +64,7 @@ design:
 
 Key design fields: `palette` (see values below), `colorMode` (`light`, `dark`, `auto`), `accentHue` (0--360), semantic `color*` values (six-digit hex or opaque numeric `oklch()`), `density` (`compact`, `comfortable`, `spacious`), `blockSpacing` (`compact`, `default`, `spacious`), `navArchetype` (`sidebar`, `bottomBar`, `slides`, `scroll`, `minimal`, `none`), `dividerStyle` (`none`, `thin`, `gradient`, `wave`, `angle`, `curve`), `motionEntrance` (`none`, `fade`, `slide`, `scale`).
 
-Valid palette values (all 13): `standard`, `minimal`, `universal`, `editorial`, `bold`, `cinematic`, `ocean`, `warm`, `dark`, `nature`, `pastel`, `corporate`, `playful`. Some map to the same underlying theme (e.g. `minimal` and `universal` share one base), but all 13 are valid author-facing names.
+Current Studio palette values: `clean`, `waves`, `standard`, `bauhaus`, `campfire`, and `darkroom`. Use these values for new courses.
 
 
 ## Document structure
@@ -355,7 +355,7 @@ Standard markdown pipe-delimited table (separator row `|---|---|` is optional):
 | Q2      | 150     | 90    |
 ```
 
-Add `chart:` to render as a chart: `bar`, `line`, `scatter`, `area`, `radar`, `stacked`. Note: `pie` and `donut` are not supported. Additional keys: `xLabel:`, `yLabel:`, `title:`, `altText:`, `orientation:` (bar only), `sortOrder:`. Chart `colors:` is accepted for compatibility but does not change canonical output.
+Charts are outside the supported authoring set. Use a table for new content.
 
 ### Stats
 
@@ -486,10 +486,10 @@ Uses implicit heading grouping. Typically two items.
 
 ### Card
 
-Cards support `style: none | outline | shaded | primary | secondary` across grid, masonry, and single-card layouts. Set depth separately with `shadow: theme | none | subtle | elevated`. Requires `close: card`.
+Cards support `style: none | outline | shaded | primary | secondary` across grid, masonry, and single-card layouts. Set depth separately with `shadow: theme | none | subtle | elevated`. Use `close: card` before following same-page content.
 
 ```
-### Types of PPE
+## Types of PPE
 as: card
 columns: 3
 style: outline
@@ -535,16 +535,15 @@ The card group heading is not part of the card face. Each item heading starts a 
 
 ### The `close:` keyword
 
-`close:` ends containers whose boundaries cannot be inferred from headings alone:
+Use `close: col`, `close: card`, `close: assessment-group`, `close: accordion`,
+`close: tab`, `close: sequence`, or `close: comparison` to end a container before
+following same-page content. A page break, H1 heading, or end of file closes
+all open containers. A section divider `--` does not close them.
 
-| Required `close:` | Optional `close:` |
-|--------------------|-------------------|
-| `close: col` | `close: accordion` |
-| `close: assessment-group` | `close: tab` |
-| `close: card` | `close: sequence` |
-| | `close: comparison` |
+Heading-based containers can also close at a heading above their item level or a
+different block declaration at the item level. Ordinary H2–H4 headings do not close
+columns or assessment groups. Explicit closers make these boundaries clear.
 
-A `---` page break always closes all open containers automatically, even without explicit `close:`.
 
 
 ## Assessment blocks
@@ -555,11 +554,11 @@ Assessments use a heading for the question, `as:` for the type, and specialized 
 
 | Key | Effect | Default |
 |-----|--------|---------|
-| `points:` | Point value | `1` |
+| `points:` | Point value | omitted |
 | `shuffle:` | Randomize option order | `false` |
-| `attempts:` | Max attempts (0 = unlimited) | `1` |
+| `attempts:` | Max attempts (0 = unlimited) | unlimited for ungraded auto-scored checks; otherwise `1` |
 | `required:` | Must complete to proceed | `false` |
-| `scored:` | Include in scoring | `true` |
+| `scored:` | Include in scoring | `false` |
 
 ### Single choice (choose-one)
 
@@ -790,7 +789,7 @@ close: assessment-group
 | Key | Values | Default |
 |-----|--------|---------|
 | `passingScore:` | percentage (0--100) | none |
-| `mode:` | `all`, `any` | `all` |
+| `mode:` | `all`, `oneOf` | `all` |
 | `buttonLabel:` | text | `Check all` when ungraded; `Submit all` when graded |
 
 
@@ -1021,7 +1020,7 @@ lessons:
   - hazards.prax
   - emergency.prax
 design:
-  palette: ocean
+  palette: waves
   navArchetype: sidebar
 ```
 

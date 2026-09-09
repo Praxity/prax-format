@@ -16,10 +16,23 @@ design:
   accentHue: 220
 ```
 
-Palette aliases are normalized internally. Public presets include:
+Current Studio presets use these source values:
 
-- `standard`, `minimal`, `universal`, `editorial`, `bold`, `cinematic`
-- `ocean`, `warm`, `dark`, `nature`, `pastel`, `corporate`, `playful`
+| Source value | Studio label |
+| --- | --- |
+| `clean` | Minimal |
+| `waves` | Waves |
+| `standard` | Grove |
+| `bauhaus` | Dunes |
+| `campfire` | Campfire |
+| `darkroom` | Plum |
+
+`blueprint` and `marquee` remain supported for existing courses. Older aliases
+also normalize internally: `minimal` maps to `bauhaus`, `universal` and `ocean`
+to `blueprint`, `editorial` and `warm` to `campfire`, `bold` and `playful` to
+`marquee`, `cinematic` and `dark` to `darkroom`, `nature` to `standard`, `pastel`
+to `bauhaus`, and `corporate` to `blueprint`. Use the current source values in new
+courses; the label Minimal corresponds to `clean`, not the legacy `minimal` alias.
 
 Color tokens:
 
@@ -63,6 +76,9 @@ isolated rendering. Intrinsic colours whose identity is the content (for example
 colour-vision-safe chart series) stay with that asset or renderer.
 
 ## Typography
+
+These settings belong inside frontmatter `design:`. The example below shows the
+`typography` object within that design mapping.
 
 - `typography.fontDisplay`: `auto | block | swap | fallback | optional`
 - `typography.body` (font role)
@@ -152,8 +168,9 @@ Unknown block pairs use `normal`, so future block types have a stable fallback.
 Heavy blocks are tables, images, videos, embeds, columns, accordions, tabs,
 assessments, and assessment groups. Heading adjacency wins when a heading introduces a
 heavy block. `density` continues to control component-owned internal spacing and does
-not shrink touch targets or reading rhythm. `blockSpacing` remains accepted for older
-files but no longer flattens published content into one gap. `sectionGap` controls
+not shrink touch targets or reading rhythm. `blockSpacing` scales the gaps while
+preserving the differences between adjacency types: `compact` uses two-thirds of
+the default spacing and `spacious` uses five-thirds. `sectionGap` controls
 alternate/manual section-band separation: values up to `3` are proportional
 multipliers; pixel-era values such as `48` are normalized against the former 48px
 default and then applied to the body-relative `section` token.
@@ -283,7 +300,7 @@ Block defaults; changing a default does not rewrite each block's source.
 title: Incident Response Essentials
 lang: en
 design:
-  palette: universal
+  palette: waves
   colorMode: auto
   accentHue: 205
   typography:

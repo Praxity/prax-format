@@ -29,6 +29,8 @@ for supporting text above a chapter heading. These do not change its document le
 ```
 
 **Parameters:**
+- `display`: `standard | chapter` — visual heading treatment.
+- `kicker` (string) — supporting text above a chapter heading.
 - `layout`: `wide | full | breakout`
 
 ## image

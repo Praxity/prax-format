@@ -32,7 +32,7 @@ lessons:
   - emergency.prax
 
 design:
-  palette: ocean
+  palette: waves
   accentHue: 200
   density: comfortable
   navArchetype: sidebar
@@ -48,7 +48,7 @@ design:
 | `locale` | string | no | inherited | Default locale (`en`, `fr`, etc.) |
 | `theme` | string | no | — | Theme name from `shared/themes/` or built-in |
 | `narrationEnabled` | boolean | no | `false` | Enables block-level narration unless a lesson overrides it |
-| `lessons` | string[] | yes | `[]` | Ordered list of `.prax` lesson filenames |
+| `lessons` | string[] | recommended | auto-discovered | Ordered list of `.prax` lesson filenames. Omitted or empty lists discover files alphabetically. |
 | `design` | object | no | `{}` | Design overrides (same keys as frontmatter `design:`) |
 
 ### `lessons` list
@@ -125,7 +125,7 @@ sidecar rather than lesson frontmatter.
 | `.prax` file on disk but not in `lessons:` | Shown dimmed as "(unlisted)" in editor |
 | Duplicate entry in `lessons:` | Deduplicated on load, first occurrence kept |
 | `course.yaml` missing | Folder treated as non-course |
-| No `lessons:` key | Auto-discover `.prax` files alphabetically |
+| Missing or empty `lessons:` list | Auto-discover `.prax` files alphabetically |
 
 ## Lesson files
 

@@ -2,7 +2,7 @@
 title: Safety Quiz Module
 lang: en
 design:
-  palette: universal
+  palette: clean
   colorMode: light
   accentHue: 210
 ---

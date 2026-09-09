@@ -5,10 +5,10 @@
 Before returning any `.prax` content:
 
 - Confirm frontmatter fences are balanced (`---` ... `---`).
-- Confirm every page has at least one `##` heading.
-- Confirm page breaks are `---` on their own line.
+- Confirm intended visible page headings are authored explicitly.
+- Confirm page breaks use `---`, optionally followed by a navigation label.
 - Confirm assessment markers match question type.
-- Confirm required `close:` statements exist.
+- Confirm container boundaries match the intended structure; `--` does not close containers.
 - Confirm parameter values use valid types.
 - Confirm `as: choice` is used (not `as: choose-one` or `as: choose-many`).
 - Confirm `as: rating` is used for the rate block rather than `as: rate`.
@@ -161,15 +161,15 @@ as: choice
 
 ### Missing `close:` for containers
 
-Some containers require an explicit close statement. Forgetting it will include all following content inside the container.
+Use an explicit close statement before following same-page content that belongs outside the container. A page break, H1 heading, or end of file also closes every container.
 
-| Container | Required close |
+| Container | Explicit closer |
 |---|---|
 | columns | `close: col` |
 | assessment-group | `close: assessment-group` |
 | card, including flip cards using `card: back` | `close: card` |
 
-Wrong:
+Following prose is still inside the second column:
 
 ```prax
 as: col
@@ -177,6 +177,8 @@ First column content.
 
 as: col
 Second column content.
+
+This should be outside the columns.
 ```
 
 Right:
@@ -189,6 +191,8 @@ as: col
 Second column content.
 
 close: col
+
+This is outside the columns.
 ```
 
 ### Wrong `assessment-group` parameter names
@@ -264,21 +268,21 @@ Common type errors:
 - Boolean typed as text: `required: yes` → use `required: true`
 - Wrong feedback indentation: see feedback section above
 
-### Content before first heading
+### Visible page headings
 
-Leading text before the first page heading becomes awkward floating content. Start pages with `##` headings.
+Pages may start with any content. Add an authored heading when a visible page title is intended.
 
 ## Self-check questions
 
-- Does every page section begin with a clear `##` or `###` heading?
+- Do intended visible page titles have authored headings?
 - Are all `as:` values valid for grammar v3?
 - Is `as: choice` used for both single- and multiple-choice questions?
 - Does each rating block use `as: rating` rather than `as: rate`?
 - Are choose-one markers `(x)` / `( )` and choose-many markers `[x]` / `[ ]`?
 - Is `feedback:` on its own line, flush to the left margin?
-- Does every `assessment-group` end with `close: assessment-group`?
-- Does every column set end with `close: col`?
-- Does every standalone `as: card` or flip card using `card: back` have a matching `close: card`?
+- Does each assessment group end before content intended outside it?
+- Does `close: col` precede content intended outside the columns?
+- Do card boundaries keep following page content outside the cards?
 - Is `passingScore` used (not `passing`) in `assessment-group`?
 - Are shared assessment params typed correctly (numbers as numbers, booleans as true/false)?
 - Is frontmatter valid YAML?

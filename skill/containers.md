@@ -2,16 +2,16 @@
 
 ## How containers work
 
-Containers hold child blocks. In v3, containers are opened from headings using `as:` and closed by structure or explicit `close:`. Some containers are implicit (accordion, tabs, sequence) — subsequent sibling headings at the same level become additional items. Others are explicit and need `close:`.
+Containers hold child blocks. In v3, containers are opened from headings using `as:` and closed by structure or explicit `close:`. Some containers are implicit (accordion, tabs, sequence) — subsequent sibling headings at the same level become additional items. Use explicit `close:` markers to end containers before following same-page content.
 
 Key rules:
 
 - Accordion, tab, and sequence items use the opening heading level (`###` in these examples).
 - First heading in a group carries the `as:` value; subsequent siblings join automatically.
 - Columns use standalone `as: col` sections (no heading needed).
-- `close: col` is required for columns.
-- `close: assessment-group` is required for assessment groups.
-- `close: card` is required when opened with standalone `as: card` (including flip cards that use `card: back`).
+- Use `close: col` to return from columns to page flow.
+- Use `close: assessment-group` before content outside the group.
+- Use `close: card` before content outside a card group, including flip cards.
 - A page break (`---`) closes all still-open containers on that page.
 
 ## accordion
@@ -35,7 +35,7 @@ Post local contacts in every lab and near all exits.
 Document all near-miss events within 24 hours using form HS-12.
 ```
 
-Accordion with `separated` style:
+Accordion with `outline` style:
 
 ```prax
 ### Module Overview
@@ -107,7 +107,7 @@ color: warning
 
 ### Practice Question
 
-### Which PPE is required in chemical zones?
+#### Which PPE is required in chemical zones?
 as: choice
 scored: true
 
@@ -119,7 +119,7 @@ feedback: Goggles and lab coat are also required.
 
 ## columns
 
-Columns are standalone — no heading required. Each `as: col` starts a new column. Adjacent columns merge into one `columns` block. Always close with `close: col`.
+Columns are standalone — no heading required. Each `as: col` starts a new column. Adjacent columns merge into one `columns` block. Use `close: col` before following same-page content.
 
 ```prax
 as: col
@@ -260,7 +260,7 @@ Use `slider` for a before/after image comparison.
 
 ## card
 
-Card can be opened from a heading or from a standalone `as: card`. Requires `close: card`.
+Card can be opened from a heading or from a standalone `as: card`. Use `close: card` before following same-page content.
 
 When opened from a heading, that heading is the card group title. Card items are created by headings one level below the group heading. For a `##` card group, each `###` heading starts a new card item and becomes that card's label/header.
 
@@ -334,19 +334,20 @@ Avoid nesting containers inside containers (accordion inside accordion) unless r
 
 ## Closing rules
 
-Summary of which containers require explicit `close:` and which are closed by structure:
+Every container closes at a page break, H1 heading, or end of file.
+For boundaries within a page:
 
-| Container | Close required | Closed by |
+| Container | Explicit closer | Other same-page boundary |
 |---|---|---|
-| accordion | No | `close: accordion`, higher-level heading, different block declaration at the item level, or page break |
-| tab | No | `close: tab`, higher-level heading, different block declaration at the item level, or page break |
-| sequence | No | `close: sequence`, higher-level heading, different block declaration at the item level, or page break |
-| comparison | No | `close: comparison`, higher-level heading, different block declaration at the item level, or page break |
-| columns | Yes | `close: col` |
-| card (any variant, including `card: back`) | Yes | `close: card` |
-| assessment-group | Yes | `close: assessment-group` |
+| accordion | `close: accordion` | Heading above item level or different block declaration at item level |
+| tab | `close: tab` | Heading above item level or different block declaration at item level |
+| sequence | `close: sequence` | Heading above item level or different block declaration at item level |
+| comparison | `close: comparison` | Heading above item level or different block declaration at item level |
+| columns | `close: col` | Ordinary H2–H4 headings stay inside |
+| card, including `card: back` | `close: card` | Heading above item level or different block declaration at item level |
+| assessment-group | `close: assessment-group` | Ordinary H2–H4 headings stay inside |
 
-Page breaks (`---`) close all open containers on the current page regardless of type.
+A section divider `--` does not close containers.
 
 The opening heading sets each heading-based container’s item level; `###` in
 these examples is a convention, not a fixed grammar requirement. Same-level

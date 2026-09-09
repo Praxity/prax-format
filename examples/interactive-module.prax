@@ -2,7 +2,7 @@
 title: Interactive Safety Walkthrough
 lang: en
 design:
-  palette: editorial
+  palette: campfire
   colorMode: light
   accentHue: 24
 ---
@@ -35,6 +35,8 @@ Review overnight incidents and pending actions.
 ### During Shift
 
 Use the checklist and escalate unresolved hazards.
+
+close: tab
 
 as: col
 ### Risks

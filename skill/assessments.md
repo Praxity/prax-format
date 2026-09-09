@@ -443,7 +443,7 @@ Hand Protection:
 
 ## assessment-group
 
-Use `as: assessment-group` on a heading to wrap multiple assessments. The group requires an explicit `close: assessment-group`.
+Use `as: assessment-group` on a heading to wrap multiple assessments. Use `close: assessment-group` before following same-page content. A page break, H1 heading, or end of file also closes the group.
 
 ```prax
 ## Module Checkpoint
@@ -560,7 +560,7 @@ incorrect: Review section 3 of the safety manual before continuing.
 - Is the `as:` value `rating` for the rate block (not `as: rate`)?
 - Is per-option `feedback:` on its own line, flush left, immediately after the option it belongs to?
 - Are `correct:` and `incorrect:` placed after all options (not after any individual option)?
-- Does every `assessment-group` end with `close: assessment-group`?
+- Does each assessment group end before content intended outside it?
 - Is `passingScore` used (not `passing` or `pass-score`) for assessment-group?
 - Are `points`, `attempts`, and `timed` numeric?
 - Are `shuffle` and `required` boolean (`true`/`false`)?

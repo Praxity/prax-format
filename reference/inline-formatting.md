@@ -82,7 +82,7 @@ var: learnerName = "Taylor"
 var: attempts = 0
 ```
 
-Use `camelCase` for variable names. See [document-structure.md](document-structure.md) for extended variable declarations with `type:`, `source:`, and `default:` parameters.
+Use `camelCase` for variable names. See [Variables and logic](../skill/SKILL.md#variables-and-logic) for extended variable declarations with `type:`, `source:`, and `default:` parameters.
 
 ## Lists
 
@@ -172,6 +172,20 @@ English and "Note" in French. The sources retain native ordered-list semantics.
 No link role or keyboard stop is added. W3C's `doc-noteref` role inherits link
 semantics, so it is not used for these plain references.
 [DPUB-ARIA 1.1](https://www.w3.org/TR/dpub-aria-1.1/#doc-noteref)
+
+## Inline icons
+
+Use a Tabler icon name inside `@icon{...}`:
+
+```prax
+@icon{mail} Contact your instructor.
+@icon{star-filled} Save this resource.
+```
+
+Kebab-case names use the outline icon by default; append `-filled` for a filled
+variant. Tabler export names such as `IconMail` and `IconMailFilled` also work.
+Icons are decorative and hidden from screen readers, so keep meaningful text
+beside them. Code spans keep icon syntax literal.
 
 ## Doodles
 

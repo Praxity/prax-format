@@ -32,7 +32,7 @@ Whole-question feedback lines go after all options (not after any individual opt
 
 Both `correct:`/`incorrect:` and per-option `feedback:` can be used together. They are stored as `data.correct` and `data.incorrect` on the block.
 
-A whole-assessment `feedback: <text>` line after the options is also accepted. It is used as a shared fallback if `correct:` or `incorrect:` is not provided.
+A whole-assessment `feedback: <text>` line is also accepted as a shared fallback if `correct:` or `incorrect:` is not provided. Put it with the question parameters before the options, or separate it from the last option with a blank line. A line directly after an option belongs to that option.
 
 ## choose-many
 
@@ -346,7 +346,7 @@ references. It writes `close: assessment-group` after the last member so the nex
 question remains outside the group. Nested assessment headings retain their
 authored level so they remain inside their parent container.
 
-Group multiple assessments. `as: assessment-group` conventionally goes on a `##` heading (H2), which matches how the parser closes implicit groups at heading-level boundaries. Each assessment inside the group uses a `###` heading (H3) as its question title, since the group itself uses a `##` heading (H2).
+Group multiple assessments. Conventionally, put `as: assessment-group` on a `##` heading and use `###` headings for its questions. Ordinary H2–H4 headings do not end the group. Use `close: assessment-group` before following content on the same page; a page break, H1 heading, or the end of the file also closes it.
 
 **Syntax:**
 ```prax
@@ -365,7 +365,7 @@ as: choice
 close: assessment-group
 ```
 
-**`mode: oneOf`** allows assessment choice — the learner picks which question(s) to answer rather than completing all of them. For example, in a group of 5 questions with `mode: oneOf`, the learner can choose any single question to answer.
+**`mode: oneOf`** allows assessment choice — the learner selects one question to answer. For example, in a group of 5 questions with `mode: oneOf`, the learner can choose any single question to answer.
 
 Note: `passingScore:` is the correct parameter name (not `passing:`).
 
@@ -384,9 +384,11 @@ A member question can use `name:` as a logic anchor and `id:` as a durable ident
 
 Members inherit the group’s `layout` (`wide`, `full`, or `breakout`) unless they specify their own layout. Published pages apply this layout before interaction initializes, so activation preserves question widths.
 
-Group progress counts the same committed question results that mark each member complete. After all
-members are complete, the group action is removed and the localized result is announced. Ungraded
-groups default to **Check all**; graded groups default to **Submit all**.
+Group progress counts the same committed question results that mark each member complete. After the required
+members are complete, the group action is removed and the localized result is announced. In
+`mode: all`, ungraded groups default to **Check all** and graded groups to **Submit all**.
+In `mode: oneOf`, only the selected member is shown, submitted, and counted toward the result;
+the defaults are **Check selected** and **Submit selected**.
 
 ## Shared scoring parameters
 
@@ -418,7 +420,8 @@ Decorator parameters add metadata for learning analytics and adaptive behavior:
 | `competency` | text | Competency tag or identifier this question maps to (e.g. `"fire-safety"`). **Not applied yet** — not emitted in xAPI. |
 | `confidence` | boolean | Intended to enable confidence-based marking. **Not applied yet** — no confidence prompt is rendered. |
 | `retrieval` | boolean | Marks this as a retrieval practice question. **Not applied yet** — does not affect analytics. |
-| `feedback` | enum | Feedback display mode. Controls when and how feedback is shown to the learner. |
+| `feedback` | text | Shared authored feedback when no `correct:` or `incorrect:` text is supplied. Legacy mode words `immediate`, `after-submit`, `after-all`, `never`, and `deferred` do not configure feedback timing in published output. |
+| `feedbackMode` | enum | `retry` or `reveal` for choice, match, order, fill-blank, and categorize. See reveal behavior above. |
 | `description` | text | Supporting context shown between the question and response controls. |
 | `display` | enum | `standard` or `scenario`. Use `scenario` when a concise question needs longer context in the same assessment surface. |
 

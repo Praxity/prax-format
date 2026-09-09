@@ -80,6 +80,8 @@ A full-body harness distributes arrest forces across the thighs, pelvis, chest, 
 
 The lanyard, self-retracting lifeline (SRL), or energy absorber that connects the harness to the anchor. Maximum allowable free-fall is 1.8 metres. Always calculate total fall clearance — harness height, lanyard extension, deceleration distance, and safety margin — before beginning work.
 
+close: sequence
+
 --
 
 ### Inspect before use
