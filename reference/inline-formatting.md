@@ -6,6 +6,29 @@
 Use **bold** for emphasis and *italic* for nuance.
 ```
 
+Use `~~removed text~~` for strikethrough and `==marked text==` for a plain
+highlight. Backtick code spans keep their contents literal, including markup.
+
+## Where formatting works
+
+Inline formatting works in prose, headings, note bodies, lists and nested block
+content. Display-field preparation also covers image/audio/video captions,
+audio/video titles, note titles, heading kickers, table headings and cells,
+accordion/tab/card/sequence labels, checklist labels, chart titles and captions,
+statistics labels and captions, and assessment group names. Assessment stems,
+supporting prose and feedback use their child blocks; choice and order labels
+and matching prompts also accept formatting.
+
+URLs, alt text, IDs, code, equation source and grading values remain literal.
+Formatting a displayed answer label does not change its stored answer value.
+Native answer choices and machine-valued fields are not general rich-text containers.
+
+Links may contain decorative formatting, icons and code. Doodles may contain
+other doodles, links and glossary terms. Inside a link label or an interactive
+control label, nested links become label text and glossary terms become
+`term (definition)`, without another interactive control. Accordion and tab
+labels follow this rule. Code remains literal at every nesting level.
+
 ## Links
 
 ```prax
@@ -17,7 +40,7 @@ Standalone links (a link on its own line) can be transformed into other block ty
 ```prax
 [Download the SOP](https://example.com/sop.pdf)
 as: button
-variant: outline
+style: outline
 openInNewTab: true
 ```
 
@@ -41,7 +64,7 @@ For advanced image params (alt text, captions, sizing), use a bare media path on
 /assets/extinguisher-map.png
 alt: Building floor plan with emergency exits highlighted
 caption: Emergency exits marked in green
-size: large
+width: large
 ```
 
 ## Variables
@@ -59,7 +82,7 @@ var: learnerName = "Taylor"
 var: attempts = 0
 ```
 
-Use `camelCase` for variable names. See [document-structure.md](document-structure.md) for extended variable declarations with `type:`, `source:`, and `default:` parameters.
+Use `camelCase` for variable names. See [Variables and logic](../skill/SKILL.md#variables-and-logic) for extended variable declarations with `type:`, `source:`, and `default:` parameters.
 
 ## Lists
 
@@ -110,6 +133,60 @@ Set `design.glossaryPage: false` in the frontmatter to keep the inline tooltips 
 
 Definitions are plain inline text. Do not nest another tooltip, a link, or a block inside one — a definition that needs that much is a paragraph, not a tooltip.
 
+## Numbered sources
+
+Place a source beside the statement it supports:
+
+```prax
+Housing need includes affordability and suitability.@footer{CMHC, Core housing need, 2025.}
+```
+
+The output shows `[1]` in superscript. Numbers follow source order and restart at
+1 on each page. Sources are collected into an ordered list at the bottom of that
+page, before page navigation. They are not added to the course glossary.
+
+To place the list yourself, put `@footer.insert` in its own paragraph. It can sit
+inside an accordion, and includes references both before and after that location:
+
+```prax
+### Sources
+as: accordion
+
+@footer.insert
+
+close: accordion
+```
+
+The first standalone insertion wins; later standalone insertions are empty. With
+no references, no list is shown. An insertion written within a sentence stays
+literal. References inside inline or fenced code stay literal too.
+
+Source text supports bold, italic, inline code and Markdown links. Do not nest
+brace-based inline syntax inside a source. Numbering is generated for rendering,
+never written into the `.prax` file. Use references in formatted prose, headings,
+notes, lists, display captions and container content or labels, not machine
+metadata or grading values.
+
+References are non-interactive text with a screen-reader prefix, "Footnote" in
+English and "Note" in French. The sources retain native ordered-list semantics.
+No link role or keyboard stop is added. W3C's `doc-noteref` role inherits link
+semantics, so it is not used for these plain references.
+[DPUB-ARIA 1.1](https://www.w3.org/TR/dpub-aria-1.1/#doc-noteref)
+
+## Inline icons
+
+Use a Tabler icon name inside `@icon{...}`:
+
+```prax
+@icon{mail} Contact your instructor.
+@icon{star-filled} Save this resource.
+```
+
+Kebab-case names use the outline icon by default; append `-filled` for a filled
+variant. Tabler export names such as `IconMail` and `IconMailFilled` also work.
+Icons are decorative and hidden from screen readers, so keep meaningful text
+beside them. Code spans keep icon syntax literal.
+
 ## Doodles
 
 Inline doodle annotations add hand-drawn decorative marks. Underline doodles use stronger text
@@ -143,3 +220,7 @@ Escape reserved syntax with backslash when you need literal text.
 
 - Keep link text descriptive.
 - Avoid stacking too many inline styles in one sentence.
+
+Plain `==highlight==` has a visible fill even when `highlightStyle: none` disables
+decorative treatment. `@box{text}` surrounds its text; `@arrow{text}` points to
+its own text and works in the final block of a page.

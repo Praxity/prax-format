@@ -17,23 +17,16 @@ design:
 
 ## Palette
 
-The `palette` key sets the overall visual preset. Public names map to internal theme aliases at parse time.
+The `palette` key selects a Studio theme. Use these source values for new courses:
 
-| Public name | Description |
+| Source value | Studio name |
 |---|---|
-| `standard` | Clean, neutral default |
-| `minimal` | Bauhaus-inspired, low decoration |
-| `universal` | High-contrast, accessibility-first |
-| `editorial` | Warm tones, editorial feel |
-| `bold` | High contrast, strong typography |
-| `cinematic` | Dark background, dramatic |
-| `ocean` | Cool blues, structured |
-| `warm` | Warm earth tones |
-| `dark` | Dark-mode default |
-| `nature` | Greens and naturals |
-| `pastel` | Soft, low-saturation |
-| `corporate` | Professional, muted blues |
-| `playful` | Vivid, energetic |
+| `clean` | Minimal |
+| `waves` | Waves |
+| `standard` | Grove |
+| `bauhaus` | Dunes |
+| `campfire` | Campfire |
+| `darkroom` | Plum |
 
 ### Palette and color parameters
 
@@ -313,6 +306,6 @@ design:
     logoScope: all-pages
   componentDefaults:
     note:
-      style: filled
+      style: shaded
 ---
 ```

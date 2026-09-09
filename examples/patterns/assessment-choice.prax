@@ -3,7 +3,7 @@ title: Hazard Control Knowledge Check — Your Choice
 description: Assessment group with mode oneOf, giving learners agency over which question they answer. Use this when your audience has varied roles and no single question type fits everyone.
 lang: en
 design:
-  palette: universal
+  palette: clean
   colorMode: light
   accentHue: 210
 ---
@@ -25,8 +25,7 @@ as: choice
 points: 10
 required: true
 shuffle: true
-
-A spill of cleaning solvent has occurred near an electrical panel. Select the most appropriate first control.
+description: A spill of cleaning solvent has occurred near an electrical panel. Select the most appropriate first control.
 
 (x) Shut off the electrical panel and ventilate the area before cleanup
 feedback: Correct — eliminate the ignition source and reduce vapour concentration before anyone enters.

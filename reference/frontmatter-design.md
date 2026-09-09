@@ -16,10 +16,23 @@ design:
   accentHue: 220
 ```
 
-Palette aliases are normalized internally. Public presets include:
+Current Studio presets use these source values:
 
-- `standard`, `minimal`, `universal`, `editorial`, `bold`, `cinematic`
-- `ocean`, `warm`, `dark`, `nature`, `pastel`, `corporate`, `playful`
+| Source value | Studio label |
+| --- | --- |
+| `clean` | Minimal |
+| `waves` | Waves |
+| `standard` | Grove |
+| `bauhaus` | Dunes |
+| `campfire` | Campfire |
+| `darkroom` | Plum |
+
+`blueprint` and `marquee` remain supported for existing courses. Older aliases
+also normalize internally: `minimal` maps to `bauhaus`, `universal` and `ocean`
+to `blueprint`, `editorial` and `warm` to `campfire`, `bold` and `playful` to
+`marquee`, `cinematic` and `dark` to `darkroom`, `nature` to `standard`, `pastel`
+to `bauhaus`, and `corporate` to `blueprint`. Use the current source values in new
+courses; the label Minimal corresponds to `clean`, not the legacy `minimal` alias.
 
 Color tokens:
 
@@ -64,8 +77,12 @@ colour-vision-safe chart series) stay with that asset or renderer.
 
 ## Typography
 
+These settings belong inside frontmatter `design:`. The example below shows the
+`typography` object within that design mapping.
+
 - `typography.fontDisplay`: `auto | block | swap | fallback | optional`
 - `typography.body` (font role)
+- `typography.code.fontFamily` (font family for inline code and fenced code blocks; defaults to system monospace)
 - `typography.headings` (font role plus optional `h1` through `h6` overrides)
 - `fontFamily` (ordered array of up to four family names)
 - `fontWeight`: `400 | 500 | 600 | 700 | 800`
@@ -80,6 +97,8 @@ typography:
     fontFamily: [Inter, "DM Sans", sans-serif]
     fontWeight: 400
     fontStyle: normal
+  code:
+    fontFamily: ["Fira Code", monospace]
   headings:
     fontFamily: [Inter, "DM Sans", sans-serif]
     fontWeight: 600
@@ -141,6 +160,7 @@ Unknown block pairs use `normal`, so future block types have a stable fallback.
 | text ↔ text or checklist | close |
 | text ↔ note or quote | normal |
 | text ↔ heavy block | section |
+| prose ↔ floated image | normal inline and block-end gutter while prose wraps |
 | consecutive note/quote or heavy blocks | section |
 | divider in either direction | section |
 | text → button / button → text / button → button | close / normal / tight |
@@ -148,8 +168,9 @@ Unknown block pairs use `normal`, so future block types have a stable fallback.
 Heavy blocks are tables, images, videos, embeds, columns, accordions, tabs,
 assessments, and assessment groups. Heading adjacency wins when a heading introduces a
 heavy block. `density` continues to control component-owned internal spacing and does
-not shrink touch targets or reading rhythm. `blockSpacing` remains accepted for older
-files but no longer flattens published content into one gap. `sectionGap` controls
+not shrink touch targets or reading rhythm. `blockSpacing` scales the gaps while
+preserving the differences between adjacency types: `compact` uses two-thirds of
+the default spacing and `spacious` uses five-thirds. `sectionGap` controls
 alternate/manual section-band separation: values up to `3` are proportional
 multipliers; pixel-era values such as `48` are normalized against the former 48px
 default and then applied to the body-relative `section` token.
@@ -198,6 +219,12 @@ platform through `prefers-contrast` and `forced-colors`; there is no course-leve
 - `backgroundTexture`: `none | grain | paper | noise`
 - `highlightStyle`: `none | marker | gradient | scribble`
 
+`dividerStyle` inserts decorative separators before subsequent H2 sections within
+a page, including pages with uniform colours. `none` removes them. With alternate
+or manually assigned section palettes, separators mark the palette boundaries.
+The setting applies in small previews and full preview. It does not change an
+explicit `--` divider block.
+
 ## Image effects
 
 `imageEffects` supports keyed effect objects. A key's presence enables the effect.
@@ -239,20 +266,32 @@ Both entrance motion and Card transitions are disabled when the learner requests
 ```yaml
 design:
   brand:
-    logoUrl: https://example.com/logo-light.svg
-    logoDarkUrl: https://example.com/logo-dark.svg
-    logoPlacement: left
-    logoScope: all-pages
+    logoUrl: /assets/logo-light.svg
+    logoDarkUrl: /assets/logo-dark.svg
+    logoPlacement: header
 ```
 
-- `logoPlacement`: `left | center | hidden`
-- `logoScope`: `all-pages | title-only`
+Studio bundles logos from the project assets folder. The light and dark variants follow the
+learner's selected appearance. Keep both files with the project.
+
+- `logoPlacement`: `sidebar | header | hidden` (default: `header`). Studio labels these
+  Sidebar, Header bar, and Hide in the **Show on** dropdown. The logo sits beside the course
+  title in the selected navigation surface; it does not appear inside page content.
+- The selected surface and course title must be enabled in navigation settings. Sidebar
+  placement remains in the course menu when the sidebar becomes a drawer on smaller screens.
+- Older `left` and `center` placements use the header bar. The old `logoScope` page filter is
+  ignored because branding now belongs to course navigation.
 
 ## Custom code and defaults
 
 - `customCss` (string) — raw author CSS appended to published output. Praxity's contrast and
   reflow validation cannot vouch for styles introduced here; authors must validate that CSS.
 - `componentDefaults` (object)
+
+Component defaults apply to omitted block settings, including nested blocks.
+An explicit setting on a block takes precedence, even when it selects the normal
+unstyled/default value. Studio writes the appropriate keys when you use Design →
+Block defaults; changing a default does not rewrite each block's source.
 
 ## Complete example
 
@@ -261,7 +300,7 @@ design:
 title: Incident Response Essentials
 lang: en
 design:
-  palette: universal
+  palette: waves
   colorMode: auto
   accentHue: 205
   typography:
@@ -304,10 +343,9 @@ design:
       intensity: 20
   imageEffectsAuto: true
   brand:
-    logoUrl: https://example.com/logo-light.svg
-    logoDarkUrl: https://example.com/logo-dark.svg
-    logoPlacement: left
-    logoScope: all-pages
+    logoUrl: /assets/logo-light.svg
+    logoDarkUrl: /assets/logo-dark.svg
+    logoPlacement: header
   componentDefaults: {}
 ---
 ```

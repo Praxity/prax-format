@@ -1,16 +1,14 @@
 ---
 title: Spill Response Scenario
-description: Conditional feedback pattern. The learner chooses a response to a workplace scenario, then sees differentiated follow-up content based on their answer. Uses variables and when: rules to reveal the right feedback block.
+description: Conditional feedback pattern. The learner chooses a response to a workplace scenario, then sees differentiated follow-up content based on their answer. Uses assessment results and if: rules to reveal the right feedback block.
 lang: en
 design:
-  palette: editorial
+  palette: campfire
   colorMode: light
   accentHue: 24
 ---
 
 ## Scenario: Chemical Spill in the Storage Room
-
-var: response = ""
 
 You are working in the chemical storage room when you notice a small puddle forming at the base of a solvent drum. The drum valve appears to have been left open. Two colleagues are working nearby.
 
@@ -21,6 +19,7 @@ style: outline
 
 ### What is your first action?
 as: choice
+name: spillResponse
 points: 3
 required: true
 
@@ -38,13 +37,16 @@ incorrect: Review the spill response procedure. People before product is the gui
 
 ## What Happens Next
 
-when: response is "correct"
+if: block:spillResponse.result is "correct"
 then: show @correctFollowUp
+then: hide @incorrectFollowUp
 
-when: response is "incorrect"
+if: block:spillResponse.result is "incorrect"
 then: show @incorrectFollowUp
+then: hide @correctFollowUp
 
 ### You made the right call
+as: card
 name: correctFollowUp
 hide: true
 
@@ -52,10 +54,13 @@ Clearing the area prevents secondary injuries. Once colleagues are safe, the nex
 
 [Download the Spill Response Checklist](https://example.com/spill-response-checklist.pdf)
 as: button
-variant: outline
+style: outline
 openInNewTab: true
 
+close: card
+
 ### Let's review the procedure
+as: card
 name: incorrectFollowUp
 hide: true
 
@@ -64,9 +69,11 @@ The spill response procedure has four phases: **protect people**, then **contain
 > When in doubt, clear the area first. Containment can wait thirty seconds.
 as: note
 color: accent
-style: filled
+style: shaded
 
 [Review the Spill Response SOP](https://example.com/spill-response-sop)
 as: button
-variant: outline
+style: outline
 openInNewTab: true
+
+close: card

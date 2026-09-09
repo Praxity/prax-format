@@ -68,7 +68,7 @@ A personal fall arrest system (PFAS) has three components that must all be prese
 
 ### Anchorage
 as: sequence
-variant: numbered
+style: numbered
 
 The fixed attachment point — rated to hold a minimum of 22 kN (5,000 lbs) per attached worker. Select an anchor above the work position whenever possible to reduce free-fall distance.
 
@@ -79,6 +79,8 @@ A full-body harness distributes arrest forces across the thighs, pelvis, chest, 
 ### Connecting subsystem
 
 The lanyard, self-retracting lifeline (SRL), or energy absorber that connects the harness to the anchor. Maximum allowable free-fall is 1.8 metres. Always calculate total fall clearance — harness height, lanyard extension, deceleration distance, and safety margin — before beginning work.
+
+close: sequence
 
 --
 
@@ -94,7 +96,7 @@ Inspect every PFAS component at the start of each shift. Remove any component fr
 > A PFAS that has arrested a fall must be immediately removed from service, even if it shows no visible damage.
 as: note
 color: warning
-style: filled
+style: shaded
 
 --
 

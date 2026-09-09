@@ -64,7 +64,7 @@ design:
 
 Key design fields: `palette` (see values below), `colorMode` (`light`, `dark`, `auto`), `accentHue` (0--360), semantic `color*` values (six-digit hex or opaque numeric `oklch()`), `density` (`compact`, `comfortable`, `spacious`), `blockSpacing` (`compact`, `default`, `spacious`), `navArchetype` (`sidebar`, `bottomBar`, `slides`, `scroll`, `minimal`, `none`), `dividerStyle` (`none`, `thin`, `gradient`, `wave`, `angle`, `curve`), `motionEntrance` (`none`, `fade`, `slide`, `scale`).
 
-Valid palette values (all 13): `standard`, `minimal`, `universal`, `editorial`, `bold`, `cinematic`, `ocean`, `warm`, `dark`, `nature`, `pastel`, `corporate`, `playful`. Some map to the same underlying theme (e.g. `minimal` and `universal` share one base), but all 13 are valid author-facing names.
+Current Studio palette values: `clean`, `waves`, `standard`, `bauhaus`, `campfire`, and `darkroom`. Use these values for new courses.
 
 
 ## Document structure
@@ -108,26 +108,25 @@ heading remains visible; no fallback heading is synthesized.
 A page break always closes all open containers. `hide: true` directly after a page break
 hides the whole page.
 
-Put the opening page's explicit navigation label and other fields in frontmatter because page 1
+Put the opening page's explicit navigation label and page defaults in frontmatter because page 1
 has no preceding break. Without an explicit label, its first heading provides the same fallback.
-Optional narration uses an MP3 plus an optional WebVTT transcript:
 
 ```yaml
 firstPage:
+  id: page-e9b588b0-b3cf-4b89-adb8-2648f8306a31
   title: Introduction
-  narration: assets/introduction-a1b2c3.mp3
-  captions: assets/introduction-a1b2c3.vtt
 ```
 
-Put later-page fields directly after the page break:
+Studio adds stable IDs to lesson frontmatter, `firstPage`, later page breaks, and stateful blocks
+so learner state survives source edits and preview regeneration. Preserve every existing `id`;
+never copy an ID to another item. Source without IDs remains valid and Studio fills them in.
 
-```prax
---- Safety Equipment
-narration: assets/safety-d4e5f6.mp3
-captions: assets/safety-d4e5f6.vtt
-```
-
-Narration never autoplays or affects learner progress. A pronunciation lexicon may be stored in
+Narration is a Studio-managed layer in the project-root `narration.yaml`; it is not `.prax`
+grammar. Generate clean visible content in `.prax`. Use Studio for narration scripts, cues,
+anchors, generation settings, and audio. The CLI reads the sidecar when it bundles the course.
+Enable playback with `narrationEnabled: true` in `course.yaml`. Narration never autoplays or
+affects learner progress.
+A pronunciation lexicon may be stored in
 lesson frontmatter or, with the same shape, in `course.yaml`:
 
 ```yaml
@@ -165,6 +164,11 @@ Four patterns create blocks:
 
 Blank lines between parameters and content are optional.
 
+Use `style:` for visual treatments and `orientation:` for direction. Sequence
+uses `style: none` for its unnumbered treatment. Older `variant:` spellings
+remain readable; generate `style:` in new source. Generic `reveal:` is retired;
+use block interactions or conditional visibility instead.
+
 ### Universal parameters
 
 These keys work on any block:
@@ -174,7 +178,6 @@ These keys work on any block:
 | `name:` | Unique identifier for targeting (logic rules, anchor links) |
 | `layout:` | Width override: `wide`, `full`, `breakout` |
 | `hide:` | `true` to hide from rendered output |
-| `reveal:` | Narration time (seconds or `MM:SS`), or `each` to reveal list items one at a time |
 | `visible:` | Conditional visibility expression (e.g. `visible: passedQuiz`) |
 | `entrance:` | Animation: `none`, `fade`, `slide`, `scale` |
 
@@ -263,18 +266,18 @@ as: note
 title: Safety reminder
 icon: alert-triangle
 color: warning
-style: filled
+style: shaded
 ```
 
 `color:` options are `accent` (default), `primary`, `secondary`, `success`, `warning`,
 `error`, and `grey`. They publish as Note, Info, Info, Success, Warning, Warning, and Tip
 respectively when `title:` is omitted.
-`style: outline` is low emphasis; `filled` is high emphasis. Legacy `light` maps to low
-emphasis and `shaded` to high emphasis. `title:` overrides the visible label. `icon:` accepts any
+`style: outline` has a transparent background; `shaded` has a semantic tinted fill. Legacy
+`light` maps to `outline` and `filled` to `shaded`. `title:` overrides the visible label. `icon:` accepts any
 kebab-case [Tabler Icons](https://tabler.io/icons) outline icon name, such as `thinking-high` or
 `sparkles`; use `none` for no icon, or omit it to derive the icon from the color. Exports embed only
 the icons used by the document and do not require an icon CDN.
-Every treatment keeps a tint and the same 1px semantic border. Legacy `emoji` values remain
+Both treatments keep the same 1px semantic border. Legacy `emoji` values remain
 parseable but published output uses the project icon.
 
 ### Quote
@@ -291,6 +294,8 @@ sourceUrl: https://news.stanford.edu/stories/2005/06/youve-got-find-love-jobs-sa
 Keys: `speaker:` (person or organisation), `work:` (title, rendered as `<cite>`), and
 `sourceUrl:` (visible link and blockquote `cite` URL). Quotes have one unfilled visual
 treatment with a logical start rule and one hanging opening mark.
+Use `style: none | outline | shaded | primary | secondary` for an unstyled quote, a transparent full border, a neutral surface, or a brand tint. Omit style to retain the original start border. These surfaces preserve the blockquote and citation semantics.
+
 Legacy `attribution` maps to `speaker`; legacy `decorator`, `size`, and pull-quote `style`
 values are accepted but ignored without dropping quote content.
 
@@ -322,11 +327,11 @@ A standalone link with `as: button`:
 ```
 [Download Safety Manual](https://example.com/manual.pdf)
 as: button
-variant: outline
+style: outline
 openInNewTab: true
 ```
 
-`variant:` options: `filled` (default), `outline`, `light`. `openInNewTab:` defaults to `false`.
+`style:` options: `filled` (default), `outline`, `light`. `openInNewTab:` defaults to `false`.
 
 ### Bookmark (from link)
 
@@ -350,7 +355,24 @@ Standard markdown pipe-delimited table (separator row `|---|---|` is optional):
 | Q2      | 150     | 90    |
 ```
 
-Add `chart:` to render as a chart: `bar`, `line`, `scatter`, `area`, `radar`, `stacked`. Note: `pie` and `donut` are not supported. Additional keys: `xLabel:`, `yLabel:`, `title:`, `altText:`, `orientation:` (bar only), `sortOrder:`, `colors:`.
+Charts are outside the supported authoring set. Use a table for new content.
+
+### Stats
+
+Write one statistic per table row. Put the value in the first cell and its label in the remaining cells.
+
+```
+| Over 1 in 4 | Indigenous households have experienced homelessness |
+| 3x | the rate experienced by the total population |
+| 35% | people counted as homeless who identified as Indigenous |
+| 5% | of the national population identified as Indigenous |
+as: stats
+columns: 2
+size: large
+caption: Source: [Source title](https://example.com)
+```
+
+Set `size:` to `default`, `large`, or `very-large`. It changes the value only. Studio applies the heading font, heavy weight, and contrast-safe accent text color. This scale is separate from heading levels, so a value can render larger than an `h1`. Do not add a `color:` parameter; stats do not support one. Set `columns:` to `2`, `3`, or `4`. Studio chooses up to four columns when it is omitted. One row renders as a statement, and two or more rows render as a grid.
 
 ### Embed
 
@@ -372,7 +394,7 @@ Containers group content. The `as:` key on a heading transforms it into a contai
 ```
 ### What is a learning outcome?
 as: accordion
-style: contained
+style: shaded
 
 A learning outcome describes what a learner will be able to do
 after completing instruction.
@@ -390,7 +412,7 @@ Only the first heading needs `as: accordion`. Subsequent headings at the same le
 
 | Key | Values | Default |
 |-----|--------|---------|
-| `style:` | `default`, `contained`, `separated` | `default` |
+| `style:` | `none`, `outline`, `shaded`, `primary`, `secondary` | original separators |
 | `allowMultipleOpen:` | `true`/`false` | `false` |
 
 ### Tabs
@@ -413,7 +435,7 @@ Same grouping rules as accordion. Only the first heading needs `as: tab`.
 ```
 ### 1. Design the grammar
 as: sequence
-variant: timeline
+style: timeline
 
 Define the syntax rules...
 
@@ -424,7 +446,7 @@ Write the tokenizer...
 
 | Key | Values | Default |
 |-----|--------|---------|
-| `variant:` | `numbered`, `timeline`, `plain` | `numbered` |
+| `style:` | `numbered`, `timeline`, `none` | `numbered` |
 | `orientation:` | `vertical`, `horizontal` | `vertical` |
 
 ### Columns
@@ -464,10 +486,10 @@ Uses implicit heading grouping. Typically two items.
 
 ### Card
 
-A grid of styled cards (`columns:` number, `style:` `outline`/`filled`/`elevated`). Requires `close: card`.
+Cards support `style: none | outline | shaded | primary | secondary` across grid, masonry, and single-card layouts. Set depth separately with `shadow: theme | none | subtle | elevated`. Use `close: card` before following same-page content.
 
 ```
-### Types of PPE
+## Types of PPE
 as: card
 columns: 3
 style: outline
@@ -482,6 +504,8 @@ close: card
 ```
 
 Use `card: back` for front/back behavior. Content before `card: back` is the front; content after it is the back.
+
+Card item labels are semantic headings by default and keep their authored level. Standalone card groups use level 3 unless `headingLevel: 2` through `headingLevel: 6` is set. Use `headings: false` for presentation-only or storytelling cards whose labels should not appear in heading navigation.
 
 ```
 ## Safety Terms
@@ -511,16 +535,15 @@ The card group heading is not part of the card face. Each item heading starts a 
 
 ### The `close:` keyword
 
-`close:` ends containers whose boundaries cannot be inferred from headings alone:
+Use `close: col`, `close: card`, `close: assessment-group`, `close: accordion`,
+`close: tab`, `close: sequence`, or `close: comparison` to end a container before
+following same-page content. A page break, H1 heading, or end of file closes
+all open containers. A section divider `--` does not close them.
 
-| Required `close:` | Optional `close:` |
-|--------------------|-------------------|
-| `close: col` | `close: accordion` |
-| `close: assessment-group` | `close: tab` |
-| `close: card` | `close: sequence` |
-| | `close: comparison` |
+Heading-based containers can also close at a heading above their item level or a
+different block declaration at the item level. Ordinary H2–H4 headings do not close
+columns or assessment groups. Explicit closers make these boundaries clear.
 
-A `---` page break always closes all open containers automatically, even without explicit `close:`.
 
 
 ## Assessment blocks
@@ -531,11 +554,11 @@ Assessments use a heading for the question, `as:` for the type, and specialized 
 
 | Key | Effect | Default |
 |-----|--------|---------|
-| `points:` | Point value | `1` |
+| `points:` | Point value | omitted |
 | `shuffle:` | Randomize option order | `false` |
-| `attempts:` | Max attempts (0 = unlimited) | `1` |
+| `attempts:` | Max attempts (0 = unlimited) | unlimited for ungraded auto-scored checks; otherwise `1` |
 | `required:` | Must complete to proceed | `false` |
-| `scored:` | Include in scoring | `true` |
+| `scored:` | Include in scoring | `false` |
 
 ### Single choice (choose-one)
 
@@ -766,7 +789,7 @@ close: assessment-group
 | Key | Values | Default |
 |-----|--------|---------|
 | `passingScore:` | percentage (0--100) | none |
-| `mode:` | `all`, `any` | `all` |
+| `mode:` | `all`, `oneOf` | `all` |
 | `buttonLabel:` | text | `Check all` when ungraded; `Submit all` when graded |
 
 
@@ -797,7 +820,7 @@ as: signature
 mode: draw
 ```
 
-`mode:` options: `draw` (default), `type`.
+`mode:` options: `draw` (default), `type`. This selects the initial method; both draw and type remain available.
 
 ## Inline formatting
 
@@ -896,7 +919,7 @@ color: accent
 
 ### Head Protection
 as: accordion
-style: contained
+style: shaded
 
 Hard hats protect against falling objects. Inspect for cracks before use.
 
@@ -957,6 +980,7 @@ mode: draw
 | Note callout | `> text` + `as: note` |
 | Quote | `> text` + `attribution: Author` |
 | Button | `[text](url)` + `as: button` |
+| Stats | `\| value \| label \|` + `as: stats` |
 | Accordion | `### Title` + `as: accordion` |
 | Tabs | `### Title` + `as: tab` |
 | Columns | `as: col` ... `close: col` |
@@ -989,15 +1013,19 @@ The manifest defines lesson order, course metadata, and shared design:
 
 ```yaml
 title: Safety Training Fundamentals
+id: 4b827bfd-f5ea-4ba6-a8aa-5fb5113cdef4
 locale: en
 lessons:
   - intro.prax
   - hazards.prax
   - emergency.prax
 design:
-  palette: ocean
+  palette: waves
   navArchetype: sidebar
 ```
+
+Preserve the Studio-managed course `id`. Give a copied course a new ID only when it should have
+independent learner state.
 
 Each `.prax` file is a standalone lesson. Settings cascade: `course.yaml` design applies to all lessons unless a lesson's frontmatter overrides it. See `reference/course-manifest.md` for the full schema.
 

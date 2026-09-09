@@ -2,26 +2,26 @@
 
 ## How containers work
 
-Containers hold child blocks. In v3, containers are opened from headings using `as:` and closed by structure or explicit `close:`. Some containers are implicit (accordion, tabs, sequence) — subsequent sibling headings at the same level become additional items. Others are explicit and need `close:`.
+Containers hold child blocks. In v3, containers are opened from headings using `as:` and closed by structure or explicit `close:`. Some containers are implicit (accordion, tabs, sequence) — subsequent sibling headings at the same level become additional items. Use explicit `close:` markers to end containers before following same-page content.
 
 Key rules:
 
-- Accordion, tab, and sequence items are `###` headings.
+- Accordion, tab, and sequence items use the opening heading level (`###` in these examples).
 - First heading in a group carries the `as:` value; subsequent siblings join automatically.
 - Columns use standalone `as: col` sections (no heading needed).
-- `close: col` is required for columns.
-- `close: assessment-group` is required for assessment groups.
-- `close: card` is required when opened with standalone `as: card` (including flip cards that use `card: back`).
+- Use `close: col` to return from columns to page flow.
+- Use `close: assessment-group` before content outside the group.
+- Use `close: card` before content outside a card group, including flip cards.
 - A page break (`---`) closes all still-open containers on that page.
 
 ## accordion
 
-Accordion items are `###` headings with `as: accordion` on the first heading. Subsequent sibling headings at the same level join automatically.
+Accordion items are headings with `as: accordion` on the first heading. Subsequent sibling headings at the same level join automatically.
 
 ```prax
 ### Hazard Signals
 as: accordion
-style: contained
+style: shaded
 allowMultipleOpen: false
 
 Red indicates immediate danger. Stop all nearby work.
@@ -35,12 +35,12 @@ Post local contacts in every lab and near all exits.
 Document all near-miss events within 24 hours using form HS-12.
 ```
 
-Accordion with `separated` style:
+Accordion with `outline` style:
 
 ```prax
 ### Module Overview
 as: accordion
-style: separated
+style: outline
 
 Introduction to risk identification and control.
 
@@ -49,18 +49,20 @@ Introduction to risk identification and control.
 By the end, learners can categorize hazards by type and severity.
 ```
 
+Omitting style preserves the original separator lines. Explicit `none` removes those lines. Legacy `default`, `contained` and `separated` retain their original treatment, but new authoring uses the five surface styles.
+
 ### accordion parameters
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `style` | enum | `default`, `contained`, `separated` | default | Visual treatment of accordion panels |
+| `style` | enum | `none`, `outline`, `shaded`, `primary`, `secondary` | original separators | Surface treatment: unstyled, transparent border, neutral fill, or brand tint |
 | `allowMultipleOpen` | boolean | true / false | false | Allow multiple panels open simultaneously |
 
-Planned style variants: `flip`, `stepped`, `plain`.
+
 
 ## tabs
 
-Tab items are `###` headings with `as: tab` on the first heading. Subsequent sibling headings at the same level join the same tab group automatically.
+Tab items are headings with `as: tab` on the first heading. Subsequent sibling headings at the same level join the same tab group automatically.
 
 ```prax
 ### Before Shift
@@ -79,7 +81,8 @@ Log any observations in the safety management system.
 
 ### tabs parameters
 
-Tabs have no additional visual-treatment parameters beyond the universal parameters.
+Tabs support `style: default|outline|pills` (default: `default`) and
+`orientation: horizontal|vertical` (default: `horizontal`).
 The tab strip and panel share a neutral surface and continuous hairline boundary. Arrow keys move
 focus between tabs; Enter or Space activates the focused tab.
 
@@ -94,7 +97,7 @@ Assessments and content blocks can both appear inside accordion items:
 ```prax
 ### Safety Quiz Prep
 as: accordion
-style: contained
+style: shaded
 
 Review these key definitions before taking the quiz.
 
@@ -104,7 +107,7 @@ color: warning
 
 ### Practice Question
 
-### Which PPE is required in chemical zones?
+#### Which PPE is required in chemical zones?
 as: choice
 scored: true
 
@@ -116,7 +119,7 @@ feedback: Goggles and lab coat are also required.
 
 ## columns
 
-Columns are standalone — no heading required. Each `as: col` starts a new column. Adjacent columns merge into one `columns` block. Always close with `close: col`.
+Columns are standalone — no heading required. Each `as: col` starts a new column. Adjacent columns merge into one `columns` block. Use `close: col` before following same-page content.
 
 ```prax
 as: col
@@ -162,7 +165,7 @@ Sequence is heading-driven like accordion. The first heading carries the `as: se
 ```prax
 ### 1. Identify Hazard
 as: sequence
-variant: numbered
+style: numbered
 orientation: vertical
 alignment: left
 
@@ -186,7 +189,7 @@ Verify controls remain effective over time.
 ```prax
 ### 2020 — Foundation
 as: sequence
-variant: timeline
+style: timeline
 
 Established initial safety protocols.
 
@@ -199,12 +202,12 @@ Added chemical handling procedures.
 Deployed IoT monitoring sensors.
 ```
 
-### Plain
+### No markers
 
 ```prax
 ### Observation
 as: sequence
-variant: plain
+style: none
 
 Note conditions before starting work.
 
@@ -221,13 +224,12 @@ Confirm controls held throughout.
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `variant` | enum | `numbered`, `timeline`, `plain` | numbered | Visual style of the sequence |
+| `style` | enum | `numbered`, `timeline`, `none` | numbered | Visual style of the sequence |
 | `orientation` | enum | `vertical`, `horizontal` | vertical | Layout direction |
 | `alignment` | enum | `left`, `center`, `right` | left | Text alignment within items |
 | `distribution` | enum | `uniform`, `scaled` | uniform | Controls spacing between steps |
 | `scrollable` | boolean | true / false | false | Whether the sequence is scrollable |
 
-Planned variant values: `scroll-journey`, `carousel`, `stepper`, `hero`.
 
 ## comparison
 
@@ -252,13 +254,13 @@ is only a fallback when a stored column has no heading; the preset accent rule a
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `style` | enum | `side-by-side` | side-by-side | Layout mode |
+| `style` | enum | `side-by-side`, `slider` | side-by-side | Visual treatment |
 
-Planned style variants: `slider`, `toggle`, `diff`.
+Use `slider` for a before/after image comparison.
 
 ## card
 
-Card can be opened from a heading or from a standalone `as: card`. Requires `close: card`.
+Card can be opened from a heading or from a standalone `as: card`. Use `close: card` before following same-page content.
 
 When opened from a heading, that heading is the card group title. Card items are created by headings one level below the group heading. For a `##` card group, each `###` heading starts a new card item and becomes that card's label/header.
 
@@ -274,6 +276,8 @@ close: card
 ```
 
 Use `card: back` for front/back behavior. Content before `card: back` is the front; content after it is the back.
+
+Card item labels are semantic headings by default and keep their authored level. Standalone card groups use level 3 unless `headingLevel: 2` through `headingLevel: 6` is set. Use `headings: false` for presentation-only or storytelling cards whose labels should not appear in heading navigation.
 
 ```prax
 ## Safety Terms
@@ -301,19 +305,21 @@ close: card
 
 Do not put a same-level item heading immediately after `card: back` unless you mean to start the next card. Use paragraph text or a lower-level heading for back-face content. Headingless standalone `as: card` is useful for one card; multiple cards in a group need item headings.
 
+Legacy card `filled` remains accepted as `shaded`; `accent` becomes `primary`. Legacy tinted cards using `color: primary` or `color: secondary` serialize to the corresponding named surface style. Do not offer `color` separately for new cards.
+
 ### card parameters
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
 | `columns` | number | any integer | — | Number of grid columns |
 | `layout` | enum | `single`, `grid`, `masonry` | grid | Card presentation mode |
-| `style` | enum | `none`, `outline`, `filled` | none | Card item chrome treatment |
+| `style` | enum | `none`, `outline`, `shaded`, `primary`, `secondary` | none | Surface treatment on ordinary cards, flip faces and single-card decks |
 | `shadow` | enum | `theme`, `none`, `subtle`, `elevated` | theme | Card depth treatment |
 | `advance` | number | any number >= 0 | 0 | Auto-advance interval in seconds for `layout: single` |
 | `transition` | enum | `none`, `fade`, `slide`, `zoom` | fade | Transition style for `layout: single` |
 | `showProgress` | boolean | true / false | true | Show progress controls for `layout: single` |
 | `shuffle` | boolean | true / false | false | Randomize card order |
-| `trackCompletion` | boolean | true / false | false | Track interaction/completion for cards |
+| `trackCompletion` | boolean | true / false | false | Track interaction/completion for `layout: single` |
 
 ## Nesting rules
 
@@ -328,16 +334,21 @@ Avoid nesting containers inside containers (accordion inside accordion) unless r
 
 ## Closing rules
 
-Summary of which containers require explicit `close:` and which are closed by structure:
+Every container closes at a page break, H1 heading, or end of file.
+For boundaries within a page:
 
-| Container | Close required | Closed by |
+| Container | Explicit closer | Other same-page boundary |
 |---|---|---|
-| accordion | No | Next `##` heading or page break |
-| tab | No | Next `##` heading or page break |
-| sequence | No | Next `##` heading or page break |
-| comparison | No | Next `##` heading or page break |
-| columns | Yes | `close: col` |
-| card (any variant, including `card: back`) | Yes | `close: card` |
-| assessment-group | Yes | `close: assessment-group` |
+| accordion | `close: accordion` | Heading above item level or different block declaration at item level |
+| tab | `close: tab` | Heading above item level or different block declaration at item level |
+| sequence | `close: sequence` | Heading above item level or different block declaration at item level |
+| comparison | `close: comparison` | Heading above item level or different block declaration at item level |
+| columns | `close: col` | Ordinary H2–H4 headings stay inside |
+| card, including `card: back` | `close: card` | Heading above item level or different block declaration at item level |
+| assessment-group | `close: assessment-group` | Ordinary H2–H4 headings stay inside |
 
-Page breaks (`---`) close all open containers on the current page regardless of type.
+A section divider `--` does not close containers.
+
+The opening heading sets each heading-based container’s item level; `###` in
+these examples is a convention, not a fixed grammar requirement. Same-level
+headings add items. Use explicit closers to put following prose or columns outside.

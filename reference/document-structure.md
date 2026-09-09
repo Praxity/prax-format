@@ -6,6 +6,7 @@ Frontmatter is optional YAML at the top of the file.
 
 ```prax
 ---
+id: lesson-8f565705-3918-4ef7-9710-3933e3485ad8
 title: Workplace Safety 101
 lang: en
 kicker: Module 1
@@ -29,8 +30,8 @@ kicker: Module 1
 ```
 
 When `kicker` is omitted or blank, no kicker is shown. In a multi-file course, `course.yaml`
-supplies the overall course title while each lesson's `title` and optional `kicker` supply its
-navigation identity.
+supplies the overall course title and each lesson's `title` labels its navigation link.
+Lesson kickers are omitted from the multi-file course outline.
 
 ## H1 heading — module/lesson title
 
@@ -71,30 +72,63 @@ hide: true
 # Visible page title
 ```
 
-Page 1 has no preceding page break, so its explicit navigation label and other page fields live
-in frontmatter. Without an explicit label, its first heading provides the same fallback. Narration
-is an optional MP3 asset with an optional WebVTT transcript:
+Page 1 has no preceding page break, so its explicit navigation label and page defaults live in
+frontmatter. Without an explicit label, its first heading provides the same fallback.
 
 ```yaml
 ---
 title: Example lesson
 firstPage:
   title: Introduction
-  narration: assets/introduction-a1b2c3.mp3
-  captions: assets/introduction-a1b2c3.vtt
 ---
 ```
 
-Later pages put the same fields after the page break that starts the page:
+## Stable content IDs
+
+Stable IDs connect learner progress to the same lesson, page, and interactive block after
+source edits or preview regeneration. Preserve existing IDs; do not copy one onto another item
+or change it to rename content.
+
+An ID is 1–128 ASCII letters, numbers, underscores, or hyphens and must start with a letter or
+number. IDs must be unique across the course. Studio writes a missing lesson `id` into
+frontmatter. It stores generated page and stateful block IDs in the project's
+`.praxity/content-identity.json` file, so they do not appear in the editor or `.prax` source.
+Stateful blocks include accordion, assessment, assessment group, button, card, checklist,
+image comparison, labeled graphic, rating, sequence, signature, and tabs.
+
+Explicit IDs remain supported. Use `firstPage.id` for the first page, `id` after a page break
+for later pages, or a block's `id` parameter:
 
 ```prax
---- Handling a complaint
-narration: assets/complaint-d4e5f6.mp3
-captions: assets/complaint-d4e5f6.vtt
+--- Next steps
+id: next-steps
+
+### Confirm completion
+as: signature
+id: confirm-completion
 ```
 
-`narration` must point to audio and `captions` must point to WebVTT. Narration never
-autoplays or affects completion, scoring, content access, or navigation.
+Use `name:` when authoring a block anchor for logic. Generated runtime identities do not need
+an authored name or ID.
+
+When opening older Studio source, Studio records canonical generated page and block UUIDs in
+project metadata before removing their source rows. It preserves referenced IDs, custom IDs,
+and noncanonical forms. Older source without IDs remains valid.
+
+Keep `.praxity/content-identity.json` when copying or backing up a project. Copying a clean
+`.prax` alone into another project creates new generated page and block identities. Explicit
+source IDs travel with the file. Legacy source still carrying generated UUIDs retains those
+values during migration. Studio's rename and Save As commands preserve generated identities.
+Unsaved previews do not replace saved identity records.
+
+Studio preserves identities when it can match content unambiguously. Ambiguous duplicate or
+external edits receive new IDs rather than inheriting another block's saved learner state.
+
+Studio narration is a project layer stored in `narration.yaml`, not grammar syntax. Studio owns
+that machine-managed sidecar and links its scripts and audio to the visible page title and logical
+blocks. Authors and agents should edit the `.prax` source for visible content, then use Studio to
+edit narration. The CLI reads the same sidecar and bundles referenced MP3 and optional WebVTT
+assets. Narration never autoplays or affects completion, scoring, content access, or navigation.
 
 An optional pronunciation lexicon maps exact written terms to spoken aliases during online
 narration generation. It does not change learner-visible text:
@@ -145,9 +179,9 @@ as: choice
 
 Common uses:
 
-- `as: choice`, `as: match`, `as: order`, `as: free-response`
+- `as: choice`, `as: match`, `as: order`, `as: free-response`, `as: rating`
 - `as: accordion`, `as: tab`, `as: sequence`, `as: comparison`
-- `as: signature`, `as: checklist`
+- `as: stats`, `as: signature`, `as: checklist`
 
 ## Section divider vs page break
 
@@ -173,6 +207,17 @@ You can organize large files using `##` page headings and container sections (`#
 
 ## Universal parameters
 
+Use `style:` for a block's visual treatment and `orientation:` for its direction.
+Values are specific to the block; a style supported by one block need not apply to
+another. Button, tabs, and sequence accept the older `variant:` spelling for
+compatibility, but new source uses `style:`. For sequences, `none` replaces the
+older `plain` label. Studio writes the canonical spelling when serializing.
+
+Generic `reveal:` is retired. Existing values remain readable and preserve the
+content, which is displayed normally. Use a sequence, accordion, or card for
+learner-controlled disclosure, or logic for visibility based on a condition.
+Assessment `feedbackMode: reveal` and block-specific disclosure are unaffected.
+
 All manifest blocks support the following parameters:
 
 | Parameter | Type | Valid values | Description |
@@ -180,12 +225,11 @@ All manifest blocks support the following parameters:
 | `layout` | enum | `wide \| full \| breakout` | Overrides the default content width for this block |
 | `name` | string | any | Assigns a name to the block for cross-referencing. Used in logic rules (`then: show @myBlock`), assessment-group scoring, and anchor links. Use `camelCase` with no spaces — e.g. `name: safetyTip`. Avoid colons, quotes, and special characters. |
 | `hide` | boolean | `true \| false` | Hides the block from rendered output. The block is preserved in the grammar and can be shown later via logic rules (`then: show @name`). |
-| `reveal` | number, `MM:SS`, or `each` | none | On a narrated page, a number or timestamp reveals the block at that playback time. On a bulleted or numbered list, `reveal: each` shows one item at a time with an accessible learner control. It does not apply to containers such as accordions and is independent of the theme's entrance Motion setting. |
 | `visible` | condition expression | always | Conditional visibility based on variable state. Example: `visible: score >= 80`. The block renders only when the condition is true. |
 | `entrance` | enum | `fade \| slide \| scale \| none` | Block entrance animation; overrides course-level `motionEntrance`. |
 | `entranceDuration` | CSS duration | `250ms` | Duration of the entrance animation. |
 
-`layout` is the only universal parameter defined in the manifest (`UNIVERSAL_PARAMETERS`). The others (`name`, `hide`, `reveal`, `visible`, `entrance`, `entranceDuration`) are runtime workflow metadata recognized by the published-output viewer.
+`layout` is the universal parameter in the manifest. Narration lives in the project sidecar, not block parameters. The others (`name`, `hide`, `visible`, `entrance`, `entranceDuration`) are runtime workflow metadata recognized by the published-output viewer.
 
 ## Escaping reserved lines
 

@@ -1,9 +1,9 @@
 ---
 title: Full .prax Feature Tour
-description: Demonstrates every grammar-supported block type. Blocks marked with (Cloud) require Praxity Studio Cloud publish.
+description: Demonstrates supported content blocks, containers, assessments, and interactions.
 lang: en
 design:
-  palette: bold
+  palette: bauhaus
   colorMode: auto
   accentHue: 196
   typography:
@@ -63,8 +63,7 @@ height: 420
 as: bookmark
 
 > Consistency beats speed when risk is high.
-attribution: Safety Lead
-decorator: line-left
+speaker: Safety Lead
 
 > Use controls before relying on memory.
 as: note
@@ -83,7 +82,7 @@ $$
 
 [Open SOP Portal](https://example.com/sop)
 as: button
-variant: filled
+style: filled
 openInNewTab: true
 
 | Area | Incidents | Near Misses |
@@ -96,9 +95,6 @@ openInNewTab: true
 | --- | --- |
 | Q1 | 12 |
 | Q2 | 9 |
-chart: bar
-xLabel: Quarter
-yLabel: Findings
 
 --
 
@@ -106,7 +102,7 @@ yLabel: Findings
 
 ### Identification
 as: accordion
-style: separated
+style: outline
 
 Document what happened, where, and who is exposed.
 
@@ -131,6 +127,8 @@ Capture new hazards quickly.
 
 Confirm all incidents are documented.
 
+close: tab
+
 as: col
 ### Hazards
 - Chemical
@@ -147,7 +145,7 @@ close: col
 
 ### Step 1
 as: sequence
-variant: numbered
+style: numbered
 
 Identify the issue.
 
@@ -305,5 +303,10 @@ var: attempts = 0
 var: passedCheckpoint = false
 var: learnerName = "Learner"
 
-when: passedCheckpoint is false
+if: passedCheckpoint is false
 then: show @remediation
+
+> Review the checkpoint questions before continuing.
+as: note
+name: remediation
+hide: true

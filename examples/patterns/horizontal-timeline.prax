@@ -3,7 +3,7 @@ title: Incident Response Process
 description: Horizontal timeline showing a linear process. Use breakout layout so the full sequence is visible without wrapping on standard screens.
 lang: en
 design:
-  palette: universal
+  palette: clean
   colorMode: light
   accentHue: 22
 ---
@@ -14,7 +14,7 @@ Every reported incident follows the same five-step process. The horizontal layou
 
 ### Contain
 as: sequence
-variant: timeline
+style: timeline
 orientation: horizontal
 layout: breakout
 

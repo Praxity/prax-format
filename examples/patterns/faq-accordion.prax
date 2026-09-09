@@ -3,7 +3,7 @@ title: Workplace Safety FAQ
 description: Common questions about safety policy, reporting, and PPE — answered in a scannable accordion. Learners open only what they need.
 lang: en
 design:
-  palette: universal
+  palette: clean
   colorMode: light
   accentHue: 210
 ---
@@ -14,7 +14,7 @@ Use this FAQ when learners need reference material rather than a guided walkthro
 
 ### Who is responsible for reporting a hazard?
 as: accordion
-style: contained
+style: shaded
 allowMultipleOpen: true
 
 Every worker is responsible for reporting hazards immediately. You do not need to wait for a supervisor. Use the incident reporting app or the paper form at each zone entry point.

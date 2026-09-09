@@ -1,6 +1,6 @@
-# Block Index
+# Block index
 
-This index is generated from `packages/grammar/src/manifest.ts` by `docs/prax-format/scripts/generate-block-index.mjs`.
+This index lists every authoring keyword in Studio's block manifest. It is generated from `packages/grammar/src/manifest.ts` by `docs/prax-format/scripts/generate-block-index.mjs`.
 
 | Block | Category | Syntax | Reference |
 |---|---|---|---|
@@ -14,12 +14,16 @@ This index is generated from `packages/grammar/src/manifest.ts` by `docs/prax-fo
 | bookmark | Content | `as: bookmark` | [blocks-content.md#bookmark](blocks-content.md#bookmark) |
 | note | Content | `as: note` | [blocks-content.md#note](blocks-content.md#note) |
 | quote | Content | `> quote` | [blocks-content.md#quote](blocks-content.md#quote) |
+| code | Content | `fenced code block` | [blocks-content.md#code](blocks-content.md#code) |
+| equation | Content | `$$` | [blocks-content.md#equation](blocks-content.md#equation) |
 | button | Content | `[label](url) + as: button` | [blocks-content.md#button](blocks-content.md#button) |
 | data-table | Content | `\| table \|` | [blocks-content.md#data-table](blocks-content.md#data-table) |
+| stats | Content | `\| value \| label \| + as: stats` | [blocks-content.md#stats](blocks-content.md#stats) |
 | accordion | Container | `as: accordion` | [blocks-containers.md#accordion](blocks-containers.md#accordion) |
 | tabs | Container | `as: tab` | [blocks-containers.md#tabs](blocks-containers.md#tabs) |
 | columns | Container | `as: col` | [blocks-containers.md#columns](blocks-containers.md#columns) |
 | card | Container | `as: card` | [blocks-containers.md#card](blocks-containers.md#card) |
+| sequence | Container | `as: sequence` | [blocks-containers.md#sequence](blocks-containers.md#sequence) |
 | comparison | Container | `as: comparison` | [blocks-containers.md#comparison](blocks-containers.md#comparison) |
 | choose-one | Assessment | `as: choice + (x)/( )` | [blocks-assessments.md#choose-one](blocks-assessments.md#choose-one) |
 | choose-many | Assessment | `as: choice + [x]/[ ]` | [blocks-assessments.md#choose-many](blocks-assessments.md#choose-many) |
@@ -27,11 +31,13 @@ This index is generated from `packages/grammar/src/manifest.ts` by `docs/prax-fo
 | order | Assessment | `as: order` | [blocks-assessments.md#order](blocks-assessments.md#order) |
 | free-response | Assessment | `as: free-response` | [blocks-assessments.md#free-response](blocks-assessments.md#free-response) |
 | hotspot | Assessment | `as: hotspot` | [blocks-assessments.md#hotspot](blocks-assessments.md#hotspot) |
+| rate | Assessment | `as: rating` | [blocks-assessments.md#rate](blocks-assessments.md#rate) |
 | fill-blank | Assessment | `as: fill-blank` | [blocks-assessments.md#fill-blank](blocks-assessments.md#fill-blank) |
 | categorize | Assessment | `as: categorize` | [blocks-assessments.md#categorize](blocks-assessments.md#categorize) |
 | matrix | Assessment | `as: matrix` | [blocks-assessments.md#matrix](blocks-assessments.md#matrix) |
 | assessment-group | Assessment | `as: assessment-group` | [blocks-assessments.md#assessment-group](blocks-assessments.md#assessment-group) |
 | checklist | Interactive | `as: checklist` | [blocks-interactive.md#checklist](blocks-interactive.md#checklist) |
+| signature | Interactive | `as: signature` | [blocks-interactive.md#signature](blocks-interactive.md#signature) |
 
 For matrix syntax, use a heading prompt, numbered scale points, and bullet-list statements.
 
@@ -41,10 +47,17 @@ These parse and validate, so a course using them stays valid, but nothing reads
 them and they make no difference to exported output. They are listed so the
 spec does not promise behaviour the exporter does not deliver.
 
+- `colors`
 - `competency`
 - `confidence`
+- `gridlines`
+- `header`
+- `highlightHeaderCol`
+- `highlightHeaderRow`
 - `retrieval`
+- `striped`
 - `timed`
+- `visual`
 
 See `blocks.json` for the full per-block parameter list, including which
 parameters each block accepts.
