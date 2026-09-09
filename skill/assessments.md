@@ -360,18 +360,15 @@ required: true
 
 Common mistake: writing `as: rate` — the parser only accepts `as: rating`.
 
-### rate parameters
+### rating parameters
 
 | Parameter | Type | Valid values | Default |
 |---|---|---|---|
-| `scored` | boolean | true / false | false |
-| `points` | number | any positive number | — |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
-| `style` | enum | `likert` | likert |
+| `style` | enum | `likert`, `stars`, `slider` | likert |
 
-Planned style variants: `stars`, `slider`.
+Rating collects a scale response; scoring/attempt controls from knowledge checks
+are not rating settings.
 
 ## matrix
 

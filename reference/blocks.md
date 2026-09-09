@@ -47,10 +47,17 @@ These parse and validate, so a course using them stays valid, but nothing reads
 them and they make no difference to exported output. They are listed so the
 spec does not promise behaviour the exporter does not deliver.
 
+- `colors`
 - `competency`
 - `confidence`
+- `gridlines`
+- `header`
+- `highlightHeaderCol`
+- `highlightHeaderRow`
 - `retrieval`
+- `striped`
 - `timed`
+- `visual`
 
 See `blocks.json` for the full per-block parameter list, including which
 parameters each block accepts.

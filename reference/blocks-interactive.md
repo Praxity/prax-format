@@ -20,6 +20,9 @@ required: true
 
 ## signature
 
+The heading supplies the signature label. Parameters follow the heading; ordinary
+prose after the parameters starts a separate text block.
+
 Learner signoff with optional draw or type modes. The learner signs to confirm they have reviewed the content.
 
 **Syntax:**
@@ -32,5 +35,5 @@ label: Trainee Signature
 
 **Parameters:**
 - `label` (string, required) — text displayed below the signature line.
-- `mode`: `draw | type` — input mode. Note: `draw` mode alone is not accessible to all users; prefer `type` or allow both when accessibility is a concern.
+- `mode`: `draw | type` — initially selected input method (default: `draw`). Both methods remain available, including keyboard-accessible typing.
 - `layout`: `wide | full | breakout`

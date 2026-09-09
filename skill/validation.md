@@ -85,11 +85,12 @@ as: rating
 5: Very confident
 ```
 
-### Feedback incorrectly indented or placed
+### Feedback placement
 
-Feedback must be on its own line, flush to the left margin, immediately after the option it belongs to. Indenting feedback (with spaces or tabs) causes it to be treated as plain text, not parsed as feedback.
+Feedback must be on its own line immediately after the option it belongs to.
+Indentation is accepted; prefer flush-left formatting for consistency.
 
-Wrong (indented):
+Accepted (indented):
 
 ```prax
 (x) Correct option
@@ -213,12 +214,12 @@ passingScore: 80
 
 ### Accordion `style:` values
 
-The `style:` parameter on accordions controls the visual treatment. Valid values are `default`, `contained`, `separated`.
+The `style:` parameter on accordions controls the visual treatment. New authoring uses `none`, `outline`, `shaded`, `primary`, `secondary`. Omitted style preserves separator lines; legacy `default`, `contained` and `separated` remain accepted.
 
 ```prax
 ### Panel Title
 as: accordion
-style: contained
+style: shaded
 ```
 
 ### Forgetting page breaks

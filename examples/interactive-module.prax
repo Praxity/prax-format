@@ -13,7 +13,7 @@ This module combines explainers, interaction, and quick decision points.
 
 ### Hazard Types
 as: accordion
-style: contained
+style: shaded
 
 Physical hazards include slips, noise, and moving machinery.
 
@@ -58,7 +58,7 @@ end: 90
 > Use the buddy system for high-risk tasks.
 as: note
 color: accent
-style: filled
+style: shaded
 
 > Stop work immediately when controls fail.
 as: note
@@ -73,14 +73,13 @@ required: true
 
 [Open Full SOP](https://example.com/sop)
 as: button
-variant: outline
+style: outline
 openInNewTab: true
 
 ### Decision Scenario
 as: choice
 points: 5
-
-A solvent leak appears near a heat source. Choose the safest first response.
+description: A solvent leak appears near a heat source. Choose the safest first response.
 
 (x) Shut off the heat source and contain the spill
 feedback: Correct — eliminate the ignition source first, then contain.

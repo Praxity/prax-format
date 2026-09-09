@@ -313,6 +313,6 @@ design:
     logoScope: all-pages
   componentDefaults:
     note:
-      style: filled
+      style: shaded
 ---
 ```

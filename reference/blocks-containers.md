@@ -1,5 +1,9 @@
 # Container Blocks
 
+Containers use the normal content width by default. Set `layout: wide|full|breakout`
+to widen a container. Cards use `layoutMode:` for width when `layout:` selects
+`grid`, `masonry`, or `single`. Sequences do not widen automatically as items are added.
+
 ## accordion
 
 Collapsible panels. The heading with `as: accordion` opens the accordion; subsequent headings at the same level become additional panels. Any heading level works (`##`, `###`, `####`), though `###` is most common.
@@ -8,7 +12,7 @@ Collapsible panels. The heading with `as: accordion` opens the accordion; subseq
 ```prax
 ### Hazard Types
 as: accordion
-style: contained
+style: shaded
 
 Chemical, electrical, and mechanical hazards.
 
@@ -22,7 +26,7 @@ File an incident report within 24 hours.
 ```
 
 **Parameters:**
-- `style`: `default | contained | separated` — visual style of accordion panels.
+- `style`: `none | outline | shaded | primary | secondary` — surface treatment. `none` removes fill, border and separators; `outline` adds an unshaded border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Omitted style retains the original separator-line treatment. Legacy `default`, `contained` and `separated` source remains supported with its original appearance.
 - `allowMultipleOpen` (boolean) — whether multiple panels can be open at once.
 - `layout`: `wide | full | breakout`
 
@@ -49,6 +53,10 @@ The tab strip and active panel share a neutral surface and continuous hairline b
 selected tab remains visibly attached to its content without relying on color. The first tab label
 starts on the page content spine. Published tabs use manual activation: arrow keys move focus,
 and Enter or Space selects the focused tab.
+
+Set `style: default|outline|pills` and `orientation: horizontal|vertical` on
+the first `as: tab` item to style the whole tab group. Defaults are `default` and
+`horizontal`. Both settings survive serialization.
 
 ## columns
 
@@ -78,13 +86,13 @@ Any content can go inside a column — headings, images, text, lists, even neste
 
 ## sequence
 
-Step-by-step or timeline container. Each `###` heading becomes a labeled step or point in the sequence.
+Step-by-step or timeline container. The opening heading sets the item level; subsequent headings at that level become labeled steps.
 
 **Syntax:**
 ```prax
 ### Report the incident
 as: sequence
-variant: timeline
+style: timeline
 orientation: vertical
 
 Notify your supervisor immediately.
@@ -99,7 +107,7 @@ Take photos and complete the incident form.
 ```
 
 **Variants:**
-- `variant`: `numbered | timeline | plain`
+- `style`: `numbered | timeline | none`
 - `orientation`: `vertical | horizontal`
 - `alignment`: `left | center | right` — controls text alignment within steps.
 - `distribution`: `uniform | scaled` — controls spacing between steps.
@@ -108,6 +116,11 @@ Take photos and complete the incident form.
 ## comparison
 
 Comparison of two items — text or images.
+
+Each item owns the blocks between its heading and the next item heading.
+Descriptions and media stay inside their respective columns. `close: comparison`
+ends the comparison before following prose. Serialization preserves these children
+and writes an explicit closing marker for heading-based containers.
 
 **Syntax (side-by-side text):**
 ```prax
@@ -186,14 +199,13 @@ close: card
 - `columns` (number) — number of columns when `layout` is `grid` or `masonry`.
 - `headingLevel` (`2` to `6`). Sets the heading level for item labels in a standalone `as: card` group. The default is `3`.
 - `headings` (boolean). Controls whether item labels participate in heading navigation. The default is `true`; use `false` for presentation-only or storytelling cards.
-- `style`: `none | outline | filled` — card item chrome treatment.
-- `color`: `primary | secondary` - subtle brand tint for `style: filled`.
+- `style`: `none | outline | shaded | primary | secondary` — surface treatment across grid, masonry, single-card decks and flip faces. `none` removes surface chrome; `outline` is transparent with a border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Legacy `filled` aliases `shaded`; `accent` aliases `primary`. Old `filled`/`shaded`/`accent` plus `color: primary` or `color: secondary` is accepted and serialized as the corresponding named style.
 - `shadow`: `theme | none | subtle | elevated` — card depth treatment.
 - `advance` (number, seconds) — auto-advance interval for `layout: single`; `0` = manual.
 - `transition`: `none | fade | slide | zoom` — transition style for `layout: single`.
 - `showProgress` (boolean) — show pagination/progress controls in `layout: single`.
 - `shuffle` (boolean) — randomize card item order.
-- `trackCompletion` (boolean) — track learner interaction/completion at card level.
+- `trackCompletion` (boolean) — track learner interaction/completion for `layout: single` only.
 
 Use `card: back` to mark the back face of an item. Content before `card: back` is the front face.
 
@@ -269,9 +281,13 @@ Headingless `as: card` is useful for a single card whose front face is image or 
 
 | Container | Closing | Notes |
 |---|---|---|
-| `accordion` / `tabs` | Implicit | Closed by next heading at same or higher level, or page break |
+| `accordion` / `tab` | Optional explicit closer | `close: accordion` / `close: tab`, a higher-level heading, a same-level heading declaring another block type, or a page break |
 | `col` | `close: col` required | Must explicitly close the column layout |
 | `assessment-group` | `close: assessment-group` required | Must explicitly close |
 | `card` | `close: card` required | Must explicitly close; applies to all card layouts |
-| `sequence` | Implicit | Closed by next heading at same or higher level, or page break |
-| `comparison` | Implicit | Closed after second item |
+| `sequence` | Optional explicit closer | `close: sequence`, a higher-level heading, a same-level heading declaring another block type, or a page break |
+| `comparison` | Optional explicit closer | `close: comparison` or a structural boundary; the second item does not automatically close the group |
+
+Same-level headings without a different `as:` declaration add items to heading-based
+containers. Use an explicit closer before following prose or columns that belong
+outside the group. `close: tabs` remains accepted as an alias for `close: tab`.

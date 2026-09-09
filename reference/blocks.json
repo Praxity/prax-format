@@ -18,14 +18,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -37,6 +29,20 @@
       "reference": "blocks-content.md#heading",
       "variants": [],
       "parameters": [
+        {
+          "name": "display",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "standard",
+            "chapter"
+          ]
+        },
+        {
+          "name": "kicker",
+          "type": "string",
+          "required": false
+        },
         {
           "name": "level",
           "type": "number",
@@ -50,14 +56,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -91,6 +89,25 @@
         }
       ],
       "parameters": [
+        {
+          "name": "treatment",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "none",
+            "grayscale",
+            "tint",
+            "duotone",
+            "grain",
+            "dither",
+            "blur"
+          ]
+        },
+        {
+          "name": "captionEnabled",
+          "type": "boolean",
+          "required": false
+        },
         {
           "name": "src",
           "type": "string",
@@ -133,14 +150,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -202,14 +211,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -221,6 +222,21 @@
       "reference": "blocks-content.md#audio",
       "variants": [],
       "parameters": [
+        {
+          "name": "caption",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "transcript",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "captionEnabled",
+          "type": "boolean",
+          "required": false
+        },
         {
           "name": "src",
           "type": "string",
@@ -239,14 +255,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -268,14 +276,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -287,6 +287,21 @@
       "reference": "blocks-content.md#embed",
       "variants": [],
       "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "height",
+          "type": "number",
+          "required": false
+        },
         {
           "name": "src",
           "type": "string",
@@ -300,14 +315,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -334,14 +341,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -357,9 +356,9 @@
           "type": "enum",
           "options": [
             "outline",
-            "filled"
+            "shaded"
           ],
-          "default": "filled"
+          "default": "shaded"
         },
         {
           "name": "color",
@@ -396,14 +395,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -413,7 +404,20 @@
       "category": "Content",
       "syntax": "> quote",
       "reference": "blocks-content.md#quote",
-      "variants": [],
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "none",
+            "outline",
+            "shaded",
+            "primary",
+            "secondary"
+          ],
+          "default": "default"
+        }
+      ],
       "parameters": [
         {
           "name": "speaker",
@@ -438,14 +442,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -472,14 +468,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -500,14 +488,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -519,7 +499,7 @@
       "reference": "blocks-content.md#button",
       "variants": [
         {
-          "name": "variant",
+          "name": "style",
           "type": "enum",
           "options": [
             "filled",
@@ -554,14 +534,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -571,18 +543,144 @@
       "category": "Content",
       "syntax": "| table |",
       "reference": "blocks-content.md#data-table",
-      "variants": [
+      "variants": [],
+      "parameters": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "header",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "true",
+            "false",
+            "row",
+            "column"
+          ],
+          "implemented": false
+        },
+        {
+          "name": "striped",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "highlightHeaderRow",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "highlightHeaderCol",
+          "type": "boolean",
+          "required": false,
+          "implemented": false
+        },
+        {
+          "name": "gridlines",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "none",
+            "rows",
+            "columns",
+            "inside",
+            "all"
+          ],
+          "implemented": false
+        },
+        {
+          "name": "chart",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "bar",
+            "line",
+            "scatter",
+            "area",
+            "radar",
+            "stacked"
+          ]
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "vertical",
+            "horizontal"
+          ]
+        },
+        {
+          "name": "subtitle",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "altText",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "xLabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "yLabel",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "stacked",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showLines",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "showPoints",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "sortOrder",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "none",
+            "asc",
+            "desc"
+          ]
+        },
+        {
+          "name": "colors",
+          "type": "string",
+          "required": false,
+          "implemented": false
+        },
         {
           "name": "visual",
           "type": "enum",
+          "required": false,
           "options": [
             "table",
             "chart"
           ],
-          "default": "table"
-        }
-      ],
-      "parameters": [
+          "implemented": false
+        },
         {
           "name": "layout",
           "type": "enum",
@@ -591,14 +689,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -641,14 +731,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -663,9 +745,11 @@
           "name": "style",
           "type": "enum",
           "options": [
-            "default",
-            "contained",
-            "separated"
+            "none",
+            "outline",
+            "shaded",
+            "primary",
+            "secondary"
           ],
           "default": "default"
         },
@@ -685,14 +769,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -702,7 +778,27 @@
       "category": "Container",
       "syntax": "as: tab",
       "reference": "blocks-containers.md#tabs",
-      "variants": [],
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "default",
+            "outline",
+            "pills"
+          ],
+          "default": "default"
+        },
+        {
+          "name": "orientation",
+          "type": "enum",
+          "options": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal"
+        }
+      ],
       "parameters": [
         {
           "name": "layout",
@@ -712,14 +808,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -740,14 +828,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -775,7 +855,9 @@
           "options": [
             "none",
             "outline",
-            "filled"
+            "shaded",
+            "primary",
+            "secondary"
           ],
           "default": "none"
         },
@@ -847,14 +929,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -866,7 +940,7 @@
       "reference": "blocks-containers.md#sequence",
       "variants": [
         {
-          "name": "variant",
+          "name": "style",
           "type": "enum",
           "options": [
             {
@@ -887,7 +961,7 @@
               "value": "hero",
               "implemented": false
             },
-            "plain"
+            "none"
           ],
           "default": "numbered"
         },
@@ -913,6 +987,20 @@
       ],
       "parameters": [
         {
+          "name": "distribution",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "uniform",
+            "scaled"
+          ]
+        },
+        {
+          "name": "scrollable",
+          "type": "boolean",
+          "required": false
+        },
+        {
           "name": "layout",
           "type": "enum",
           "required": false,
@@ -920,14 +1008,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -966,14 +1046,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -1050,6 +1122,25 @@
           ]
         },
         {
+          "name": "correct",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "incorrect",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "feedbackMode",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "retry",
+            "reveal"
+          ]
+        },
+        {
           "name": "shuffle",
           "type": "boolean",
           "required": false
@@ -1083,14 +1174,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -1163,6 +1246,25 @@
           ]
         },
         {
+          "name": "correct",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "incorrect",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "feedbackMode",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "retry",
+            "reveal"
+          ]
+        },
+        {
           "name": "shuffle",
           "type": "boolean",
           "required": false
@@ -1196,14 +1298,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -1272,6 +1366,15 @@
           ]
         },
         {
+          "name": "feedbackMode",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "retry",
+            "reveal"
+          ]
+        },
+        {
           "name": "placeholder",
           "type": "text",
           "required": false
@@ -1310,14 +1413,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -1386,6 +1481,15 @@
           ]
         },
         {
+          "name": "feedbackMode",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "retry",
+            "reveal"
+          ]
+        },
+        {
           "name": "shuffle",
           "type": "boolean",
           "required": false
@@ -1419,14 +1523,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -1553,14 +1649,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -1653,6 +1741,16 @@
           "required": false
         },
         {
+          "name": "alt",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "spot",
+          "type": "string",
+          "required": false
+        },
+        {
           "name": "layout",
           "type": "enum",
           "required": false,
@@ -1660,14 +1758,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -1684,80 +1774,16 @@
           "type": "enum",
           "options": [
             "likert",
-            {
-              "value": "stars",
-              "implemented": false
-            },
-            {
-              "value": "slider",
-              "implemented": false
-            }
+            "stars",
+            "slider"
           ],
           "default": "likert"
         }
       ],
       "parameters": [
         {
-          "name": "scored",
-          "type": "boolean",
-          "required": false
-        },
-        {
-          "name": "competency",
-          "type": "text",
-          "required": false,
-          "implemented": false
-        },
-        {
-          "name": "confidence",
-          "type": "boolean",
-          "required": false,
-          "implemented": false
-        },
-        {
-          "name": "retrieval",
-          "type": "boolean",
-          "required": false,
-          "implemented": false
-        },
-        {
-          "name": "feedback",
-          "type": "enum",
-          "required": false
-        },
-        {
-          "name": "description",
-          "type": "text",
-          "required": false
-        },
-        {
-          "name": "display",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "standard",
-            "scenario"
-          ]
-        },
-        {
-          "name": "points",
-          "type": "number",
-          "required": false
-        },
-        {
           "name": "required",
           "type": "boolean",
-          "required": false
-        },
-        {
-          "name": "timed",
-          "type": "number",
-          "required": false,
-          "implemented": false
-        },
-        {
-          "name": "attempts",
-          "type": "number",
           "required": false
         },
         {
@@ -1768,14 +1794,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -1848,6 +1866,15 @@
           ]
         },
         {
+          "name": "feedbackMode",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "retry",
+            "reveal"
+          ]
+        },
+        {
           "name": "placeholder",
           "type": "text",
           "required": false
@@ -1881,14 +1908,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -1944,6 +1963,15 @@
           ]
         },
         {
+          "name": "feedbackMode",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "retry",
+            "reveal"
+          ]
+        },
+        {
           "name": "shuffle",
           "type": "boolean",
           "required": false
@@ -1977,14 +2005,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]
@@ -2080,14 +2100,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -2143,14 +2155,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -2181,14 +2185,6 @@
             "full",
             "breakout"
           ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
-          ]
         }
       ]
     },
@@ -2211,6 +2207,16 @@
       ],
       "parameters": [
         {
+          "name": "required",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "sublabel",
+          "type": "string",
+          "required": false
+        },
+        {
           "name": "label",
           "type": "string",
           "required": true
@@ -2223,14 +2229,6 @@
             "wide",
             "full",
             "breakout"
-          ]
-        },
-        {
-          "name": "reveal",
-          "type": "enum",
-          "required": false,
-          "options": [
-            "each"
           ]
         }
       ]

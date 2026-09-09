@@ -51,6 +51,44 @@ feedback: Required before any task begins.
 feedback: Not a mandatory safety check.
 ```
 
+### Reveal answers after submission
+
+For choice, match, order, fill-blank, and categorize questions,
+`feedbackMode: reveal` marks the submitted response and generates a correct-answer
+list in the feedback area after one submission. Choice also identifies every
+correct option in its label.
+No authored answer explanation is required. An optional `incorrect:` pointer
+appears separately from the generated answers.
+
+```prax
+### Which action comes first?
+as: choice
+feedbackMode: reveal
+required: true
+
+( ) Continue working
+(x) Stop and assess the hazard
+
+incorrect: Review the safety procedure.
+```
+
+The attempt locks, no Try again action appears, and the question counts as
+completed even when the answer is incorrect. A scored question still awards zero
+points for an incorrect answer. A separate assessment-group passing threshold
+continues to use the actual score. Reveal mode overrides `attempts:` with one
+attempt. Reloading preserves the submitted response and revealed answers; resetting
+learner progress clears them.
+
+`feedbackMode: retry` is the default and retains the existing attempt and feedback
+behavior. Reveal mode requires configured correct answers. Other assessment types
+report a validation error.
+
+Generated answers follow the authored order. Match lists each prompt with its
+correct match; order lists the correct sequence; fill-blank numbers the expected
+answers by blank position; categorize lists each item with its category. The submitted responses stay
+visible and cannot be changed. Put optional `incorrect:` pointers with the
+parameters before the body for non-choice questions.
+
 ## match
 
 Matching pairs.
@@ -121,7 +159,18 @@ as: fill-blank
 Verify {pressure} and inspect {seal} before use.
 ```
 
-Use `{answer}` when the activity has a configured correct answer. Use `____`
+Use `{answer}` when the activity has a configured correct answer.
+Separate accepted alternatives with `|`, for example `{colour|color}`.
+Prefix an alternative with `~` to use wildcards: `{permit|~entry*permit}`.
+Within a wildcard pattern, `*` matches zero or more characters and `?` matches
+exactly one character. The pattern must match the whole answer. Other characters
+are literal; raw regular expressions are not supported. Without `~`, `*` and `?`
+are literal too. Blank responses never count as correct.
+The first alternative is the answer shown by `feedbackMode: reveal`, so put a
+readable example first and wildcard patterns after it. Empty alternatives are ignored.
+The `|` character separates alternatives and cannot appear inside a single answer.
+
+Use `____`
 for an open blank with no predefined answer:
 
 ```prax
@@ -136,7 +185,7 @@ Known answers size the field to the expected answer length (clamped to 8–32 ch
 open `____` blanks use a 12-character default.
 
 When `scored: true`, every known-answer blank must match its configured answer (or an
-alternative stored in imported course data). Matching is case-insensitive, trims surrounding
+authored alternative). Matching is case-insensitive, trims surrounding
 whitespace, collapses internal whitespace, and treats canonically equivalent Unicode text as the
 same. It does not ignore punctuation or accents and does not use fuzzy or edit-distance matching.
 After submission, each known-answer blank is marked correct or incorrect without revealing the
@@ -207,6 +256,13 @@ as: rating
 4: Very confident
 5: Expert
 ```
+
+`style: likert` is the default and shows the authored scale labels.
+`style: stars` shows star choices. `style: slider` shows a native slider with the
+selected value and label. Rating is an unscored response; `required: true` requires
+an interaction before completion. `display: standard|scenario` has no effect on
+rating and is not offered in authoring suggestions. Legacy `numeric` and `emoji`
+styles remain supported.
 
 ## matrix
 
@@ -285,6 +341,11 @@ alt: Safety goggles
 
 ## assessment-group
 
+Serialization preserves the group title, settings, authored IDs, and member
+references. It writes `close: assessment-group` after the last member so the next
+question remains outside the group. Nested assessment headings retain their
+authored level so they remain inside their parent container.
+
 Group multiple assessments. `as: assessment-group` conventionally goes on a `##` heading (H2), which matches how the parser closes implicit groups at heading-level boundaries. Each assessment inside the group uses a `###` heading (H3) as its question title, since the group itself uses a `##` heading (H2).
 
 **Syntax:**
@@ -318,6 +379,10 @@ Note: `passingScore:` is the correct parameter name (not `passing:`).
 | `pointsOverride` | number | Override total point value for the group (instead of summing individual question points). |
 | `requireAll` | boolean | Whether all questions must be attempted before submitting. |
 | `buttonLabel` | text | Override the visible group action text. |
+
+A member question can use `name:` as a logic anchor and `id:` as a durable identity. These parameters do not change its group membership or shared submit action.
+
+Members inherit the group’s `layout` (`wide`, `full`, or `breakout`) unless they specify their own layout. Published pages apply this layout before interaction initializes, so activation preserves question widths.
 
 Group progress counts the same committed question results that mark each member complete. After all
 members are complete, the group action is removed and the localized result is announced. Ungraded
@@ -365,7 +430,7 @@ Decorator parameters add metadata for learning analytics and adaptive behavior:
 - order: accessible move controls implemented.
 - free-response: `textarea` implemented.
 - hotspot: `click-regions` implemented.
-- rate: `likert` implemented.
+- rating: `likert`, `stars`, and `slider` implemented.
 - matrix: `likert` implemented.
 - fill-blank: `inline-inputs` implemented.
 - assessment-group mode: `all | oneOf`.

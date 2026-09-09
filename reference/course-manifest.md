@@ -20,6 +20,7 @@ Each `.prax` file in the folder is a standalone lesson. Pages within a lesson ar
 
 ```yaml
 title: Safety Training Fundamentals
+id: 4b827bfd-f5ea-4ba6-a8aa-5fb5113cdef4
 description: Comprehensive workplace safety program
 locale: en
 theme: brand-theme
@@ -42,6 +43,7 @@ design:
 | Field | Type | Required | Default | Description |
 |-------|------|----------|---------|-------------|
 | `title` | string | yes | `""` | Course title |
+| `id` | string | no | Studio-generated | Stable, non-sensitive course identity used for learner state. Preserve it after Studio adds it. |
 | `description` | string | no | — | Course description |
 | `locale` | string | no | inherited | Default locale (`en`, `fr`, etc.) |
 | `theme` | string | no | — | Theme name from `shared/themes/` or built-in |
@@ -52,11 +54,35 @@ design:
 ### `lessons` list
 
 The `lessons` array is the canonical lesson order. It determines:
+
 - Navigation order in the published course
 - File tree display order in the editor
 - Export assembly order
 
 Each entry is a filename (not a path) — all lesson files live in the same folder as `course.yaml`.
+
+Full-course HTML and SCORM exports list every lesson in this order. Each lesson link
+uses that file's frontmatter `title` and opens its first page. Only the current lesson
+shows its nested page links. There are no lesson disclosure controls, and learners may
+visit other lessons freely.
+
+Previous and Next follow one sequence across all lesson pages. At a forward lesson
+boundary the action reads `Continue to [lesson title]`; Previous returns to the prior
+lesson's final page. Position labels show the current module and its local page count,
+for example `Module 3 of 6 · Page 4 of 11`. Bookmarking resumes the exact page.
+SCORM exports remain one package with one SCO and one course completion record.
+
+The glossary collects inline terms from every listed lesson. Its link sits outside the
+lesson list and opens a new tab, leaving the current course page in place. The glossary
+does not start an LMS session or contribute to progress, completion, or Previous/Next.
+Electron preview opens the same glossary in a separate protected window.
+
+### Stable course identity
+
+Studio adds `id` to a valid manifest when it first opens the course. The value stays the same
+across preview regeneration and publishing so learner state remains attached to the course.
+Preserve it when editing the manifest. Do not reuse it for a copied course that should have
+independent learner state.
 
 ### `design` overrides
 
@@ -122,9 +148,9 @@ Content for page 2...
 
 The `title:` in lesson frontmatter is the canonical lesson title. If absent, the filename (minus `.prax`) is the fallback.
 
-Optional lesson `kicker:` text appears above the lesson title in learner navigation. Use a
-short value such as `Course` or `Module 1`. Omit it or leave it blank to show the lesson title
-without a kicker.
+Lesson `kicker:` text is excluded from the multi-file course outline. Include a label such
+as `Module 1:` in the lesson `title:` when wanted. Single-lesson exports retain their flat
+page outline and existing kicker treatment.
 
 `# H1` headings are content headings in multi-file courses — they do not define lesson boundaries (each file is already one lesson).
 

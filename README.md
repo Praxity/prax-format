@@ -54,6 +54,7 @@ Confirm emergency exits are clear and protective gear is available.
 
 - [`reference/document-structure.md`](reference/document-structure.md): Frontmatter, pages, headings, `as:`, breaks.
 - [`reference/inline-formatting.md`](reference/inline-formatting.md): Bold/italic/links/variables/lists/tables.
+- [`inline-icons.md`](inline-icons.md): Inline Tabler icons and accessibility guidance.
 - [`reference/blocks.md`](reference/blocks.md): Studio block index with links to each detailed reference section.
 - [`reference/blocks.json`](reference/blocks.json): Machine-readable block index with parameters and variants.
 - [`reference/blocks-content.md`](reference/blocks-content.md): Content block syntax and options.
@@ -62,6 +63,7 @@ Confirm emergency exits are clear and protective gear is available.
 - [`reference/blocks-interactive.md`](reference/blocks-interactive.md): Interactive block patterns.
 - [`reference/frontmatter-design.md`](reference/frontmatter-design.md): Frontmatter design keys.
 - [`reference/course-manifest.md`](reference/course-manifest.md): Multi-file courses and `course.yaml` schema.
+- [`cli.md`](cli.md): Headless Studio export command and JSON result contract.
 
 ## Examples
 

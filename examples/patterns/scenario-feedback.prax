@@ -52,7 +52,7 @@ Clearing the area prevents secondary injuries. Once colleagues are safe, the nex
 
 [Download the Spill Response Checklist](https://example.com/spill-response-checklist.pdf)
 as: button
-variant: outline
+style: outline
 openInNewTab: true
 
 ### Let's review the procedure
@@ -64,9 +64,9 @@ The spill response procedure has four phases: **protect people**, then **contain
 > When in doubt, clear the area first. Containment can wait thirty seconds.
 as: note
 color: accent
-style: filled
+style: shaded
 
 [Review the Spill Response SOP](https://example.com/spill-response-sop)
 as: button
-variant: outline
+style: outline
 openInNewTab: true

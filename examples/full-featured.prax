@@ -83,7 +83,7 @@ $$
 
 [Open SOP Portal](https://example.com/sop)
 as: button
-variant: filled
+style: filled
 openInNewTab: true
 
 | Area | Incidents | Near Misses |
@@ -106,7 +106,7 @@ yLabel: Findings
 
 ### Identification
 as: accordion
-style: separated
+style: outline
 
 Document what happened, where, and who is exposed.
 
@@ -147,7 +147,7 @@ close: col
 
 ### Step 1
 as: sequence
-variant: numbered
+style: numbered
 
 Identify the issue.
 

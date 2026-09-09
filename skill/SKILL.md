@@ -113,8 +113,13 @@ has no preceding break. Without an explicit label, its first heading provides th
 
 ```yaml
 firstPage:
+  id: page-e9b588b0-b3cf-4b89-adb8-2648f8306a31
   title: Introduction
 ```
+
+Studio adds stable IDs to lesson frontmatter, `firstPage`, later page breaks, and stateful blocks
+so learner state survives source edits and preview regeneration. Preserve every existing `id`;
+never copy an ID to another item. Source without IDs remains valid and Studio fills them in.
 
 Narration is a Studio-managed layer in the project-root `narration.yaml`; it is not `.prax`
 grammar. Generate clean visible content in `.prax`. Use Studio for narration scripts, cues,
@@ -159,6 +164,11 @@ Four patterns create blocks:
 
 Blank lines between parameters and content are optional.
 
+Use `style:` for visual treatments and `orientation:` for direction. Sequence
+uses `style: none` for its unnumbered treatment. Older `variant:` spellings
+remain readable; generate `style:` in new source. Generic `reveal:` is retired;
+use block interactions or conditional visibility instead.
+
 ### Universal parameters
 
 These keys work on any block:
@@ -168,7 +178,6 @@ These keys work on any block:
 | `name:` | Unique identifier for targeting (logic rules, anchor links) |
 | `layout:` | Width override: `wide`, `full`, `breakout` |
 | `hide:` | `true` to hide from rendered output |
-| `reveal:` | `each` reveals list items one at a time; numeric and timestamp values are retired |
 | `visible:` | Conditional visibility expression (e.g. `visible: passedQuiz`) |
 | `entrance:` | Animation: `none`, `fade`, `slide`, `scale` |
 
@@ -257,18 +266,18 @@ as: note
 title: Safety reminder
 icon: alert-triangle
 color: warning
-style: filled
+style: shaded
 ```
 
 `color:` options are `accent` (default), `primary`, `secondary`, `success`, `warning`,
 `error`, and `grey`. They publish as Note, Info, Info, Success, Warning, Warning, and Tip
 respectively when `title:` is omitted.
-`style: outline` is low emphasis; `filled` is high emphasis. Legacy `light` maps to low
-emphasis and `shaded` to high emphasis. `title:` overrides the visible label. `icon:` accepts any
+`style: outline` has a transparent background; `shaded` has a semantic tinted fill. Legacy
+`light` maps to `outline` and `filled` to `shaded`. `title:` overrides the visible label. `icon:` accepts any
 kebab-case [Tabler Icons](https://tabler.io/icons) outline icon name, such as `thinking-high` or
 `sparkles`; use `none` for no icon, or omit it to derive the icon from the color. Exports embed only
 the icons used by the document and do not require an icon CDN.
-Every treatment keeps a tint and the same 1px semantic border. Legacy `emoji` values remain
+Both treatments keep the same 1px semantic border. Legacy `emoji` values remain
 parseable but published output uses the project icon.
 
 ### Quote
@@ -285,6 +294,8 @@ sourceUrl: https://news.stanford.edu/stories/2005/06/youve-got-find-love-jobs-sa
 Keys: `speaker:` (person or organisation), `work:` (title, rendered as `<cite>`), and
 `sourceUrl:` (visible link and blockquote `cite` URL). Quotes have one unfilled visual
 treatment with a logical start rule and one hanging opening mark.
+Use `style: none | outline | shaded | primary | secondary` for an unstyled quote, a transparent full border, a neutral surface, or a brand tint. Omit style to retain the original start border. These surfaces preserve the blockquote and citation semantics.
+
 Legacy `attribution` maps to `speaker`; legacy `decorator`, `size`, and pull-quote `style`
 values are accepted but ignored without dropping quote content.
 
@@ -316,11 +327,11 @@ A standalone link with `as: button`:
 ```
 [Download Safety Manual](https://example.com/manual.pdf)
 as: button
-variant: outline
+style: outline
 openInNewTab: true
 ```
 
-`variant:` options: `filled` (default), `outline`, `light`. `openInNewTab:` defaults to `false`.
+`style:` options: `filled` (default), `outline`, `light`. `openInNewTab:` defaults to `false`.
 
 ### Bookmark (from link)
 
@@ -344,7 +355,7 @@ Standard markdown pipe-delimited table (separator row `|---|---|` is optional):
 | Q2      | 150     | 90    |
 ```
 
-Add `chart:` to render as a chart: `bar`, `line`, `scatter`, `area`, `radar`, `stacked`. Note: `pie` and `donut` are not supported. Additional keys: `xLabel:`, `yLabel:`, `title:`, `altText:`, `orientation:` (bar only), `sortOrder:`, `colors:`.
+Add `chart:` to render as a chart: `bar`, `line`, `scatter`, `area`, `radar`, `stacked`. Note: `pie` and `donut` are not supported. Additional keys: `xLabel:`, `yLabel:`, `title:`, `altText:`, `orientation:` (bar only), `sortOrder:`. Chart `colors:` is accepted for compatibility but does not change canonical output.
 
 ### Stats
 
@@ -383,7 +394,7 @@ Containers group content. The `as:` key on a heading transforms it into a contai
 ```
 ### What is a learning outcome?
 as: accordion
-style: contained
+style: shaded
 
 A learning outcome describes what a learner will be able to do
 after completing instruction.
@@ -401,7 +412,7 @@ Only the first heading needs `as: accordion`. Subsequent headings at the same le
 
 | Key | Values | Default |
 |-----|--------|---------|
-| `style:` | `default`, `contained`, `separated` | `default` |
+| `style:` | `none`, `outline`, `shaded`, `primary`, `secondary` | original separators |
 | `allowMultipleOpen:` | `true`/`false` | `false` |
 
 ### Tabs
@@ -424,7 +435,7 @@ Same grouping rules as accordion. Only the first heading needs `as: tab`.
 ```
 ### 1. Design the grammar
 as: sequence
-variant: timeline
+style: timeline
 
 Define the syntax rules...
 
@@ -435,7 +446,7 @@ Write the tokenizer...
 
 | Key | Values | Default |
 |-----|--------|---------|
-| `variant:` | `numbered`, `timeline`, `plain` | `numbered` |
+| `style:` | `numbered`, `timeline`, `none` | `numbered` |
 | `orientation:` | `vertical`, `horizontal` | `vertical` |
 
 ### Columns
@@ -475,7 +486,7 @@ Uses implicit heading grouping. Typically two items.
 
 ### Card
 
-A grid of styled cards (`columns:` number, `style:` `outline`/`filled`/`elevated`). Requires `close: card`.
+Cards support `style: none | outline | shaded | primary | secondary` across grid, masonry, and single-card layouts. Set depth separately with `shadow: theme | none | subtle | elevated`. Requires `close: card`.
 
 ```
 ### Types of PPE
@@ -810,7 +821,7 @@ as: signature
 mode: draw
 ```
 
-`mode:` options: `draw` (default), `type`.
+`mode:` options: `draw` (default), `type`. This selects the initial method; both draw and type remain available.
 
 ## Inline formatting
 
@@ -909,7 +920,7 @@ color: accent
 
 ### Head Protection
 as: accordion
-style: contained
+style: shaded
 
 Hard hats protect against falling objects. Inspect for cracks before use.
 
@@ -1003,6 +1014,7 @@ The manifest defines lesson order, course metadata, and shared design:
 
 ```yaml
 title: Safety Training Fundamentals
+id: 4b827bfd-f5ea-4ba6-a8aa-5fb5113cdef4
 locale: en
 lessons:
   - intro.prax
@@ -1012,6 +1024,9 @@ design:
   palette: ocean
   navArchetype: sidebar
 ```
+
+Preserve the Studio-managed course `id`. Give a copied course a new ID only when it should have
+independent learner state.
 
 Each `.prax` file is a standalone lesson. Settings cascade: `course.yaml` design applies to all lessons unless a lesson's frontmatter overrides it. See `reference/course-manifest.md` for the full schema.
 
