@@ -130,6 +130,12 @@ blocks. Authors and agents should edit the `.prax` source for visible content, t
 edit narration. The CLI reads the same sidecar and bundles referenced MP3 and optional WebVTT
 assets. Narration never autoplays or affects completion, scoring, content access, or navigation.
 
+Generated narration for single- and multiple-choice questions reads the prompt, description,
+instructions, and visible answer options in authored order, then pauses for the learner.
+It excludes correctness markers, scoring, answer keys, and feedback. Custom narration scripts
+override this generated text. After a generated script changes, regenerate its audio and timings;
+existing clips are not rewritten automatically.
+
 An optional pronunciation lexicon maps exact written terms to spoken aliases during online
 narration generation. It does not change learner-visible text:
 
