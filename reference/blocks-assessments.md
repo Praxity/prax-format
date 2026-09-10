@@ -51,6 +51,13 @@ feedback: Required before any task begins.
 feedback: Not a mandatory safety check.
 ```
 
+### Scoring retries
+
+The course score uses the latest submitted scored attempt for each question, not
+an average of that question's attempts. An incorrect attempt followed by a correct
+retry contributes the correct retry's score. Earlier attempts remain in LMS
+interaction history. Ungraded survey responses do not contribute to the course score.
+
 ### Reveal answers after submission
 
 For choice, match, order, fill-blank, and categorize questions,

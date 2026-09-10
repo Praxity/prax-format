@@ -338,6 +338,8 @@ yLabel: Count
 - `sortOrder` (`none | asc | desc`) — sort data before rendering.
 - `layout`: `wide | full | breakout`
 
+Dense annual category axes in vertical bar, line, area, scatter and stacked charts show labels at roughly five-year intervals. Longer series may use wider intervals to keep labels readable. The first and last years always appear; nearby interior labels may be omitted to leave room for them. This applies to consecutive four-digit years in ascending or descending order. Every data point and accessible data-table row is retained.
+
 **Table examples:**
 
 ```prax
