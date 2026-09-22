@@ -47,7 +47,7 @@ These parameters are available across all assessment blocks.
 | `required` | boolean | false | Must be completed before continuing |
 | `timed` | number | — | Time budget in seconds *(not applied yet)* |
 | `attempts` | number | — | Maximum attempts allowed |
-| `layout` | enum | — | `wide`, `full`, `breakout` |
+| `width` | enum | — | `narrow`, `wide`, `full`, `breakout` |
 
 > **Not applied yet.** `competency`, `confidence`, `retrieval` and `timed` parse and
 > validate, so a course using them stays valid, but nothing reads them and they make
@@ -489,7 +489,7 @@ close: assessment-group
 | `passingScore` | number | 0–100 | — |
 | `requireAll` | boolean | true / false | false |
 | `buttonLabel` | text | visible action text | Check all (ungraded), Submit all (graded) |
-| `layout` | enum | `wide`, `full`, `breakout` | — |
+| `width` | enum | `narrow`, `wide`, `full`, `breakout` | — |
 
 Note: The parameter is `passingScore`, not `passing` or `pass-score`.
 

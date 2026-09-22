@@ -159,7 +159,7 @@ Apply controls.
 
 ### Before
 as: comparison
-style: side-by-side
+layout: side-by-side
 
 Manual forms with delayed escalation.
 

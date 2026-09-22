@@ -249,6 +249,8 @@ accessibility remediation or efficacy claim. Contrast follows the learner's plat
 | `componentDefaults` | object | Block-level default overrides (key = block type, value = param object) |
 | `customCss` | string | Raw CSS appended to the published output |
 
+Use canonical Studio 0.2.0 block keys inside `componentDefaults`: card `layout: slides`, comparison `layout: slider` or `side-by-side`, image `size: small|medium|large`, and universal `width: narrow|wide|full|breakout`. Card and sequence `style` retain their surface and marker meanings.
+
 ## Complete example
 
 ```prax
@@ -307,5 +309,11 @@ design:
   componentDefaults:
     note:
       style: shaded
+    card:
+      layout: slides
+    comparison:
+      layout: side-by-side
+    image:
+      size: medium
 ---
 ```

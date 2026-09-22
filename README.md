@@ -6,6 +6,26 @@ Plain-text eLearning courses: human-readable, LLM-friendly, and version-control 
 
 `.prax` is Praxity Studio's grammar-based course format. A file contains optional YAML frontmatter plus structured body content that can be exported to SCORM, xAPI, or standalone HTML.
 
+## Studio 0.2.0 syntax
+
+Studio 0.2.0 separates block width from container presentation and image size. This is a breaking canonical syntax change during alpha: saving writes the new names, and those files require Studio 0.2.0 or later. Keep a copy before saving if you need to reopen a course in an earlier Studio version.
+
+| Purpose | Canonical syntax |
+| --- | --- |
+| Outer width of any block | `width: narrow\|wide\|full\|breakout` |
+| Card presentation | `layout: grid\|masonry\|slides\|rows` |
+| Image size within its block | `size: small\|medium\|large` |
+| Relative share of a column | `weight: 2` with another column's `weight: 1` |
+| Comparison arrangement | `layout: side-by-side\|slider` |
+
+Omit `width` for normal content width. Width and presentation are independent: a card can combine `layout: slides` with `width: narrow`. Sequences retain `style: numbered|timeline|none` and their separate `orientation`. Embeds use the universal width; they have no separate inner-width control.
+
+### Reading older files
+
+Studio 0.2.0 reads the older width-valued `layout` parameter, card `layoutMode` and `layout: single`, image `width: small|medium|large`, numeric column `width`, and comparison `style`. Saving converts these to the canonical names above, including settings inside `design.componentDefaults`.
+
+A valid canonical value takes precedence over a conflicting legacy alias regardless of source order, and Studio reports the conflict. Invalid canonical values produce diagnostics; a valid legacy value can still be retained. Numeric or percentage embed widths and image `size: full-width` are not supported aliases.
+
 ## Quick example
 
 ```prax
@@ -63,6 +83,7 @@ Confirm emergency exits are clear and protective gear is available.
 - [`reference/blocks-interactive.md`](reference/blocks-interactive.md): Interactive block patterns.
 - [`reference/frontmatter-design.md`](reference/frontmatter-design.md): Frontmatter design keys.
 - [`reference/course-manifest.md`](reference/course-manifest.md): Multi-file courses and `course.yaml` schema.
+- [`reference/module-deck.md`](reference/module-deck.md): Narrated modules, slide pauses, assessment gates, and learner controls.
 - [`cli.md`](cli.md): Headless Studio export command and JSON result contract.
 
 ## Examples
@@ -94,7 +115,7 @@ Use `as: card` for both static card grids and flip-card carousels.
 ```prax
 ## Safety Terms
 as: card
-layout: single
+layout: slides
 style: outline
 shadow: subtle
 advance: 0
@@ -120,13 +141,14 @@ For non-flip cards, omit `card: back` and use `layout: grid` (or `masonry`) plus
 
 ## Image syntax (v3.1)
 
-Image blocks support `width` and `alignment` variants plus standard content params:
+Image blocks support `size` and `alignment` variants plus standard content params:
 
-- Variants: `width: small|medium|large`, `alignment: left|center|right`
-- Params: `alt`, `decorative`, `caption`
+- Variants: `size: small|medium|large`, `alignment: left|center|right`
+- Params: `alt`, `decorative`, `caption`, `float: left|right`
+- Use `close: float` to end text flowing beside an image. See [image float rules](reference/blocks-content.md#image).
 - `treatment` is deprecated; use `effects` instead
 
-For a full-frame image, use the universal `layout: full`; `full` is not an image `width` value.
+For a full-frame image, use the universal `width: full`; `full` is not an image `size` value.
 
 `effects` is composable and accepts either `none` or an effects map. Supported effects:
 
@@ -146,7 +168,6 @@ Not supported image params:
 
 - `filter`
 - `opacity`
-- `size` (use `width`)
 - `x` (use `alignment`)
 - `order`
 - standalone `motionBlur` boolean (use `effects.motionBlur`)

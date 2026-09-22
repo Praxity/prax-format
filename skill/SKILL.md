@@ -6,6 +6,10 @@ version: "3.0"
 
 # .prax Format -- LLM Skill
 
+## Version requirement
+
+Generate canonical Studio 0.2.0 syntax. Use `width: narrow|wide|full|breakout` for outer block width, card `layout: grid|masonry|slides|rows`, image `size: small|medium|large`, column `weight: <positive number>`, and comparison `layout: side-by-side|slider`. Sequence `style` and `orientation` stay separate. Saving uses these spellings and requires Studio 0.2.0 or later to reopen the file. See [the format overview](../README.md#studio-020-syntax) for the alpha migration policy.
+
 ## What is .prax
 
 The `.prax` format is a plain-text course authoring format used by Praxity Studio, a desktop eLearning authoring tool. It uses augmented markdown: standard markdown with a small set of keywords (`as:`, `close:`, `var:`, `if:`) that transform plain elements into interactive learning blocks. A `.prax` file can be exported to SCORM, xAPI, or standalone HTML for deployment in any LMS. The format is designed to be human-readable, git-diffable, and LLM-friendly -- you can generate a complete interactive course in a single text file.
@@ -160,7 +164,7 @@ Four patterns create blocks:
 1. **Bare markdown** -- paragraphs, headings, lists, code blocks, equations, tables work as standard markdown.
 2. **`as:` transformer** -- placed after an element (`> text` then `as: note`) or before content (`as: col`).
 3. **Content-block paths** -- a file path or URL on its own line creates a media block (extension determines type).
-4. **Key-value parameters** -- `key: value` pairs on lines after a block, consumed greedily. Pipe-separated inline format also works: `width: large | alignment: center`.
+4. **Key-value parameters** -- `key: value` pairs on lines after a block, consumed greedily. Pipe-separated inline format also works: `size: large | alignment: center`.
 
 Blank lines between parameters and content are optional.
 
@@ -176,7 +180,7 @@ These keys work on any block:
 | Key | Effect |
 |-----|--------|
 | `name:` | Unique identifier for targeting (logic rules, anchor links) |
-| `layout:` | Width override: `wide`, `full`, `breakout` |
+| `width:` | Width override: `narrow`, `wide`, `full`, `breakout` |
 | `hide:` | `true` to hide from rendered output |
 | `visible:` | Conditional visibility expression (e.g. `visible: passedQuiz`) |
 | `entrance:` | Animation: `none`, `fade`, `slide`, `scale` |
@@ -212,7 +216,7 @@ A file path ending in an image extension (`.webp`, `.jpg`, `.jpeg`, `.png`, `.gi
 ```
 /assets/hero-ppe.webp
 alt: Workers wearing safety gear on a construction site
-layout: full
+width: full
 caption: Workers inspect their protective equipment before a shift
 ```
 
@@ -220,9 +224,9 @@ caption: Workers inspect their protective equipment before a shift
 |-----|--------|---------|
 | `alt:` | description (required for non-decorative) | -- |
 | `decorative:` | `true`/`false` | `false` |
-| `width:` | `small`, `medium`, `large` | -- |
+| `size:` | `small`, `medium`, `large` | -- |
 | `alignment:` | `left`, `center`, `right` | `center` |
-| `layout:` | `wide`, `full`, `breakout` | -- |
+| `width:` | `narrow`, `wide`, `full`, `breakout` | -- |
 | `caption:` | custom string | -- |
 | `effects:` | `none` or an effects map | -- |
 
@@ -451,7 +455,7 @@ Write the tokenizer...
 
 ### Columns
 
-Columns use standalone `as: col` markers (no heading required). Each `as: col` starts a new column. `close: col` ends the layout:
+Columns use standalone `as: col` markers (no heading required). Set `width` on the first column to size the whole container. Set `weight` on each column for unequal relative shares, such as `2` and `1`; omit it for equal shares. Each `as: col` starts a new column. `close: col` ends the layout:
 
 ```
 as: col
@@ -473,7 +477,7 @@ Content after `close: col` returns to full-width flow. Column count is inferred 
 ```
 ### Before
 as: comparison
-style: side-by-side
+layout: side-by-side
 
 Manual incident logging with paper forms.
 
@@ -510,7 +514,7 @@ Card item labels are semantic headings by default and keep their authored level.
 ```
 ## Safety Terms
 as: card
-layout: single
+layout: slides
 style: outline
 
 ### What is lockout/tagout?
@@ -909,7 +913,7 @@ PPE selection, hazard identification, and emergency procedures.
 
 /assets/hero-ppe.webp
 alt: Workers wearing safety gear on a construction site
-layout: full
+width: full
 
 > This course meets OSHA 10-hour training requirements.
 as: note

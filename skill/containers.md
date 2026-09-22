@@ -88,7 +88,7 @@ focus between tabs; Enter or Space activates the focused tab.
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `layout` | enum | `wide`, `full`, `breakout` | — | Content width override |
+| `width` | enum | `narrow`, `wide`, `full`, `breakout` | — | Content width override |
 
 ### Accordion nesting example
 
@@ -150,11 +150,11 @@ close: col
 
 ### columns parameters
 
-Columns have no additional parameters. The `layout` universal parameter applies:
+Each column accepts `weight: <positive number>` for its relative share of the available width. Omitted weights use `1`. Set the universal `width` on the first `as: col` to size the whole container:
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `layout` | enum | `wide`, `full`, `breakout` | — | Content width override |
+| `width` | enum | `narrow`, `wide`, `full`, `breakout` | — | Content width override |
 
 ## sequence
 
@@ -238,7 +238,7 @@ Comparison uses a heading + `as: comparison`. The second heading in the pair joi
 ```prax
 ### Manual Process
 as: comparison
-style: side-by-side
+layout: side-by-side
 
 Paper forms with 48-hour reporting delay.
 
@@ -254,7 +254,7 @@ is only a fallback when a stored column has no heading; the preset accent rule a
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `style` | enum | `side-by-side`, `slider` | side-by-side | Visual treatment |
+| `layout` | enum | `side-by-side`, `slider` | side-by-side | Comparison arrangement |
 
 Use `slider` for a before/after image comparison.
 
@@ -282,7 +282,7 @@ Card item labels are semantic headings by default and keep their authored level.
 ```prax
 ## Safety Terms
 as: card
-layout: single
+layout: slides
 style: outline
 
 ### What is lockout/tagout?
@@ -312,14 +312,14 @@ Legacy card `filled` remains accepted as `shaded`; `accent` becomes `primary`. L
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
 | `columns` | number | any integer | — | Number of grid columns |
-| `layout` | enum | `single`, `grid`, `masonry` | grid | Card presentation mode |
+| `layout` | enum | `grid`, `masonry`, `slides`, `rows` | grid | Card presentation mode |
 | `style` | enum | `none`, `outline`, `shaded`, `primary`, `secondary` | none | Surface treatment on ordinary cards, flip faces and single-card decks |
 | `shadow` | enum | `theme`, `none`, `subtle`, `elevated` | theme | Card depth treatment |
-| `advance` | number | any number >= 0 | 0 | Auto-advance interval in seconds for `layout: single` |
-| `transition` | enum | `none`, `fade`, `slide`, `zoom` | fade | Transition style for `layout: single` |
-| `showProgress` | boolean | true / false | true | Show progress controls for `layout: single` |
+| `advance` | number | any number >= 0 | 0 | Auto-advance interval in seconds for `layout: slides` |
+| `transition` | enum | `none`, `fade`, `slide`, `zoom` | fade | Transition style for `layout: slides` |
+| `showProgress` | boolean | true / false | true | Show progress controls for `layout: slides` |
 | `shuffle` | boolean | true / false | false | Randomize card order |
-| `trackCompletion` | boolean | true / false | false | Track interaction/completion for `layout: single` |
+| `trackCompletion` | boolean | true / false | false | Track interaction/completion for `layout: slides` |
 
 ## Nesting rules
 

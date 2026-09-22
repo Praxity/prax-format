@@ -64,7 +64,7 @@ For advanced image params (alt text, captions, sizing), use a bare media path on
 /assets/extinguisher-map.png
 alt: Building floor plan with emergency exits highlighted
 caption: Emergency exits marked in green
-width: large
+size: large
 ```
 
 ## Variables
@@ -186,6 +186,10 @@ Kebab-case names use the outline icon by default; append `-filled` for a filled
 variant. Tabler export names such as `IconMail` and `IconMailFilled` also work.
 Icons are decorative and hidden from screen readers, so keep meaningful text
 beside them. Code spans keep icon syntax literal.
+
+Page titles and navigation labels are plain text, so do not put `@icon{...}` in
+a page-break title. Use icons in content headings instead. In deck outlines,
+assessment pages receive a separate assessment icon automatically.
 
 ## Doodles
 

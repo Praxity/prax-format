@@ -10,10 +10,11 @@
       "variants": [],
       "parameters": [
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -49,10 +50,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -68,7 +70,7 @@
       "reference": "blocks-content.md#image",
       "variants": [
         {
-          "name": "width",
+          "name": "size",
           "type": "enum",
           "options": [
             "small",
@@ -129,12 +131,32 @@
           "required": false
         },
         {
-          "name": "wrap",
+          "name": "float",
           "type": "enum",
           "required": false,
           "options": [
-            "start",
-            "end"
+            "left",
+            "right"
+          ]
+        },
+        {
+          "name": "ratio",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "square",
+            "4:3",
+            "3:2",
+            "16:9"
+          ]
+        },
+        {
+          "name": "fit",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "contain",
+            "cover"
           ]
         },
         {
@@ -143,10 +165,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -203,10 +226,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -248,10 +272,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -268,10 +293,11 @@
       "variants": [],
       "parameters": [
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -293,11 +319,6 @@
           "required": false
         },
         {
-          "name": "width",
-          "type": "string",
-          "required": false
-        },
-        {
           "name": "height",
           "type": "number",
           "required": false
@@ -308,10 +329,11 @@
           "required": true
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -333,10 +355,11 @@
           "required": true
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -387,10 +410,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -435,10 +459,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -460,10 +485,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -480,10 +506,11 @@
       "variants": [],
       "parameters": [
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -526,10 +553,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -564,26 +592,42 @@
             "false",
             "row",
             "column"
-          ],
-          "implemented": false
+          ]
+        },
+        {
+          "name": "shadeHeaders",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "firstRowLine",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "firstColLine",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "columnAlignments",
+          "type": "string",
+          "required": false
         },
         {
           "name": "striped",
           "type": "boolean",
-          "required": false,
-          "implemented": false
+          "required": false
         },
         {
           "name": "highlightHeaderRow",
           "type": "boolean",
-          "required": false,
-          "implemented": false
+          "required": false
         },
         {
           "name": "highlightHeaderCol",
           "type": "boolean",
-          "required": false,
-          "implemented": false
+          "required": false
         },
         {
           "name": "gridlines",
@@ -595,8 +639,7 @@
             "columns",
             "inside",
             "all"
-          ],
-          "implemented": false
+          ]
         },
         {
           "name": "chart",
@@ -682,10 +725,11 @@
           "implemented": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -723,10 +767,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -761,10 +806,11 @@
       ],
       "parameters": [
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -801,10 +847,11 @@
       ],
       "parameters": [
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -821,10 +868,16 @@
       "variants": [],
       "parameters": [
         {
-          "name": "layout",
+          "name": "weight",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -845,10 +898,8 @@
           "options": [
             "grid",
             "masonry",
-            "single",
-            "wide",
-            "full",
-            "breakout"
+            "slides",
+            "rows"
           ],
           "default": "grid"
         },
@@ -889,13 +940,12 @@
       ],
       "parameters": [
         {
-          "name": "layoutMode",
+          "name": "media",
           "type": "enum",
           "required": false,
           "options": [
-            "wide",
-            "full",
-            "breakout"
+            "inset",
+            "flush"
           ]
         },
         {
@@ -932,6 +982,17 @@
           "name": "trackCompletion",
           "type": "boolean",
           "required": false
+        },
+        {
+          "name": "width",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "narrow",
+            "wide",
+            "full",
+            "breakout"
+          ]
         }
       ]
     },
@@ -1004,10 +1065,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1023,7 +1085,7 @@
       "reference": "blocks-containers.md#comparison",
       "variants": [
         {
-          "name": "style",
+          "name": "layout",
           "type": "enum",
           "options": [
             "slider",
@@ -1042,10 +1104,11 @@
       ],
       "parameters": [
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1149,6 +1212,15 @@
           "required": false
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -1170,10 +1242,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1273,6 +1346,15 @@
           "required": false
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -1294,10 +1376,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1388,6 +1471,15 @@
           "required": false
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -1409,10 +1501,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1498,6 +1591,15 @@
           "required": false
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -1519,10 +1621,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1623,6 +1726,15 @@
           "required": false
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -1644,10 +1756,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1723,6 +1836,15 @@
           ]
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -1754,10 +1876,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1790,10 +1913,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1883,6 +2007,15 @@
           "required": false
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -1904,10 +2037,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -1980,6 +2114,15 @@
           "required": false
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -2001,10 +2144,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -2074,6 +2218,15 @@
           ]
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "points",
           "type": "number",
           "required": false
@@ -2095,10 +2248,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -2145,15 +2299,25 @@
           "required": false
         },
         {
+          "name": "deckGate",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "attempt",
+            "pass"
+          ]
+        },
+        {
           "name": "requireAll",
           "type": "boolean",
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -2180,10 +2344,11 @@
           "required": false
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"
@@ -2225,10 +2390,11 @@
           "required": true
         },
         {
-          "name": "layout",
+          "name": "width",
           "type": "enum",
           "required": false,
           "options": [
+            "narrow",
             "wide",
             "full",
             "breakout"

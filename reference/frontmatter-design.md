@@ -1,4 +1,8 @@
-# Frontmatter Design Options
+# Frontmatter design options
+
+These are Praxity Studio presentation metadata, carried by the frontmatter container.
+For authoring steps and Studio YAML settings, see [Studio Help](https://praxity.io/en/help/studio/design-your-theme/).
+This technical reference remains available for existing source integrations.
 
 ## Course metadata
 
@@ -15,6 +19,11 @@ design:
   colorMode: light
   accentHue: 220
 ```
+
+In Studio, Theme → Preset and Reset to preset replace the visual defaults:
+colours (including status colours), typography, spacing and density, card styling,
+motion, and block style defaults. They preserve the brand logo, presentation
+settings, and authored custom CSS.
 
 Current Studio presets use these source values:
 
@@ -177,6 +186,13 @@ default and then applied to the body-relative `section` token.
 
 ## Navigation
 
+Studio exposes Pages and Guided slides in Design → Presentation. Course format
+is course-wide. Edit settings for selects Course defaults (saved in course.yaml)
+or This module (saved as lesson-level overrides). Module overrides take precedence.
+The source keys below remain supported for authored configurations. See
+[Studio presentation metadata](module-deck.md#studio-presentation-metadata) for
+the simplified panel's defaults and setting mappings.
+
 - `navArchetype`: `sidebar | bottomBar | slides | scroll | minimal | embedded | none | custom`
 - `navArchetypeBase`: same option set
 - `navLayout`: `sidebar | bottomBar | none` (legacy)
@@ -293,6 +309,10 @@ An explicit setting on a block takes precedence, even when it selects the normal
 unstyled/default value. Studio writes the appropriate keys when you use Design →
 Block defaults; changing a default does not rewrite each block's source.
 
+Use the same canonical keys as block source in Studio 0.2.0: `card.layout: slides`,
+`comparison.layout: slider` or `side-by-side`, and `image.size: small|medium|large`.
+Outer block width uses `width`; card surface treatment still uses `style`.
+
 ## Complete example
 
 ```yaml
@@ -346,6 +366,35 @@ design:
     logoUrl: /assets/logo-light.svg
     logoDarkUrl: /assets/logo-dark.svg
     logoPlacement: header
-  componentDefaults: {}
+  componentDefaults:
+    card:
+      layout: slides
+      width: narrow
+    comparison:
+      layout: side-by-side
+    image:
+      size: medium
 ---
 ```
+
+## Narrated module decks
+
+Course playback mode is `moduleDeck: true` in `course.yaml`. It is not a lesson
+frontmatter key. Presentation and initial learner preferences use `design.deck`:
+
+```yaml
+design:
+  deck:
+    preset: transcript
+    outline: true
+    initialPanel: transcript
+    slideCounter: true
+    followNarration: true
+    autoAdvance: false
+  navFloatingToc: true
+  navKeyboardArrows: true
+```
+
+See [module-deck.md](module-deck.md#studio-presentation-metadata) for values, defaults
+and precedence, or [Studio Help](https://praxity.io/en/help/studio/design-your-theme/) for
+the corresponding Design controls. These settings do not change assessment gates.

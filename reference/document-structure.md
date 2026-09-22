@@ -83,6 +83,8 @@ firstPage:
 ---
 ```
 
+For module playback, `firstPage.deckStop` and page-break `deckStop` pause narration after that slide. See [module deck settings](module-deck.md).
+
 ## Stable content IDs
 
 Stable IDs connect learner progress to the same lesson, page, and interactive block after
@@ -128,13 +130,36 @@ Studio narration is a project layer stored in `narration.yaml`, not grammar synt
 that machine-managed sidecar and links its scripts and audio to the visible page title and logical
 blocks. Authors and agents should edit the `.prax` source for visible content, then use Studio to
 edit narration. The CLI reads the same sidecar and bundles referenced MP3 and optional WebVTT
-assets. Narration never autoplays or affects completion, scoring, content access, or navigation.
+assets. In the default page runtime, narration never autoplays or affects completion, scoring, content access, or navigation. The experimental [module-deck compiler option](module-deck.md) adds user-started continuous playback and slide navigation. Its knowledge-check gates remain independent of listening time.
+
+Cards, sequences, accordions, and tabs generate separate narration clips for each item,
+with a separate clip for any container title or instructions. Two-sided cards have separate
+front and back clips, in that order; each face has its own narration settings. Nested containers retain their
+own item boundaries. Preview and export play the clips in authored order. This keeps a long
+container from consuming Soniox's two-minute limit in one request; an individual item still
+needs to fit that limit. Existing whole-container recordings remain playable. Regenerating a
+derived recording replaces it with item clips only after the full replacement batch succeeds;
+explicit custom whole-container scripts remain intact.
 
 Generated narration for single- and multiple-choice questions reads the prompt, description,
 instructions, and visible answer options in authored order, then pauses for the learner.
 It excludes correctness markers, scoring, answer keys, and feedback. Custom narration scripts
 override this generated text. After a generated script changes, regenerate its audio and timings;
 existing clips are not rewritten automatically.
+
+Narration scripts also supply the full reading text in the module transcript. In Studio's script
+field, use `**bold**`, `*italic*`, `#` through `###` headings, `-` bullet items, and `1.` numbered
+items. Put each heading or list item on its own line, and separate paragraphs with blank lines.
+Lists are flat. Transcript headings keep the surrounding text size. Raw HTML and other inline
+features are literal text, not executable markup.
+
+Formatting stays in the existing sidecar `script` field. Speech receives the same words with
+formatting removed and paragraph breaks between headings, paragraphs, and list items. Studio
+adds no sentence punctuation and keeps the original segment IDs and recording boundaries.
+Bold and italic are visual formatting, not Soniox emphasis instructions; supported bracketed
+voice cues such as `[warm]` and `[pause]` still reach the provider. Formatting-only changes can
+reuse a recording when its saved spoken text matches. Older recordings made with literal
+asterisk emphasis remain stale until regenerated. No recording is regenerated automatically.
 
 An optional pronunciation lexicon maps exact written terms to spoken aliases during online
 narration generation. It does not change learner-visible text:
@@ -228,14 +253,22 @@ All manifest blocks support the following parameters:
 
 | Parameter | Type | Valid values | Description |
 |---|---|---|---|
-| `layout` | enum | `wide \| full \| breakout` | Overrides the default content width for this block |
+| `width` | enum | `narrow \| wide \| full \| breakout` | Overrides the default content width for this block |
 | `name` | string | any | Assigns a name to the block for cross-referencing. Used in logic rules (`then: show @myBlock`), assessment-group scoring, and anchor links. Use `camelCase` with no spaces — e.g. `name: safetyTip`. Avoid colons, quotes, and special characters. |
 | `hide` | boolean | `true \| false` | Hides the block from rendered output. The block is preserved in the grammar and can be shown later via logic rules (`then: show @name`). |
 | `visible` | condition expression | always | Conditional visibility based on variable state. Example: `visible: score >= 80`. The block renders only when the condition is true. |
 | `entrance` | enum | `fade \| slide \| scale \| none` | Block entrance animation; overrides course-level `motionEntrance`. |
 | `entranceDuration` | CSS duration | `250ms` | Duration of the entrance animation. |
 
-`layout` is the universal parameter in the manifest. Narration lives in the project sidecar, not block parameters. The others (`name`, `hide`, `visible`, `entrance`, `entranceDuration`) are runtime workflow metadata recognized by the published-output viewer.
+`width: narrow` centers a block in a measure capped at `45ch`, using the surrounding body font. It keeps the full available width in a narrower parent or viewport and preserves text alignment. Use it for short passages such as notes and quotes on pages or slides. Omit `width` for the normal content width. Cards can combine a presentation such as `layout: slides` with `width: narrow`.
+
+```prax
+> Pause to consider how this applies to your work.
+as: note
+width: narrow
+```
+
+`width` is the universal parameter in the manifest. Narration lives in the project sidecar, not block parameters. The others (`name`, `hide`, `visible`, `entrance`, `entranceDuration`) are runtime workflow metadata recognized by the published-output viewer.
 
 ## Escaping reserved lines
 

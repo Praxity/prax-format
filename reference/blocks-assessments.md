@@ -51,6 +51,7 @@ feedback: Required before any task begins.
 feedback: Not a mandatory safety check.
 ```
 
+
 ### Scoring retries
 
 The course score uses the latest submitted scored attempt for each question, not
@@ -386,13 +387,15 @@ Note: `passingScore:` is the correct parameter name (not `passing:`).
 | `pointsOverride` | number | Override total point value for the group (instead of summing individual question points). |
 | `requireAll` | boolean | Whether all questions must be attempted before submitting. |
 | `buttonLabel` | text | Override the visible group action text. |
+| `deckGate` | `attempt \| pass` | In Studio module decks, release the next slide after group submission or a passing group result. See [module deck settings](module-deck.md#longer-assessments-and-surveys). |
 
 A member question can use `name:` as a logic anchor and `id:` as a durable identity. These parameters do not change its group membership or shared submit action.
 
-Members inherit the group’s `layout` (`wide`, `full`, or `breakout`) unless they specify their own layout. Published pages apply this layout before interaction initializes, so activation preserves question widths.
+The group’s `layout` (`narrow`, `wide`, `full`, or `breakout`) sets one width for its header, context, questions, and submit area, including members with their own layout. When the group omits `layout`, it uses the widest member layout (`full`, then `breakout`, then `wide`); it uses `narrow` when every member is narrow; otherwise it keeps the normal content width. Published pages apply the resolved width before interaction initializes, so activation preserves question widths.
 
 Group progress counts the same committed question results that mark each member complete. After the required
-members are complete, the group action is removed and the localized result is announced. In
+members have submitted, the localized result is announced. The group action remains
+available while a member can retry, and is removed once members finish. In
 `mode: all`, ungraded groups default to **Check all** and graded groups to **Submit all**.
 In `mode: oneOf`, only the selected member is shown, submitted, and counted toward the result;
 the defaults are **Check selected** and **Submit selected**.

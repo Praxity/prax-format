@@ -16,7 +16,7 @@ required: true
 **Parameters:**
 - `required` (boolean) — whether all items must be checked to proceed.
 - `shuffle` (boolean) — randomize item order.
-- `layout`: `wide | full | breakout`
+- `width`: `narrow | wide | full | breakout`
 
 ## signature
 
@@ -39,4 +39,4 @@ required: true
 - `sublabel` (string) — supporting text below the unsigned input.
 - `required` (boolean) — require a signature before proceeding. Default: `false`.
 - `mode`: `draw | type` — initially selected input method (default: `draw`). Both methods remain available, including keyboard-accessible typing.
-- `layout`: `wide | full | breakout`
+- `width`: `narrow | wide | full | breakout`
