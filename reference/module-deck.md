@@ -127,7 +127,9 @@ with no separate frontmatter option. Silent opening slides omit the button.
 An authored `--` divider stays inside the current slide and introduces no playback
 stop or tracking event. A `---` page break defines the next logical slide. `deckStop`
 and interaction prompts define playback stops. Scrolling and section-heading links
-do not advance slides or seek audio. When enabled, the existing floating section
+do not advance slides or seek audio. Scrolling slide content keeps narration playing
+and temporarily suspends automatic scrolling so learners can read at their own pace.
+Deliberate slide or card navigation pauses narration when Follow is enabled. When enabled, the existing floating section
 navigation lists headings in the active slide and stays outside the transcript rail.
 On narrow layouts, headings remain available in ordinary content order.
 
@@ -195,7 +197,8 @@ scrolling; selecting a narration passage resumes it when Follow narration is on.
 In Studio, **Outline detail** offers **Current module only** or **Current module
 and links to other modules**. Both list the current module's slides. The default,
 `moduleLinks`, also shows one link to each other module in course order, using its
-module title and opening its first slide. Those links obey the same assessment
+module title and opening its first slide. Module links are bold and aligned with
+module headings; the current module's slide links are indented beneath its heading. Those links obey the same assessment
 gates as slide navigation. Other modules' slides are not listed until the learner
 enters that module. This setting does not change authored titles or content. For a lesson override:
 
