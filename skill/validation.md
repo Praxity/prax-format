@@ -161,7 +161,7 @@ as: choice
 
 ### Missing `close:` for containers
 
-Use an explicit close statement before following same-page content that belongs outside the container. A page break, H1 heading, or end of file also closes every container.
+Use an explicit close statement before following same-page content that belongs outside the container. A page break or end of file also closes every container.
 
 | Container | Explicit closer |
 |---|---|

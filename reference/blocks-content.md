@@ -14,7 +14,7 @@ This is plain paragraph text.
 
 ## heading
 
-Headings define structure. The heading level is determined by the number of `#` marks — it is not set via a parameter.
+Headings define content hierarchy. `#` is an ordinary H1 with the same parameters and Studio narration handling as the other levels; it does not split lessons or pages. The heading level is determined by the number of `#` marks — it is not set via a parameter.
 The published tag uses the same level without an export-time offset (`#` → `h1`,
 `##` → `h2`, `###` → `h3`, `####` → `h4`).
 
@@ -77,8 +77,8 @@ Use `fit: contain` for diagrams or documents whose edges carry information. Imag
 Use `size` for image size, `width` for outer block width, and `alignment` for placement. Parameters such as `x`, `filter`, `opacity`, `order`, and standalone `motionBlur` are not canonical public `.prax` syntax. Use the supported image effects instead.
 
 A float region begins at an image with `float: left | right` and continues through
-following content, including paragraphs, H2–H4 headings, and lists. `close: float`
-ends the region; following content starts below the image. H1, a page break, a new
+following content, including paragraphs, headings at any level, and lists. `close: float`
+ends the region; following content starts below the image. A page break, a new
 floated image, or the end of the containing block list also ends it automatically.
 Each container has its own scope: a nested `close: float` cannot close an outer float.
 An unmatched closer produces a warning. The image and following blocks keep their

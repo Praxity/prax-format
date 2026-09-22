@@ -75,27 +75,26 @@ Current Studio palette values: `clean`, `waves`, `standard`, `bauhaus`, `campfir
 
 ### Lessons and pages
 
-`# H1` headings define **lessons** (top-level structural groupings). `---` page breaks define **pages** within a lesson.
+Each `.prax` file provides lesson or module content; frontmatter supplies its title and metadata, and `course.yaml` organizes multiple files. `#` is an ordinary H1 heading, not a lesson boundary. Only explicit `---` breaks create pages within a file.
 
-```
-# Module 1: Safety Basics
+```prax
+---
+title: Safety Basics
+lang: en
+---
 
---- Introduction
+# Introduction
 
-Welcome to the first module.
+Welcome to the module.
 
 --- Equipment Overview
 
-Personal protective equipment includes...
+## Personal protective equipment
 
-# Module 2: Emergency Procedures
-
---- Fire Safety
-
-In case of fire...
+Check your equipment before starting work.
 ```
 
-Content before the first `# H1` or `---` is implicit page 1 of an implicit first lesson.
+Content before the first page break is page 1. Keep each authored heading level; an opening H2 is not automatically promoted to H1.
 
 ### Page breaks
 
@@ -126,7 +125,7 @@ so learner state survives source edits and preview regeneration. Preserve every 
 never copy an ID to another item. Source without IDs remains valid and Studio fills them in.
 
 Narration is a Studio-managed layer in the project-root `narration.yaml`; it is not `.prax`
-grammar. Generate clean visible content in `.prax`. Use Studio for narration scripts, cues,
+grammar. Keep Soniox delivery cues in the one authored script for generation; learner transcripts omit recognized nonspoken cues while retaining human sound captions such as `[sighs]`. Cue-only edits mark the recording out of date. Generate clean visible content in `.prax`. Use Studio for narration scripts, cues,
 anchors, generation settings, and audio. The CLI reads the sidecar when it bundles the course.
 Enable playback with `narrationEnabled: true` in `course.yaml`. Narration never autoplays or
 affects learner progress.
@@ -205,9 +204,7 @@ It can span multiple lines.
 #### Minor heading
 ```
 
-`# H1` defines a lesson boundary in a single-file course and is the visible H1 for
-that page. In a multi-file course, use it as the page title. Published heading
-levels match the authored `#` depth without an export-time shift.
+`# H1` is an ordinary level-one heading with the same parameters, transformations, and Studio narration handling as other headings. Published heading levels match the authored `#` depth without an export-time shift.
 
 ### Image
 
@@ -541,11 +538,11 @@ The card group heading is not part of the card face. Each item heading starts a 
 
 Use `close: col`, `close: card`, `close: assessment-group`, `close: accordion`,
 `close: tab`, `close: sequence`, or `close: comparison` to end a container before
-following same-page content. A page break, H1 heading, or end of file closes
+following same-page content. A page break or end of file closes
 all open containers. A section divider `--` does not close them.
 
 Heading-based containers can also close at a heading above their item level or a
-different block declaration at the item level. Ordinary H2–H4 headings do not close
+different block declaration at the item level. Ordinary headings do not close
 columns or assessment groups. Explicit closers make these boundaries clear.
 
 

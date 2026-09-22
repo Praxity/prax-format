@@ -33,15 +33,18 @@ When `kicker` is omitted or blank, no kicker is shown. In a multi-file course, `
 supplies the overall course title and each lesson's `title` labels its navigation link.
 Lesson kickers are omitted from the multi-file course outline.
 
-## H1 heading — module/lesson title
+## H1 heading
 
-Praxity Studio's parser recognizes `#` (H1) separately from H2–H4. An H1 produces a `heading` block with `level: 1` and also closes all open implicit groups. Use it for module or lesson titles at the top of a file or section.
+`#` creates an ordinary level-one heading. It accepts the same heading parameters, `as:` transformations, and Studio narration handling as other heading levels. It does not create a lesson, module, or page boundary.
 
 ```prax
-# Module 1: SCORM Round-Trip Coverage
+# Safety essentials
+width: narrow
+display: chapter
+kicker: Before you begin
 ```
 
-H1 is treated as a structural boundary — it does not start a container and takes no `as:` transform.
+Files and their frontmatter define lessons or modules; `course.yaml` organizes a multi-file course. Within a file, only an explicit `---` page break starts another page. Keep the authored heading level when editing or saving, including an opening `##`; Studio does not promote every opening heading to H1.
 
 ## Pages and navigation labels
 
@@ -147,6 +150,10 @@ It excludes correctness markers, scoring, answer keys, and feedback. Custom narr
 override this generated text. After a generated script changes, regenerate its audio and timings;
 existing clips are not rewritten automatically.
 
+Studio keeps one authored narration script for generation and playback metadata. Recognized Soniox emotion and delivery cues such as `[sincerely]`, `[delighted]`, `[whispering]`, and `[long pause]` remain in that script and are sent for generation. Learner transcripts, captions, and reading labels omit these nonspoken cues. Human sound captions such as `[laughs]`, `[sighs]`, and `[coughs]` remain visible. Ordinary bracketed text, citations, and Markdown links are not removed as delivery cues.
+
+Recording freshness uses the complete original generation script, including its cues. Changing only a cue therefore marks the existing recording out of date. This does not require a separate learner-transcript script.
+
 Narration scripts also supply the full reading text in the module transcript. In Studio's script
 field, use `**bold**`, `*italic*`, `#` through `###` headings, `-` bullet items, and `1.` numbered
 items. Put each heading or list item on its own line, and separate paragraphs with blank lines.
@@ -180,8 +187,8 @@ for capitalization or inflection variants. Course manifests may use the same
 
 Heading levels drive hierarchy and structure.
 
-- `#` page or module content title (H1) — structural boundary
-- `##` page-level title
+- `#` level-one content heading, recommended for a visible page title
+- `##` section heading
 - `###` section/item heading
 - `####` subsection heading
 
@@ -234,7 +241,7 @@ Additional section on same page.
 
 ## Lessons and grouping
 
-You can organize large files using `##` page headings and container sections (`###` items inside accordion/tabs/sequence). No extra lesson keyword is required.
+Each `.prax` file supplies lesson or module content and frontmatter metadata. Use `course.yaml` to organize multiple files. Within a file, use `---` for pages and headings for content hierarchy. A heading never creates another lesson.
 
 ## Universal parameters
 

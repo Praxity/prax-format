@@ -354,7 +354,7 @@ references. It writes `close: assessment-group` after the last member so the nex
 question remains outside the group. Nested assessment headings retain their
 authored level so they remain inside their parent container.
 
-Group multiple assessments. Conventionally, put `as: assessment-group` on a `##` heading and use `###` headings for its questions. Ordinary H2–H4 headings do not end the group. Use `close: assessment-group` before following content on the same page; a page break, H1 heading, or the end of the file also closes it.
+Group multiple assessments. Conventionally, put `as: assessment-group` on a `##` heading and use `###` headings for its questions. Ordinary headings do not end the group. Use `close: assessment-group` before following content on the same page; a page break or the end of the file also closes it.
 
 **Syntax:**
 ```prax

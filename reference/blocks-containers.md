@@ -325,11 +325,11 @@ For image-led cards, set `media: flush` or `media: inset` on the card and author
 
 - Containers may include content blocks and assessments as children.
 - Avoid deeply nested multi-container chains for readability.
-- Page breaks (`---`), H1 headings, and the end of the file close all open containers automatically.
+- Page breaks (`---`) and the end of the file close all open containers automatically.
 
 ## Closing rules
 
-All containers accept an explicit closer. Page breaks, H1 headings, and the end of
+All containers accept an explicit closer. Page breaks and the end of
 file also close every open container; an omitted closer is not a syntax error.
 Use explicit closers when following content should sit outside a container on the
 same page. Additional boundaries depend on the container:
@@ -337,8 +337,8 @@ same page. Additional boundaries depend on the container:
 | Container | Explicit closer | Other boundaries on the same page |
 |---|---|---|
 | `accordion` / `tab` | `close: accordion` / `close: tab` | A higher-level heading, or a same-level heading declaring another block type |
-| `col` | `close: col` | The next `as: col` starts a sibling column; ordinary H2–H4 headings remain inside the column |
-| `assessment-group` | `close: assessment-group` | Ordinary H2–H4 headings do not end the group |
+| `col` | `close: col` | The next `as: col` starts a sibling column; ordinary headings remain inside the column |
+| `assessment-group` | `close: assessment-group` | Ordinary headings do not end the group |
 | `card` | `close: card` | A heading above the card item level, or an item-level heading declaring another block type |
 | `sequence` | `close: sequence` | A higher-level heading, or a same-level heading declaring another block type |
 | `comparison` | `close: comparison` | A higher-level heading, or a same-level heading declaring another block type; the second item does not automatically close the group |

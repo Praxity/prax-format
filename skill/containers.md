@@ -334,7 +334,7 @@ Avoid nesting containers inside containers (accordion inside accordion) unless r
 
 ## Closing rules
 
-Every container closes at a page break, H1 heading, or end of file.
+Every container closes at a page break or end of file.
 For boundaries within a page:
 
 | Container | Explicit closer | Other same-page boundary |
@@ -343,9 +343,9 @@ For boundaries within a page:
 | tab | `close: tab` | Heading above item level or different block declaration at item level |
 | sequence | `close: sequence` | Heading above item level or different block declaration at item level |
 | comparison | `close: comparison` | Heading above item level or different block declaration at item level |
-| columns | `close: col` | Ordinary H2–H4 headings stay inside |
+| columns | `close: col` | Ordinary headings stay inside |
 | card, including `card: back` | `close: card` | Heading above item level or different block declaration at item level |
-| assessment-group | `close: assessment-group` | Ordinary H2–H4 headings stay inside |
+| assessment-group | `close: assessment-group` | Ordinary headings stay inside |
 
 A section divider `--` does not close containers.
 

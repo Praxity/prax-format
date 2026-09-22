@@ -443,7 +443,7 @@ Hand Protection:
 
 ## assessment-group
 
-Use `as: assessment-group` on a heading to wrap multiple assessments. Use `close: assessment-group` before following same-page content. A page break, H1 heading, or end of file also closes the group.
+Use `as: assessment-group` on a heading to wrap multiple assessments. Use `close: assessment-group` before following same-page content. A page break or end of file also closes the group.
 
 ```prax
 ## Module Checkpoint
