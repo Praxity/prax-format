@@ -349,12 +349,12 @@ alt: Safety goggles
 
 ## assessment-group
 
-Serialization preserves the group title, settings, authored IDs, and member
+Serialization preserves the group title, its authored heading level, settings, authored IDs, and member
 references. It writes `close: assessment-group` after the last member so the next
 question remains outside the group. Nested assessment headings retain their
 authored level so they remain inside their parent container.
 
-Group multiple assessments. Conventionally, put `as: assessment-group` on a `##` heading and use `###` headings for its questions. Ordinary headings do not end the group. Use `close: assessment-group` before following content on the same page; a page break or the end of the file also closes it.
+Group multiple assessments. Put `as: assessment-group` on a `#` heading when its title is the page's primary heading. For a group nested under a page title, use `##` or a deeper heading level and follow it with appropriately nested question headings. Ordinary headings do not end the group. Use `close: assessment-group` before following content on the same page; a page break or the end of the file also closes it.
 
 **Syntax:**
 ```prax
