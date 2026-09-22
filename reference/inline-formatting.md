@@ -75,7 +75,7 @@ Variables can be referenced inline with moustache syntax:
 Hello {{learnerName}}, welcome back.
 ```
 
-Variable declarations are block-level lines (not inline). Once declared, a variable persists across the entire course and can be referenced on any subsequent page:
+Variable declarations are block-level lines (not inline). A `var:` line starts a new declaration even directly after a heading, page break, or another variable; it is never a parameter of the preceding block. Blank lines before the declaration are optional. Once declared, a variable persists across the entire course and can be referenced on any subsequent page:
 
 ```prax
 var: learnerName = "Taylor"
