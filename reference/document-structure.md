@@ -154,7 +154,7 @@ Studio keeps one authored narration script for generation and playback metadata.
 
 Recording freshness uses the complete original generation script, including its cues. Changing only a cue therefore marks the existing recording out of date. This does not require a separate learner-transcript script.
 
-Narration scripts also supply the full reading text in the module transcript. In Studio's script
+Narration scripts also supply the reading text in the current slide’s transcript. In Studio's script
 field, use `**bold**`, `*italic*`, `#` through `###` headings, `-` bullet items, and `1.` numbered
 items. Put each heading or list item on its own line, and separate paragraphs with blank lines.
 Lists are flat. Transcript headings keep the surrounding text size. Raw HTML and other inline
