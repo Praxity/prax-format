@@ -10,6 +10,15 @@ To attach a card to a heading, put `as: card` directly beneath that heading.
 Accordion, tab, sequence, comparison, and assessment-group declarations require a
 heading; their existing heading attachment also accepts intervening blank lines.
 
+For compatibility when reading source with inline narration overrides, `narration`, `narrationVoice`,
+`narrationLanguage`, `narrationSpeed`, `narrationDisabled`, and recording metadata on
+an item heading belong to that item. This applies to every accordion, tab, and sequence
+heading, including the first, and to card item headings. Overrides do not carry over to
+the next item. A card's outer title retains its own narration; a lower-level heading
+inside a front or back face remains a separate narrated content block. Existing
+whole-card narration retains its whole-container behavior. Studio saves narration in
+`narration.yaml`; serializing blocks to `.prax` does not emit in-memory narration fields.
+
 ## accordion
 
 Collapsible panels. The heading with `as: accordion` opens the accordion; subsequent headings at the same level become additional panels. Any heading level works (`##`, `###`, `####`), though `###` is most common.
