@@ -2,7 +2,7 @@
 
 ## Frontmatter structure
 
-Design values live in YAML frontmatter under `design:`. All design keys are optional — omit any key to use the default.
+Course-wide design values live in YAML frontmatter under `design:`. All design keys are optional — omit any key to use the default. Named page treatments live separately under `pageStyles`; select them with `pageStyle` on a page break or opening H1. See [named page styles](../reference/document-structure.md#named-page-styles-and-corner-artwork).
 
 ```prax
 ---

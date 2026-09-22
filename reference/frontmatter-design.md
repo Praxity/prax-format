@@ -11,6 +11,12 @@ title: Course Title
 lang: en
 ```
 
+## Named page styles
+
+Use frontmatter `pageStyles` for reusable page treatments, selected with `pageStyle`
+on a page break or opening H1. See [named page styles and corner artwork](document-structure.md#named-page-styles-and-corner-artwork)
+for syntax, precedence, and supported properties.
+
 ## Palette and colors
 
 ```yaml

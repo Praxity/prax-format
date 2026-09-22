@@ -23,12 +23,13 @@ for supporting text above a chapter heading. These do not change its document le
 
 **Syntax:**
 ```prax
-## Page Heading
-### Section Heading
-#### Subsection Heading
+# Page Heading
+## Section Heading
+### Subsection Heading
 ```
 
 **Parameters:**
+- `pageStyle` (string) — named `pageStyles` entry, on an opening top-level H1.
 - `display`: `standard | chapter` — visual heading treatment.
 - `kicker` (string) — supporting text above a chapter heading.
 - `width`: `narrow | wide | full | breakout`

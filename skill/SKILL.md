@@ -89,12 +89,17 @@ Welcome to the module.
 
 --- Equipment Overview
 
-## Personal protective equipment
+# Personal protective equipment
 
 Check your equipment before starting work.
 ```
 
 Content before the first page break is page 1. Keep each authored heading level; an opening H2 is not automatically promoted to H1.
+
+Define reusable presentation styles in frontmatter `pageStyles`, then select one with
+`pageStyle: name` after a page break or on the opening H1. Page-break settings take
+precedence. See [named page styles](../reference/document-structure.md#named-page-styles-and-corner-artwork)
+for decorative artwork and supported style properties.
 
 ### Page breaks
 

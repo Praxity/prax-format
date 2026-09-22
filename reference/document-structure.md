@@ -51,12 +51,12 @@ Files and their frontmatter define lessons or modules; `course.yaml` organizes a
 Pages are separated with `---` on its own line. Text after the dashes labels the new page in navigation; it is not rendered as a heading. Use an authored `#` heading when the page needs a visible title.
 
 ```prax
-## Page One
+# Page One
 Content on page one.
 
 --- Introduction
 
-## Page Two
+# Page Two
 Content on page two.
 ```
 
@@ -87,6 +87,78 @@ firstPage:
 ```
 
 For module playback, `firstPage.deckStop` and page-break `deckStop` pause narration after that slide. See [module deck settings](module-deck.md).
+
+## Named page styles and corner artwork
+
+Define reusable page styles in frontmatter, then select one with `pageStyle` after a
+page break or on the page's opening H1:
+
+```prax
+---
+title: Example lesson
+pageStyles:
+  illustrated:
+    cornerImage: assets/corner-wash.png
+  plain:
+    cornerImage: none
+---
+
+# Welcome
+pageStyle: illustrated
+
+--- Next steps
+pageStyle: illustrated
+
+# Next steps
+
+--- Summary
+pageStyle: plain
+
+# Summary
+```
+
+A page-break `pageStyle` takes precedence over the opening H1's `pageStyle`. Only
+an H1 that is the page’s first top-level block can set its page style; later or
+nested headings do not. A heading's ordinary `style` still styles that heading.
+The older frontmatter `styles` and page-break `style` spellings remain supported
+for existing source. When both dictionaries are present, `pageStyles` takes precedence.
+For an opening page without a page break, `firstPage.pageStyle` in frontmatter
+can select the style instead of the H1 parameter.
+
+Each named style can set these presentation properties. Defaults below apply to
+a new custom style; a definition named after a built-in style inherits that style’s defaults.
+
+| Property | Values | Default |
+|---|---|---|
+| `cornerImage` | Asset path, or `none` | No artwork |
+| `background` | `paper`, `surface`, `accent`, `ink` | `paper` |
+| `measure` | `narrow`, `default`, `wide`, `full` | `default` |
+| `align` | `start`, `center` | `center` |
+| `scale` | `default`, `display` | `default` |
+| `chrome` | `default`, `minimal` | `default` |
+| `accentRule` | `true`, `false` | `false` |
+| `mediaPlacement` | `stacked`, `left`, `right` | `stacked` |
+
+`background` selects theme colours; `cornerImage` adds decorative artwork independently.
+`align` controls vertical placement, and `measure` controls the content width.
+`accentRule` adds the accent border used by the built-in `section` style.
+
+`cornerImage` is optional and off by default. Use artwork designed for cropped
+upper-left and lower-right corners. Keep meaningful illustrations in ordinary
+image blocks with alt text. Styles can name different artwork files; reuse the
+same style on as many pages as needed. A style with `cornerImage: none` has no
+corner artwork.
+
+Slide mode reserves space beside the content automatically, using the slide's
+available width after docked panels. Narrow slides, and slides containing full or
+breakout-width blocks, show a smaller wash after the content instead. Other
+presentation layouts retain the setting without displaying the artwork.
+There are no authored crop, opacity, or breakpoint controls. The image is omitted
+in dark mode, forced colours, and print, and adds no transcript, narration, or
+navigation content.
+
+Local artwork is included in preview and exported packages through the ordinary
+asset pipeline. Keep the file with the course's other assets.
 
 ## Stable content IDs
 
