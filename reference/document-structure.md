@@ -339,7 +339,7 @@ All manifest blocks support the following parameters:
 | `entrance` | enum | `fade \| slide \| scale \| none` | Block entrance animation; overrides course-level `motionEntrance`. |
 | `entranceDuration` | CSS duration | `250ms` | Duration of the entrance animation. |
 
-`width: narrow` centers a block in a measure capped at `45ch`, using the surrounding body font. It keeps the full available width in a narrower parent or viewport and preserves text alignment. Use it for short passages such as notes and quotes on pages or slides. Omit `width` for the normal content width. Cards can combine a presentation such as `layout: slides` with `width: narrow`.
+`width: narrow` centers a block in a measure capped at `45ch`, using the surrounding body font. It keeps the full available width in a narrower parent or viewport and preserves text alignment. Use it for short passages such as notes and quotes on pages or slides. Omit `width` for the normal content width. Wider blocks stay centered in the available content area and retain a side gutter, including when a navigation panel reduces that area. `width: full` fills this usable area; section backgrounds and decorative artwork can still extend to its edges. Cards can combine a presentation such as `layout: slides` with `width: narrow`.
 
 ```prax
 > Pause to consider how this applies to your work.

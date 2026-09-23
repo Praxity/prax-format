@@ -108,7 +108,7 @@ Video from a URL or local media path. The source is the bare URL/path on its own
 https://www.youtube.com/embed/aqz-KE-bpKQ
 caption: Safety walkthrough
 title: Emergency response walkthrough
-transcript: Full transcript text or a transcript reference.
+transcript: The presenter checks the exit route before starting work.
 start: 12
 end: 90
 ```
@@ -116,15 +116,14 @@ end: 90
 **Parameters:**
 - `caption` (string) — visible caption below the video.
 - `title` (string) — visible title above the player.
-- `transcript` (string) — transcript text or a transcript reference.
+- `transcript` (string) — text shown under the player. A file path is displayed literally; Studio does not load that file.
 - `start` / `end` (number) — optional playback bounds in seconds.
-- `captionTracks` (array/object, editor-generated) — timed caption track metadata.
 - `captionEnabled` (boolean) — set `false` to suppress the visible caption.
 - `width`: `narrow | wide | full | breakout`
 
 `start` and `end` are playback bounds in seconds. They are supported for YouTube, Vimeo, local/direct video files, and Mux-hosted video. Loom and unknown iframe embeds can render, but they do not expose reliable playback control to Praxity Studio, so timing bounds are not enforced there.
 
-`autoplay`, `size`, and bare `subtitles:` are not canonical public `.prax` parameters. Caption files are represented internally as `captionTracks`.
+`autoplay`, `size`, and bare `subtitles:` are not canonical public `.prax` parameters. The current grammar cannot attach a timed caption file to local video; a `transcript:` does not create synchronized captions. For embedded video, supply captions through its video host.
 
 ## audio
 
@@ -137,14 +136,13 @@ no transcript is supplied, the card also includes the audio download link.
 /assets/briefing.mp3
 title: Daily briefing
 caption: Recorded during the morning huddle.
-transcript: Full transcript text or a transcript reference.
+transcript: The supervisor reviews the daily safety checks.
 ```
 
 **Parameters:**
 - `title` (string) — display title for the audio player.
 - `caption` (string) — visible caption below the player.
-- `transcript` (string) — transcript text or a transcript reference. Recommended for accessibility.
-- `captionTracks` (array/object, editor-generated) — timed caption track metadata.
+- `transcript` (string) — text shown under the player. A file path is displayed literally; Studio does not load that file.
 - `captionEnabled` (boolean) — set `false` to suppress the visible caption.
 - `width`: `narrow | wide | full | breakout`
 

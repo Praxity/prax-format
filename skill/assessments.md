@@ -558,7 +558,7 @@ incorrect: Review section 3 of the safety manual before continuing.
 - Did every assessment heading start with a heading line (`### ...`)?
 - Is the `as:` value `choice` for both choose-one and choose-many (not `as: choose-one`)?
 - Is the `as:` value `rating` for the rate block (not `as: rate`)?
-- Is per-option `feedback:` on its own line, flush left, immediately after the option it belongs to?
+- Is per-option `feedback:` on its own line immediately after the option it belongs to?
 - Are `correct:` and `incorrect:` placed after all options (not after any individual option)?
 - Does each assessment group end before content intended outside it?
 - Is `passingScore` used (not `passing` or `pass-score`) for assessment-group?

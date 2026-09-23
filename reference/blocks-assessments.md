@@ -354,7 +354,7 @@ references. It writes `close: assessment-group` after the last member so the nex
 question remains outside the group. Nested assessment headings retain their
 authored level so they remain inside their parent container.
 
-Group multiple assessments. Put `as: assessment-group` on a `#` heading when its title is the page's primary heading. For a group nested under a page title, use `##` or a deeper heading level and follow it with appropriately nested question headings. Ordinary headings do not end the group. Use `close: assessment-group` before following content on the same page; a page break or the end of the file also closes it.
+Group multiple assessments. Put `as: assessment-group` on a `#` heading when its title is the page's primary heading. For a group nested under a page title, use `##` or a deeper heading level and follow it with appropriately nested question headings in Prax source. In learner output, the group title remains a heading and each question stem renders as a bold paragraph labelled to its response controls. Ordinary headings do not end the group. Use `close: assessment-group` before following content on the same page; a page break or the end of the file also closes it.
 
 **Syntax:**
 ```prax

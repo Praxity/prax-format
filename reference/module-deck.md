@@ -9,7 +9,7 @@ lessons:
   - introduction.prax
 ```
 
-The Course settings panel sets the current slide's narration stop and each assessment's release rule. These choices live with their content in `.prax` source:
+The Course settings panel sets each assessment's release rule. Add a slide's narration stop in `.prax` source. Both choices stay with their content:
 
 ```prax
 ---
@@ -48,9 +48,9 @@ Desktop compiler callers can supply the same object in `DesktopExportInput.confi
 
 `gates` maps stable assessment or assessment-group block IDs to release rules. An attempt rule accepts a submitted answer; a pass rule requires a correct answer or a passing group result. Listening duration never releases a gate. A blocked advance shows a persistent notice beside the first unfinished activity: in the left gutter when space allows, or above the activity on narrow layouts. Activating the notice moves focus to the activity. It clears when the required activities are satisfied or the learner navigates away. If the blocked activity is on another slide, the controls retain a general notice instead. Routine playback pauses do not add a visible status row. Authored attempt limits still apply, and an exhausted incorrect attempt does not release a pass gate. Earned access remains available for the learner attempt; course reset clears it. Course completion and scoring keep their separate existing configuration.
 
-`stops` lists stable slide IDs where narration pauses after the final segment. Questions also pause after their prompt. Audio begins only after explicit Play. It continues through playable segments until a stop, a missing segment or module boundary. Manual permitted navigation preserves playback intent. A new module starts paused.
+`stops` lists stable slide IDs where narration pauses after the final segment. Questions also pause after their prompt. Audio begins only after explicit Play. It continues through playable segments until a stop, a missing segment or module boundary. A new module starts paused.
 
-Each contiguous lesson compiles to one document. Stable page URLs remain aliases to module fragments. Slides, history, reading seeks and module controls share sequential access rules. The narration reading text is available without generated audio. Recognized nonspoken Soniox delivery cues are omitted from this text, while human sound captions remain. Studio retains the original script for generation and recording freshness. The content keeps the native Praxity layout and authored width/spacing. The optional outline sidebar sits on the left and the optional current-slide transcript sidebar on the right, outside the content area. Both start closed by default and share sidebar styling. Authors can choose the initially open panel through `design.deck`. On desktop the reading panel scrolls independently. On narrow or short screens, an open panel replaces the slide area while playback and navigation remain available. Closing the panel returns to the slide and restores focus to its toggle. The slide scrollport spans the available width, including the margins around the authored content. The course outline and script open one at a time. Timing data may drive seeking and highlighting, but timestamps are not displayed in the transcript. The reading panel shows only the current slide. It updates with navigation and narration auto-advance; inactive slide scripts are excluded from keyboard and screen-reader navigation. No separate captions interface is added in this mode.
+Each contiguous lesson compiles to one document. Stable page URLs remain aliases to module fragments. Slides, history, reading seeks and module controls share sequential access rules. The narration reading text is available without generated audio. Recognized nonspoken Soniox delivery cues are omitted from this text, while human sound captions remain. Studio retains the original script for generation and recording freshness. The content keeps the native Praxity layout and authored width/spacing. The optional outline sidebar sits on the left and the optional current-slide transcript sidebar on the right, outside the content area. With the default Compact preset, both start closed and share sidebar styling. Authors can choose the initially open panel through `design.deck`; the learner's explicit panel choice takes precedence when browser storage is available. On desktop the reading panel scrolls independently. On narrow or short screens, an open panel replaces the slide area while playback and navigation remain available. Closing the panel returns to the slide and restores focus to its toggle. The slide scrollport spans the available width, including the margins around the authored content. The course outline and script open one at a time. Timing data may drive seeking and highlighting, but timestamps are not displayed in the transcript. The reading panel shows only the current slide. It updates with navigation and narration auto-advance; inactive slide scripts are excluded from keyboard and screen-reader navigation. No separate captions interface is added in this mode.
 
 This slice rejects logic, variables, conditional content, branching action buttons, private gated responses, pass gates on manually reviewed responses and required non-assessment activities. It does not silently translate their behavior. Blocks must have unique IDs and each lesson's pages must be contiguous.
 
@@ -129,7 +129,7 @@ stop or tracking event. A `---` page break defines the next logical slide. `deck
 and interaction prompts define playback stops. Scrolling and section-heading links
 do not advance slides or seek audio. Scrolling slide content keeps narration playing
 and temporarily suspends automatic scrolling so learners can read at their own pace.
-Deliberate slide or card navigation pauses narration when Follow is enabled. When enabled, the existing floating section
+Deliberate slide or card navigation within a module pauses narration when Follow is enabled. When enabled, the existing floating section
 navigation lists headings in the active slide and stays outside the transcript rail.
 On narrow layouts, headings remain available in ordinary content order.
 
@@ -160,7 +160,7 @@ without changing its theme, assessment gates, or narration follow/auto-advance
 preferences.
 
 Selecting Guided slides opens the transcript initially, includes links to other
-modules, and shows the course/module header. Its module-links switch maps to
+modules, and shows the course/module header. The Include links to other modules switch maps to
 `deck.outlineDetail`. Selecting Pages opens the course outline initially and shows
 the header; Show page sections enables `navFloatingToc` for long pages. Pages
 always retains links to other modules. Turning off Show outline sidebar when module starts
@@ -189,13 +189,15 @@ keys. Course and lesson deck settings merge per key; each module retains its own
 resolved settings in full-course preview and export. An initial outline falls back
 to closed when outline access is disabled. Transcript and reading tools remain
 available. Follow/advance are learner starting preferences, not completion rules;
-learner changes currently last within the module. Disabling the slide count does
+changes to them last within the module. The learner's explicit outline, transcript,
+or closed panel choice is remembered across modules and visits when browser storage
+is available. Disabling the slide count does
 not remove screen-reader slide announcements. Transcript seeking preserves the
 learner's Follow narration choice. Manual reading can temporarily suspend follow
 scrolling; selecting a narration passage resumes it when Follow narration is on.
 
-In Studio, **Outline detail** offers **Current module only** or **Current module
-and links to other modules**. Both list the current module's slides. The default,
+In Studio, **Include links to other modules** sets `outlineDetail` to `moduleLinks`
+when on or `currentModule` when off. Both list the current module's slides. The default,
 `moduleLinks`, also shows one link to each other module in course order, using its
 module title and opening its first slide. Module links are bold and aligned with
 module headings; the current module's slide links are indented beneath its heading. Those links obey the same assessment

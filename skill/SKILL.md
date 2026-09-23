@@ -40,7 +40,7 @@ The first `---` at byte position 0 opens YAML frontmatter. The next `---` closes
 
 ## Frontmatter
 
-Frontmatter controls course metadata and the design system. Only `title` and `lang` are needed for a minimal course. The `design` block is optional -- defaults produce a clean layout.
+Frontmatter controls lesson metadata and design. It is optional; add `title` and `lang` when you know them. Studio supplies design defaults when `design` is omitted.
 
 ```yaml
 ---
@@ -125,9 +125,10 @@ firstPage:
   title: Introduction
 ```
 
-Studio adds stable IDs to lesson frontmatter, `firstPage`, later page breaks, and stateful blocks
-so learner state survives source edits and preview regeneration. Preserve every existing `id`;
-never copy an ID to another item. Source without IDs remains valid and Studio fills them in.
+Studio adds a missing lesson `id` to frontmatter. It stores generated page and stateful
+block IDs in `.praxity/content-identity.json`, outside the lesson source. Preserve
+explicit authored IDs, and keep that file with the project when copying it. Source
+without page or block IDs remains valid.
 
 Narration is a Studio-managed layer in the project-root `narration.yaml`; it is not `.prax`
 grammar. Keep Soniox delivery cues in the one authored script for generation; learner transcripts omit recognized nonspoken cues while retaining human sound captions such as `[sighs]`. Cue-only edits mark the recording out of date. Generate clean visible content in `.prax`. Use Studio for narration scripts, cues,
@@ -239,7 +240,7 @@ A file path ending in `.mp4`, `.webm`, `.mov`, `.avi` or a URL from YouTube, Vim
 ```
 /assets/safety-intro.mp4
 caption: Safety walkthrough
-transcript: /assets/safety-intro-transcript.txt
+transcript: The presenter checks the exit route before starting work.
 start: 12
 end: 90
 ```
@@ -252,6 +253,7 @@ end: 90
 ```
 
 Keys: `title:`, `caption:`, `transcript:`, `start:`, `end:`. `start:` and `end:` are seconds and work for YouTube, Vimeo, local/direct video, and Mux. Loom embeds render but do not expose reliable playback timing control.
+`transcript:` displays its text; it does not load a file path or add timed captions. The current `.prax` grammar cannot attach a caption file to local video. Hosted videos use the host's captions.
 
 ### Audio
 
