@@ -206,6 +206,11 @@
           "required": false
         },
         {
+          "name": "captions",
+          "type": "string",
+          "required": false
+        },
+        {
           "name": "transcript",
           "type": "string",
           "required": false
