@@ -240,6 +240,7 @@ A file path ending in `.mp4`, `.webm`, `.mov`, `.avi` or a URL from YouTube, Vim
 ```
 /assets/safety-intro.mp4
 caption: Safety walkthrough
+captions: /assets/safety-intro.en.vtt
 transcript: The presenter checks the exit route before starting work.
 start: 12
 end: 90
@@ -252,8 +253,7 @@ start: 12
 end: 90
 ```
 
-Keys: `title:`, `caption:`, `transcript:`, `start:`, `end:`. `start:` and `end:` are seconds and work for YouTube, Vimeo, local/direct video, and Mux. Loom embeds render but do not expose reliable playback timing control.
-`transcript:` displays its text; it does not load a file path or add timed captions. The current `.prax` grammar cannot attach a caption file to local video. Hosted videos use the host's captions.
+Keys: `title:`, `caption:`, `captions:`, `transcript:`, `start:`, `end:`. Use `captions:` with a WebVTT file for local video; Studio includes that file in exports. `caption:` displays text below the player, while `transcript:` displays untimed text. It does not load a file path or create timed captions. Hosted videos use the host's captions. `start:` and `end:` are seconds and work for YouTube, Vimeo, local/direct video, and Mux. Loom embeds render but do not expose reliable playback timing control.
 
 ### Audio
 

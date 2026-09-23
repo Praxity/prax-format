@@ -113,8 +113,17 @@ start: 12
 end: 90
 ```
 
+For a local video with timed captions, keep the WebVTT file in the project assets:
+
+```prax
+/assets/safety-intro.mp4
+captions: /assets/safety-intro.en.vtt
+caption: Safety walkthrough
+```
+
 **Parameters:**
 - `caption` (string) — visible caption below the video.
+- `captions` (WebVTT path) — synchronized captions for a local/direct video, for example `captions: /assets/intro.fr.vtt`. Local caption files are packaged with the exported course.
 - `title` (string) — visible title above the player.
 - `transcript` (string) — text shown under the player. A file path is displayed literally; Studio does not load that file.
 - `start` / `end` (number) — optional playback bounds in seconds.
@@ -123,7 +132,7 @@ end: 90
 
 `start` and `end` are playback bounds in seconds. They are supported for YouTube, Vimeo, local/direct video files, and Mux-hosted video. Loom and unknown iframe embeds can render, but they do not expose reliable playback control to Praxity Studio, so timing bounds are not enforced there.
 
-`autoplay`, `size`, and bare `subtitles:` are not canonical public `.prax` parameters. The current grammar cannot attach a timed caption file to local video; a `transcript:` does not create synchronized captions. For embedded video, supply captions through its video host.
+`autoplay`, `size`, and bare `subtitles:` are not canonical public `.prax` parameters. `caption:` is visible text below the player; `transcript:` is untimed text. Neither creates synchronized captions. For embedded video, supply captions through its video host.
 
 ## audio
 
