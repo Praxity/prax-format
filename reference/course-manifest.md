@@ -47,6 +47,7 @@ design:
 | `description` | string | no | — | Course description |
 | `locale` | string | no | inherited | Default locale (`en`, `fr`, etc.) |
 | `theme` | string | no | — | Theme name from `shared/themes/` or built-in |
+| `moduleDeck` | boolean | no | `false` | Studio module-deck playback; set in Design. See [module-deck.md](module-deck.md). |
 | `narrationEnabled` | boolean | no | `false` | Enables block-level narration unless a lesson overrides it |
 | `lessons` | string[] | recommended | auto-discovered | Ordered list of `.prax` lesson filenames. Omitted or empty lists discover files alphabetically. |
 | `design` | object | no | `{}` | Design overrides (same keys as frontmatter `design:`) |
@@ -86,6 +87,8 @@ independent learner state.
 
 ### `design` overrides
 
+Studio usage and YAML placement are explained in [Studio Help](https://praxity.io/en/help/studio/yaml-settings).
+
 The `design` object accepts the same keys as lesson frontmatter `design:`. See [frontmatter-design.md](frontmatter-design.md) for all options. Course-level design applies to every lesson unless a lesson's own frontmatter overrides it.
 
 ## Settings inheritance
@@ -100,7 +103,7 @@ course.yaml             (theme, locale, design)
 lesson frontmatter      (design overrides)
 ```
 
-A lesson's frontmatter `design:` block takes highest precedence. If absent, the course-level `design:` from `course.yaml` applies. If that's also absent, workspace defaults apply.
+A lesson's frontmatter `design:` block takes highest precedence. The nested `deck` options merge per key. If absent, the course-level `design:` from `course.yaml` applies. If that's also absent, workspace defaults apply.
 
 `course.yaml` may enable narration for the course with `narrationEnabled`. Lesson enablement,
 generation defaults, scripts, anchors, and assets live in the Studio-managed `narration.yaml`

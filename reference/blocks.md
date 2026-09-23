@@ -50,12 +50,7 @@ spec does not promise behaviour the exporter does not deliver.
 - `colors`
 - `competency`
 - `confidence`
-- `gridlines`
-- `header`
-- `highlightHeaderCol`
-- `highlightHeaderRow`
 - `retrieval`
-- `striped`
 - `timed`
 - `visual`
 

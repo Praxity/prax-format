@@ -2,7 +2,7 @@
 
 Praxity Studio includes a headless export command. It uses the same project loader,
 accessibility checker, viewer assets, and packaging code as the desktop export flow.
-Studio must be installed.
+Use either the installed Studio launcher or the standalone Node package.
 
 ## Command
 
@@ -39,6 +39,17 @@ ln -s \
 ```
 
 Add `$HOME/.local/bin` to `PATH` if it is not already present.
+
+## Standalone package
+
+An integrator can supply the standalone Studio package with Node 24.18.x. Keep
+`praxity.mjs`, `export-assets/`, and `node_modules/` together. Studio does not need
+to be installed. The command and JSON results are the same:
+
+```sh
+node /path/to/studio-cli/praxity.mjs export /path/to/course \
+  --format html --output /path/to/course.zip
+```
 
 ## Project requirements
 

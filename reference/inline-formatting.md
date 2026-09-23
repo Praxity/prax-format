@@ -64,7 +64,7 @@ For advanced image params (alt text, captions, sizing), use a bare media path on
 /assets/extinguisher-map.png
 alt: Building floor plan with emergency exits highlighted
 caption: Emergency exits marked in green
-width: large
+size: large
 ```
 
 ## Variables
@@ -75,7 +75,7 @@ Variables can be referenced inline with moustache syntax:
 Hello {{learnerName}}, welcome back.
 ```
 
-Variable declarations are block-level lines (not inline). Once declared, a variable persists across the entire course and can be referenced on any subsequent page:
+Variable declarations are block-level lines (not inline). A `var:` line starts a new declaration even directly after a heading, page break, or another variable; it is never a parameter of the preceding block. Blank lines before the declaration are optional. Once declared, a variable persists across the entire course and can be referenced on any subsequent page:
 
 ```prax
 var: learnerName = "Taylor"
@@ -186,6 +186,10 @@ Kebab-case names use the outline icon by default; append `-filled` for a filled
 variant. Tabler export names such as `IconMail` and `IconMailFilled` also work.
 Icons are decorative and hidden from screen readers, so keep meaningful text
 beside them. Code spans keep icon syntax literal.
+
+Page titles and navigation labels are plain text, so do not put `@icon{...}` in
+a page-break title. Use icons in content headings instead. In deck outlines,
+assessment pages receive a separate assessment icon automatically.
 
 ## Doodles
 

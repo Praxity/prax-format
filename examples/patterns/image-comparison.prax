@@ -1,6 +1,6 @@
 ---
 title: Workstation Ergonomics: Before and After
-description: Before/after image comparison using as: comparison with style: slider. Shows a realistic workplace improvement and follows up with a reflection question. Use this pattern to make abstract improvement principles visible.
+description: Before/after image comparison using as: comparison with layout: slider. Shows a realistic workplace improvement and follows up with a reflection question. Use this pattern to make abstract improvement principles visible.
 lang: en
 design:
   palette: standard
@@ -16,7 +16,7 @@ Drag the slider to reveal the changes, or use the arrow keys if you prefer keybo
 
 ### Before assessment
 as: comparison
-style: slider
+layout: slider
 
 /assets/workstation-before.jpg
 alt: Workstation before assessment — monitor below eye level, keyboard on desk surface with no wrist support, chair seat too low causing upward reach, cables scattered across the floor

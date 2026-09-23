@@ -12,7 +12,7 @@ Before returning any `.prax` content:
 - Confirm parameter values use valid types.
 - Confirm `as: choice` is used (not `as: choose-one` or `as: choose-many`).
 - Confirm `as: rating` is used for the rate block rather than `as: rate`.
-- Confirm `feedback:` lines are flush left, not indented.
+- Put `feedback:` on a separate line immediately after its option; flush-left is the preferred style.
 - Confirm `passingScore:` is used in `assessment-group` (not `passing:`).
 
 ## Common mistakes
@@ -161,7 +161,7 @@ as: choice
 
 ### Missing `close:` for containers
 
-Use an explicit close statement before following same-page content that belongs outside the container. A page break, H1 heading, or end of file also closes every container.
+Use an explicit close statement before following same-page content that belongs outside the container. A page break or end of file also closes every container.
 
 | Container | Explicit closer |
 |---|---|
@@ -279,7 +279,7 @@ Pages may start with any content. Add an authored heading when a visible page ti
 - Is `as: choice` used for both single- and multiple-choice questions?
 - Does each rating block use `as: rating` rather than `as: rate`?
 - Are choose-one markers `(x)` / `( )` and choose-many markers `[x]` / `[ ]`?
-- Is `feedback:` on its own line, flush to the left margin?
+- Is `feedback:` on its own line immediately after its option?
 - Does each assessment group end before content intended outside it?
 - Does `close: col` precede content intended outside the columns?
 - Do card boundaries keep following page content outside the cards?

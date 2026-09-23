@@ -6,6 +6,10 @@ version: "3.0"
 
 # .prax Format -- LLM Skill
 
+## Version requirement
+
+Generate canonical Studio 0.2.0 syntax. Use `width: narrow|wide|full|breakout` for outer block width, card `layout: grid|masonry|slides|rows`, image `size: small|medium|large`, column `weight: <positive number>`, and comparison `layout: side-by-side|slider`. Sequence `style` and `orientation` stay separate. Saving uses these spellings and requires Studio 0.2.0 or later to reopen the file. See [the format overview](../README.md#studio-020-syntax) for the alpha migration policy.
+
 ## What is .prax
 
 The `.prax` format is a plain-text course authoring format used by Praxity Studio, a desktop eLearning authoring tool. It uses augmented markdown: standard markdown with a small set of keywords (`as:`, `close:`, `var:`, `if:`) that transform plain elements into interactive learning blocks. A `.prax` file can be exported to SCORM, xAPI, or standalone HTML for deployment in any LMS. The format is designed to be human-readable, git-diffable, and LLM-friendly -- you can generate a complete interactive course in a single text file.
@@ -36,7 +40,7 @@ The first `---` at byte position 0 opens YAML frontmatter. The next `---` closes
 
 ## Frontmatter
 
-Frontmatter controls course metadata and the design system. Only `title` and `lang` are needed for a minimal course. The `design` block is optional -- defaults produce a clean layout.
+Frontmatter controls lesson metadata and design. It is optional; add `title` and `lang` when you know them. Studio supplies design defaults when `design` is omitted.
 
 ```yaml
 ---
@@ -71,27 +75,31 @@ Current Studio palette values: `clean`, `waves`, `standard`, `bauhaus`, `campfir
 
 ### Lessons and pages
 
-`# H1` headings define **lessons** (top-level structural groupings). `---` page breaks define **pages** within a lesson.
+Each `.prax` file provides lesson or module content; frontmatter supplies its title and metadata, and `course.yaml` organizes multiple files. `#` is an ordinary H1 heading, not a lesson boundary. Only explicit `---` breaks create pages within a file.
 
-```
-# Module 1: Safety Basics
+```prax
+---
+title: Safety Basics
+lang: en
+---
 
---- Introduction
+# Introduction
 
-Welcome to the first module.
+Welcome to the module.
 
 --- Equipment Overview
 
-Personal protective equipment includes...
+# Personal protective equipment
 
-# Module 2: Emergency Procedures
-
---- Fire Safety
-
-In case of fire...
+Check your equipment before starting work.
 ```
 
-Content before the first `# H1` or `---` is implicit page 1 of an implicit first lesson.
+Content before the first page break is page 1. Keep each authored heading level; an opening H2 is not automatically promoted to H1.
+
+Define reusable presentation styles in frontmatter `pageStyles`, then select one with
+`pageStyle: name` after a page break or on the opening H1. Page-break settings take
+precedence. See [named page styles](../reference/document-structure.md#named-page-styles-and-corner-artwork)
+for decorative artwork and supported style properties.
 
 ### Page breaks
 
@@ -117,12 +125,13 @@ firstPage:
   title: Introduction
 ```
 
-Studio adds stable IDs to lesson frontmatter, `firstPage`, later page breaks, and stateful blocks
-so learner state survives source edits and preview regeneration. Preserve every existing `id`;
-never copy an ID to another item. Source without IDs remains valid and Studio fills them in.
+Studio adds a missing lesson `id` to frontmatter. It stores generated page and stateful
+block IDs in `.praxity/content-identity.json`, outside the lesson source. Preserve
+explicit authored IDs, and keep that file with the project when copying it. Source
+without page or block IDs remains valid.
 
 Narration is a Studio-managed layer in the project-root `narration.yaml`; it is not `.prax`
-grammar. Generate clean visible content in `.prax`. Use Studio for narration scripts, cues,
+grammar. Keep Soniox delivery cues in the one authored script for generation; learner transcripts omit recognized nonspoken cues while retaining human sound captions such as `[sighs]`. Cue-only edits mark the recording out of date. Generate clean visible content in `.prax`. Use Studio for narration scripts, cues,
 anchors, generation settings, and audio. The CLI reads the sidecar when it bundles the course.
 Enable playback with `narrationEnabled: true` in `course.yaml`. Narration never autoplays or
 affects learner progress.
@@ -160,7 +169,7 @@ Four patterns create blocks:
 1. **Bare markdown** -- paragraphs, headings, lists, code blocks, equations, tables work as standard markdown.
 2. **`as:` transformer** -- placed after an element (`> text` then `as: note`) or before content (`as: col`).
 3. **Content-block paths** -- a file path or URL on its own line creates a media block (extension determines type).
-4. **Key-value parameters** -- `key: value` pairs on lines after a block, consumed greedily. Pipe-separated inline format also works: `width: large | alignment: center`.
+4. **Key-value parameters** -- `key: value` pairs on lines after a block, consumed greedily. Pipe-separated inline format also works: `size: large | alignment: center`.
 
 Blank lines between parameters and content are optional.
 
@@ -176,7 +185,7 @@ These keys work on any block:
 | Key | Effect |
 |-----|--------|
 | `name:` | Unique identifier for targeting (logic rules, anchor links) |
-| `layout:` | Width override: `wide`, `full`, `breakout` |
+| `width:` | Width override: `narrow`, `wide`, `full`, `breakout` |
 | `hide:` | `true` to hide from rendered output |
 | `visible:` | Conditional visibility expression (e.g. `visible: passedQuiz`) |
 | `entrance:` | Animation: `none`, `fade`, `slide`, `scale` |
@@ -201,9 +210,7 @@ It can span multiple lines.
 #### Minor heading
 ```
 
-`# H1` defines a lesson boundary in a single-file course and is the visible H1 for
-that page. In a multi-file course, use it as the page title. Published heading
-levels match the authored `#` depth without an export-time shift.
+`# H1` is an ordinary level-one heading with the same parameters, transformations, and Studio narration handling as other headings. Published heading levels match the authored `#` depth without an export-time shift.
 
 ### Image
 
@@ -212,7 +219,7 @@ A file path ending in an image extension (`.webp`, `.jpg`, `.jpeg`, `.png`, `.gi
 ```
 /assets/hero-ppe.webp
 alt: Workers wearing safety gear on a construction site
-layout: full
+width: full
 caption: Workers inspect their protective equipment before a shift
 ```
 
@@ -220,9 +227,9 @@ caption: Workers inspect their protective equipment before a shift
 |-----|--------|---------|
 | `alt:` | description (required for non-decorative) | -- |
 | `decorative:` | `true`/`false` | `false` |
-| `width:` | `small`, `medium`, `large` | -- |
+| `size:` | `small`, `medium`, `large` | -- |
 | `alignment:` | `left`, `center`, `right` | `center` |
-| `layout:` | `wide`, `full`, `breakout` | -- |
+| `width:` | `narrow`, `wide`, `full`, `breakout` | -- |
 | `caption:` | custom string | -- |
 | `effects:` | `none` or an effects map | -- |
 
@@ -233,7 +240,7 @@ A file path ending in `.mp4`, `.webm`, `.mov`, `.avi` or a URL from YouTube, Vim
 ```
 /assets/safety-intro.mp4
 caption: Safety walkthrough
-transcript: /assets/safety-intro-transcript.txt
+transcript: The presenter checks the exit route before starting work.
 start: 12
 end: 90
 ```
@@ -246,6 +253,7 @@ end: 90
 ```
 
 Keys: `title:`, `caption:`, `transcript:`, `start:`, `end:`. `start:` and `end:` are seconds and work for YouTube, Vimeo, local/direct video, and Mux. Loom embeds render but do not expose reliable playback timing control.
+`transcript:` displays its text; it does not load a file path or add timed captions. The current `.prax` grammar cannot attach a caption file to local video. Hosted videos use the host's captions.
 
 ### Audio
 
@@ -451,7 +459,7 @@ Write the tokenizer...
 
 ### Columns
 
-Columns use standalone `as: col` markers (no heading required). Each `as: col` starts a new column. `close: col` ends the layout:
+Columns use standalone `as: col` markers (no heading required). Set `width` on the first column to size the whole container. Set `weight` on each column for unequal relative shares, such as `2` and `1`; omit it for equal shares. Each `as: col` starts a new column. `close: col` ends the layout:
 
 ```
 as: col
@@ -473,7 +481,7 @@ Content after `close: col` returns to full-width flow. Column count is inferred 
 ```
 ### Before
 as: comparison
-style: side-by-side
+layout: side-by-side
 
 Manual incident logging with paper forms.
 
@@ -510,7 +518,7 @@ Card item labels are semantic headings by default and keep their authored level.
 ```
 ## Safety Terms
 as: card
-layout: single
+layout: slides
 style: outline
 
 ### What is lockout/tagout?
@@ -537,11 +545,11 @@ The card group heading is not part of the card face. Each item heading starts a 
 
 Use `close: col`, `close: card`, `close: assessment-group`, `close: accordion`,
 `close: tab`, `close: sequence`, or `close: comparison` to end a container before
-following same-page content. A page break, H1 heading, or end of file closes
+following same-page content. A page break or end of file closes
 all open containers. A section divider `--` does not close them.
 
 Heading-based containers can also close at a heading above their item level or a
-different block declaration at the item level. Ordinary H2–H4 headings do not close
+different block declaration at the item level. Ordinary headings do not close
 columns or assessment groups. Explicit closers make these boundaries clear.
 
 
@@ -909,7 +917,7 @@ PPE selection, hazard identification, and emergency procedures.
 
 /assets/hero-ppe.webp
 alt: Workers wearing safety gear on a construction site
-layout: full
+width: full
 
 > This course meets OSHA 10-hour training requirements.
 as: note

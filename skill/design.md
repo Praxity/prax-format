@@ -2,7 +2,7 @@
 
 ## Frontmatter structure
 
-Design values live in YAML frontmatter under `design:`. All design keys are optional — omit any key to use the default.
+Course-wide design values live in YAML frontmatter under `design:`. All design keys are optional — omit any key to use the default. Named page treatments live separately under `pageStyles`; select them with `pageStyle` on a page break or opening H1. See [named page styles](../reference/document-structure.md#named-page-styles-and-corner-artwork).
 
 ```prax
 ---
@@ -249,6 +249,8 @@ accessibility remediation or efficacy claim. Contrast follows the learner's plat
 | `componentDefaults` | object | Block-level default overrides (key = block type, value = param object) |
 | `customCss` | string | Raw CSS appended to the published output |
 
+Use canonical Studio 0.2.0 block keys inside `componentDefaults`: card `layout: slides`, comparison `layout: slider` or `side-by-side`, image `size: small|medium|large`, and universal `width: narrow|wide|full|breakout`. Card and sequence `style` retain their surface and marker meanings.
+
 ## Complete example
 
 ```prax
@@ -307,5 +309,11 @@ design:
   componentDefaults:
     note:
       style: shaded
+    card:
+      layout: slides
+    comparison:
+      layout: side-by-side
+    image:
+      size: medium
 ---
 ```

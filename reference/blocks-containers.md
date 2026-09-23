@@ -1,14 +1,23 @@
 # Container Blocks
 
-Containers use the normal content width by default. Set `layout: wide|full|breakout`
-to widen a container. Cards use `layoutMode:` for width when `layout:` selects
-`grid`, `masonry`, or `single`. Sequences do not widen automatically as items are added.
+Containers use the normal content width by default. Set `width: narrow|wide|full|breakout`
+to change a container's width. Cards independently use `layout:` to select
+`grid`, `masonry`, `slides`, or `rows`. Sequences do not widen automatically as items are added.
 
 A blank line before `as: card`, its legacy alias `as: flashcard`, or `as: col`
 starts a standalone container and leaves the preceding heading or content outside.
 To attach a card to a heading, put `as: card` directly beneath that heading.
 Accordion, tab, sequence, comparison, and assessment-group declarations require a
 heading; their existing heading attachment also accepts intervening blank lines.
+
+For compatibility when reading source with inline narration overrides, `narration`, `narrationVoice`,
+`narrationLanguage`, `narrationSpeed`, `narrationDisabled`, and recording metadata on
+an item heading belong to that item. This applies to every accordion, tab, and sequence
+heading, including the first, and to card item headings. Overrides do not carry over to
+the next item. A card's outer title retains its own narration; a lower-level heading
+inside a front or back face remains a separate narrated content block. Existing
+whole-card narration retains its whole-container behavior. Studio saves narration in
+`narration.yaml`; serializing blocks to `.prax` does not emit in-memory narration fields.
 
 ## accordion
 
@@ -34,7 +43,7 @@ File an incident report within 24 hours.
 **Parameters:**
 - `style`: `none | outline | shaded | primary | secondary` — surface treatment. `none` removes fill, border and separators; `outline` adds an unshaded border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Omitted style retains the original separator-line treatment. Legacy `default`, `contained` and `separated` source remains supported with its original appearance.
 - `allowMultipleOpen` (boolean) — whether multiple panels can be open at once.
-- `layout`: `wide | full | breakout`
+- `width`: `narrow | wide | full | breakout`
 
 ## tabs
 
@@ -53,7 +62,7 @@ Use the checklist and escalate unresolved hazards.
 ```
 
 **Parameters:**
-- `layout`: `wide | full | breakout`
+- `width`: `narrow | wide | full | breakout`
 
 The tab strip and active panel share a neutral surface and continuous hairline boundary, so the
 selected tab remains visibly attached to its content without relying on color. The first tab label
@@ -71,11 +80,13 @@ Column layout. Each `as: col` starts a new column. Use `close: col` to end the c
 **Syntax:**
 ```prax
 as: col
+weight: 2
 
 /assets/safety-diagram.png
 alt: Workplace safety zones diagram
 
 as: col
+weight: 1
 
 ### Key Safety Zones
 - Loading dock
@@ -88,7 +99,9 @@ close: col
 Any content can go inside a column — headings, images, text, lists, even nested blocks.
 
 **Parameters:**
-- `layout`: `wide | full | breakout`
+- `width`: `narrow | wide | full | breakout`
+
+Set the container’s `width` on the first `as: col`. Each `as: col` accepts `weight: <positive number>` as a relative proportion. For example, weights `2` and `1` allocate two thirds and one third of the available width after the gap. Omitted or invalid weights use `1`. Default columns and side-by-side comparisons share width equally. Columns stack in source order on narrow screens. Existing fractional proportions remain valid.
 
 ## sequence
 
@@ -119,6 +132,10 @@ Take photos and complete the incident form.
 - `distribution`: `uniform | scaled` — controls spacing between steps.
 - `scrollable` (boolean) — whether the sequence is scrollable.
 
+Bulleted and numbered lists inside steps keep their text aligned to the start of
+the reading direction, with hanging indents for wrapped lines. Step headings and
+paragraphs retain the chosen alignment.
+
 ## comparison
 
 Comparison of two items — text or images.
@@ -132,7 +149,7 @@ and writes an explicit closing marker for heading-based containers.
 ```prax
 ### Before
 as: comparison
-style: side-by-side
+layout: side-by-side
 
 Manual triage with paper forms.
 
@@ -149,7 +166,7 @@ headings always win while keeping the preset accent rule.
 ```prax
 ### Before renovation
 as: comparison
-style: slider
+layout: slider
 
 /assets/before.jpg
 alt: Office before renovation
@@ -160,12 +177,12 @@ alt: Office before renovation
 alt: Office after renovation
 ```
 
-Image sliders are authored with `as: comparison` and `style: slider`. There is no separate public `as: imageComparison` block.
+Image sliders are authored with `as: comparison` and `layout: slider`. There is no separate public `as: imageComparison` block.
 
-The `slider` style renders an interactive drag handle that reveals the before/after images. Supports keyboard (arrow keys) and pointer drag. Includes ARIA `role="slider"`.
+The `slider` layout renders an interactive drag handle that reveals the before/after images. Supports keyboard (arrow keys) and pointer drag. Includes ARIA `role="slider"`.
 
 **Variants:**
-- `style`: `side-by-side | slider`
+- `layout`: `side-by-side | slider`
 
 ## card
 
@@ -179,7 +196,7 @@ Card items are created by headings one level below the group heading. For a `##`
 ```prax
 ## Safety Concepts
 as: card
-layout: single
+layout: slides
 transition: slide
 showProgress: true
 
@@ -201,20 +218,35 @@ close: card
 ```
 
 **Parameters:**
-- `layout`: `single | grid | masonry` — card presentation mode. Also accepts `wide | full | breakout` to set the container width with the default grid presentation.
-- `layoutMode`: `wide | full | breakout` — container width when `layout` selects a card presentation mode, for example `layout: single` with `layoutMode: wide`.
+- `layout`: `grid | masonry | slides | rows` — card presentation mode.
+- `width`: `narrow | wide | full | breakout` — container width, independent of card presentation.
+- `media`: `inset | flush` — move the first front child before the item title when it is an image. Omit to keep existing child placement. `inset` pads the image; `flush` reaches the card edges. Captions travel with the image. Works in each layout and on flip-card fronts; back content is unchanged.
 - `columns` (number) — number of columns when `layout` is `grid` or `masonry`.
 - `headingLevel` (`2` to `6`). Sets the heading level for item labels in a standalone `as: card` group. The default is `3`.
 - `headings` (boolean). Controls whether item labels participate in heading navigation. The default is `true`; use `false` for presentation-only or storytelling cards.
 - `style`: `none | outline | shaded | primary | secondary` — surface treatment across grid, masonry, single-card decks and flip faces. `none` removes surface chrome; `outline` is transparent with a border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Legacy `filled` aliases `shaded`; `accent` aliases `primary`. Old `filled`/`shaded`/`accent` plus `color: primary` or `color: secondary` is accepted and serialized as the corresponding named style.
 - `shadow`: `theme | none | subtle | elevated` — card depth treatment.
-- `advance` (number, seconds) — auto-advance interval for `layout: single`; `0` = manual.
-- `transition`: `none | fade | slide | zoom` — transition style for `layout: single`.
-- `showProgress` (boolean) — show pagination/progress controls in `layout: single`.
+- `advance` (number, seconds) — auto-advance interval for `layout: slides`; `0` = manual.
+- `transition`: `none | fade | slide | zoom` — transition style for `layout: slides`.
+- `showProgress` (boolean) — show pagination/progress controls in `layout: slides`.
 - `shuffle` (boolean) — randomize card item order.
-- `trackCompletion` (boolean) — track learner interaction/completion for `layout: single` only.
+- `trackCompletion` (boolean) — track learner interaction/completion for `layout: slides` only.
 
 Use `card: back` to mark the back face of an item. Content before `card: back` is the front face.
+
+Generated narration reads each card front and then its back as separate clips. With Follow
+narration enabled, playback and seeking reveal the exact card face, including in shuffled
+layouts and without sentence timings. Narration follows authored item order. Single-card
+layouts advance to the next narrated item at its clip boundary. Manual card navigation or
+flipping pauses narration without changing the Follow preference. Play resumes at the current
+audio position and restores the narrated face when Follow is enabled. Narration does not move
+keyboard focus. Starting a module-deck slide from its beginning resets its cards before the
+introduction plays, without clearing completion progress. Resuming partway through a clip does
+not rewind the cards.
+Card auto-advance timers wait while their container is being narrated. Manual card browsing
+stops the authored timer for that mounted session; narration can still advance cards. Automatic reveals do
+not count as learner flips or grant completion. Older custom aggregate scripts remain intact
+and do not acquire invented front/back boundaries.
 
 Card item headings keep the level authored in `.prax`. For example, a `##` card group with `###` items renders those labels as `<h3>`. To make standalone card items page-level sections, set `headingLevel: 2` and author each item with `##`. Use `headings: false` when labels should remain visual labels rather than document headings.
 
@@ -240,7 +272,7 @@ Do not put the next item heading immediately after `card: back` if you intend th
 ```prax
 ## Safety Terms
 as: card
-layout: single
+layout: slides
 style: outline
 
 ### What is lockout/tagout?
@@ -264,7 +296,7 @@ close: card
 **Headingless single-card syntax:**
 ```prax
 as: card
-layout: single
+layout: slides
 style: outline
 
 /assets/control-panel.png
@@ -278,15 +310,35 @@ close: card
 
 Headingless `as: card` is useful for a single card whose front face is image or paragraph content. Multiple cards in one group currently need item headings; another standalone `as: card` inside an open card creates a nested card, not a sibling card item.
 
+### Card rows and image framing
+
+Use `layout: rows` for unordered rich chunks with labels beside their bodies. Rows retain the item heading levels and source order, use a subtle separator, and stack the label above the body when their container is narrow. `columns` does not affect rows. Cards with back content retain their flip interaction as full-width rows.
+
+```prax
+as: card
+layout: rows
+style: none
+
+### Host
+Check the room booking before you send the invite.
+
+### Guest
+Use the latest invite to find the time and room.
+
+close: card
+```
+
+For image-led cards, set `media: flush` or `media: inset` on the card and author the image as the first child of each front. Use image `ratio` and `fit` only when a shared frame is useful. `fit: contain` keeps the whole image visible; `fit: cover` explicitly crops it. Other children keep their order. If the first child is not an image, media placement has no effect.
+
 ## Nesting rules
 
 - Containers may include content blocks and assessments as children.
 - Avoid deeply nested multi-container chains for readability.
-- Page breaks (`---`), H1 headings, and the end of the file close all open containers automatically.
+- Page breaks (`---`) and the end of the file close all open containers automatically.
 
 ## Closing rules
 
-All containers accept an explicit closer. Page breaks, H1 headings, and the end of
+All containers accept an explicit closer. Page breaks and the end of
 file also close every open container; an omitted closer is not a syntax error.
 Use explicit closers when following content should sit outside a container on the
 same page. Additional boundaries depend on the container:
@@ -294,8 +346,8 @@ same page. Additional boundaries depend on the container:
 | Container | Explicit closer | Other boundaries on the same page |
 |---|---|---|
 | `accordion` / `tab` | `close: accordion` / `close: tab` | A higher-level heading, or a same-level heading declaring another block type |
-| `col` | `close: col` | The next `as: col` starts a sibling column; ordinary H2–H4 headings remain inside the column |
-| `assessment-group` | `close: assessment-group` | Ordinary H2–H4 headings do not end the group |
+| `col` | `close: col` | The next `as: col` starts a sibling column; ordinary headings remain inside the column |
+| `assessment-group` | `close: assessment-group` | Ordinary headings do not end the group |
 | `card` | `close: card` | A heading above the card item level, or an item-level heading declaring another block type |
 | `sequence` | `close: sequence` | A higher-level heading, or a same-level heading declaring another block type |
 | `comparison` | `close: comparison` | A higher-level heading, or a same-level heading declaring another block type; the second item does not automatically close the group |
