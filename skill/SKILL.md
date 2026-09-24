@@ -253,7 +253,14 @@ start: 12
 end: 90
 ```
 
-Keys: `title:`, `caption:`, `captions:`, `transcript:`, `start:`, `end:`. Use `captions:` with a WebVTT file for local video; Studio includes that file in exports. `caption:` displays text below the player, while `transcript:` displays untimed text. It does not load a file path or create timed captions. Hosted videos use the host's captions. `start:` and `end:` are seconds and work for YouTube, Vimeo, local/direct video, and Mux. Loom embeds render but do not expose reliable playback timing control.
+Keys: `title:`, `caption:`, `captions:`, `transcript:`, `start:`, `end:`.
+For direct video, set `captions:` to a local WebVTT file; Studio packages it with
+the export. An HTTPS `.vtt` URL is also accepted, but the learner's browser must
+fetch it remotely. `caption:` displays text below the player. `transcript:`
+displays untimed text and treats a file path as literal text. Hosted videos use
+the host's captions. `start:` and `end:` are seconds and work for YouTube, Vimeo,
+local/direct video, and Mux. Loom embeds render but do not expose reliable
+playback timing control.
 
 ### Audio
 
