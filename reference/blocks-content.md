@@ -123,7 +123,7 @@ caption: Safety walkthrough
 
 **Parameters:**
 - `caption` (string) — visible caption below the video.
-- `captions` (WebVTT path) — synchronized captions for a local/direct video, for example `captions: /assets/intro.fr.vtt`. Local caption files are packaged with the exported course.
+- `captions` (WebVTT path or HTTPS URL) — synchronized captions for a local/direct video, for example `captions: /assets/intro.fr.vtt`. Studio packages local files with the export; HTTPS caption URLs remain remote and need a network connection.
 - `title` (string) — visible title above the player.
 - `transcript` (string) — text shown under the player. A file path is displayed literally; Studio does not load that file.
 - `start` / `end` (number) — optional playback bounds in seconds.
@@ -370,7 +370,7 @@ yLabel: Count
 - `sortOrder` (`none | asc | desc`) — sort data before rendering.
 - `width`: `narrow | wide | full | breakout`
 
-Dense annual category axes in vertical bar, line, area, scatter and stacked charts show labels at roughly five-year intervals. Longer series may use wider intervals to keep labels readable. The first and last years always appear; nearby interior labels may be omitted to leave room for them. This applies to consecutive four-digit years in ascending or descending order. Every data point and accessible data-table row is retained.
+Dense annual category axes in vertical bar, line, area, scatter and stacked charts show labels at roughly five-year intervals. Longer series may use wider intervals to keep labels readable. The first and last years always appear; nearby interior labels may be omitted to leave room for them. This applies to consecutive four-digit years in ascending or descending order. Narrow charts may also show fewer labels for other categories. Every data point and accessible data-table row is retained.
 
 Charts in full preview and published output use static SVG, with a centred title, an accessible description, and an equivalent data table for screen readers. Hover and keyboard value inspection are deferred.
 
