@@ -29,6 +29,8 @@ close: accordion
 
 ### Before Shift
 as: tab
+style: pills
+orientation: vertical
 
 Review overnight incidents and pending actions.
 
@@ -52,7 +54,8 @@ as: col
 
 close: col
 
-https://www.youtube.com/embed/aqz-KE-bpKQ
+/assets/lab-safety-walkthrough.mp4
+captions: /assets/lab-safety-walkthrough.en.vtt
 caption: Lab safety walkthrough
 start: 12
 end: 90

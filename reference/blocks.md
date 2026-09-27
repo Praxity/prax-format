@@ -1,6 +1,6 @@
 # Block index
 
-This index lists every authoring keyword in Studio's block manifest. It is generated from `packages/grammar/src/manifest.ts` by `docs/prax-format/scripts/generate-block-index.mjs`.
+This index lists every authoring keyword in Studio's block manifest. It is generated from Studio's block manifest, so it always matches the parser. Edit the reference pages, not this file.
 
 | Block | Category | Syntax | Reference |
 |---|---|---|---|

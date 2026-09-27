@@ -1,0 +1,28 @@
+---
+title: Read the inspection log
+lang: en
+---
+
+# Read the inspection log
+
+@icon{check} Use this sample log to compare completed checks by month.@footer{[Sample inspection log](https://example.com/inspection-log)}
+
+## Compare monthly totals
+
+| 6 | checks completed in March |
+| 8 | checks completed in April |
+as: stats
+columns: 2
+size: large
+
+| Month | Completed checks |
+| --- | --- |
+| March | 6 |
+| April | 8 |
+
+### Sources
+as: accordion
+
+@footer.insert
+
+close: accordion

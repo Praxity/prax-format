@@ -346,7 +346,7 @@ style: outline
 openInNewTab: true
 ```
 
-`style:` options: `filled` (default), `outline`, `light`. `openInNewTab:` defaults to `false`.
+`style:` options: `filled` (default), `outline`, `light`. `openInNewTab:` defaults to `true`; set `openInNewTab: false` to open the link in the same tab.
 
 ### Bookmark (from link)
 

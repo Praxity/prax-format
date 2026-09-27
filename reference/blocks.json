@@ -1,5 +1,5 @@
 {
-  "generatedFrom": "packages/grammar/src/manifest.ts",
+  "generatedFrom": "Praxity Studio block manifest",
   "blocks": [
     {
       "id": "text",
