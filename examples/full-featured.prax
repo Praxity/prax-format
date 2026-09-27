@@ -35,8 +35,7 @@ design:
   motionEntrance: fade
   motionStagger: sequential
   brand:
-    logoPlacement: left
-    logoScope: all-pages
+    logoPlacement: sidebar
 ---
 
 ## Introduction
@@ -47,13 +46,15 @@ Welcome to the full feature tour. This file demonstrates content blocks, contain
 alt: Industrial workspace overview
 caption: Main inspection zone
 
-https://www.youtube.com/embed/aqz-KE-bpKQ
+/assets/facility-walkthrough.mp4
+captions: /assets/facility-walkthrough.en.vtt
 caption: Facility walkthrough
 start: 12
 end: 90
 
 /assets/briefing.mp3
 title: Safety audio briefing
+transcript: Check the work area, confirm the exit route, and report any hazards before you start.
 
 https://app.example.com/widget
 as: embed

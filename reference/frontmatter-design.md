@@ -207,7 +207,7 @@ the simplified panel's defaults and setting mappings.
 - `navPrevNext` (boolean)
 - `navPrevNextPosition`: `bottom | top`
 - `navProgressStyle`: `bar | dots | segments | none`
-- `navBottomArrows`, `navTopBar` (boolean)
+- `navBottomArrows`, `navTopBar`, `navHamburgerMenu` (boolean)
 - `navReadingSupportPlacement`: `topBar | bottomBar | sidebar | none`
 - `navFloatingToc`, `navScrollProgress`, `navEdgeArrows`, `navSlideCounter` (boolean)
 - `navBreadcrumbs`, `navCourseTitle`, `navLessonTitles`, `navLessonTitleAsHeading` (boolean)

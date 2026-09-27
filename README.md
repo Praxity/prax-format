@@ -68,7 +68,7 @@ Confirm emergency exits are clear and protective gear is available.
 - Accessible output patterns built into block semantics.
 - Export targets: SCORM 1.2, SCORM 2004, xAPI, standalone HTML.
 - Git-friendly diffs and collaboration workflows.
-- **LLM-friendly** — paste the skill file as context to generate valid courses with any major model.
+- Works with language models: give a model the [authoring skill](skill/SKILL.md) as context and it can draft valid courses.
 
 ## Reference
 
@@ -107,6 +107,11 @@ Reusable templates for common eLearning designs:
 - [`patterns/scenario-feedback.prax`](examples/patterns/scenario-feedback.prax): Scenario with conditional feedback via variables.
 - [`patterns/guided-reading.prax`](examples/patterns/guided-reading.prax): Read-then-test across multiple pages.
 - [`patterns/image-comparison.prax`](examples/patterns/image-comparison.prax): Before/after slider comparison.
+- [`patterns/card-layouts.prax`](examples/patterns/card-layouts.prax): Masonry cards and label-beside-body rows.
+- [`patterns/image-layouts.prax`](examples/patterns/image-layouts.prax): Image sizes, wrapped images and weighted columns.
+- [`patterns/data-display.prax`](examples/patterns/data-display.prax): Key figures, a data table, numbered sources and an inline icon.
+- [`patterns/assessment-variants.prax`](examples/patterns/assessment-variants.prax): Star and slider ratings and a private, downloadable response.
+- [`patterns/module-deck.prax`](examples/patterns/module-deck.prax): Narrated module stops, a knowledge-check gate and deck settings.
 
 ## Card syntax (v3.1)
 

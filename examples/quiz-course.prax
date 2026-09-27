@@ -16,6 +16,8 @@ as: assessment-group
 mode: all
 showResultsSummary: true
 passingScore: 80
+pointsOverride: 20
+requireAll: true
 
 ### What should happen first after a serious hazard is found?
 as: choice

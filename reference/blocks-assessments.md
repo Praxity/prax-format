@@ -233,7 +233,7 @@ spot: Valve; 30%; 15%
 spot: Release pin; 45%; 25%; correct
 ```
 
-> **Important:** All parameters — including `spot:` lines — must be contiguous with no blank lines between them. `collectParams` stops at the first blank line, so any `spot:` entries after a blank line are silently dropped.
+> **Important:** Keep every parameter, including each `spot:` line, together with no blank lines between them. Studio stops reading parameters at the first blank line, so it silently drops any `spot:` after one.
 
 **Spot syntax:**
 
@@ -391,7 +391,7 @@ Note: `passingScore:` is the correct parameter name (not `passing:`).
 
 A member question can use `name:` as a logic anchor and `id:` as a durable identity. These parameters do not change its group membership or shared submit action.
 
-The group’s `layout` (`narrow`, `wide`, `full`, or `breakout`) sets one width for its header, context, questions, and submit area, including members with their own layout. When the group omits `layout`, it uses the widest member layout (`full`, then `breakout`, then `wide`); it uses `narrow` when every member is narrow; otherwise it keeps the normal content width. Published pages apply the resolved width before interaction initializes, so activation preserves question widths.
+The group's `width` (`narrow`, `wide`, `full`, or `breakout`) sets one width for its header, context, questions, and submit area, including members with their own width. When the group omits `width`, it uses the widest member width (`full`, then `breakout`, then `wide`); it uses `narrow` when every member is narrow; otherwise it keeps the normal content width. Older source that sets these widths with `layout:` still works; new source should use `width:`. Published pages apply the resolved width before interaction initializes, so activation preserves question widths.
 
 Group progress counts the same committed question results that mark each member complete. After the required
 members have submitted, the localized result is announced. The group action remains
@@ -400,19 +400,19 @@ available while a member can retry, and is removed once members finish. In
 In `mode: oneOf`, only the selected member is shown, submitted, and counted toward the result;
 the defaults are **Check selected** and **Submit selected**.
 
-## Shared scoring parameters
-
-These parameters are available on all assessment types:
-
 Published assessments and learner activities use one neutral surface with a 1px semantic border.
 This activity material is distinct from tinted callouts and unfilled quotes and applies to
 standalone questions, grouped assessments, checklists, ratings, and signatures.
+
+## Shared scoring parameters
+
+These parameters are available on all assessment types except ratings (`as: rating`), which accept only `required`:
 
 | Parameter | Type | Description |
 |---|---|---|
 | `points` | number | Point value awarded for a correct answer. Used in scored assessment groups and SCORM/xAPI reporting. |
 | `required` | boolean | Whether the learner must answer this question before proceeding. |
-| `timed` | number | Intended time limit in seconds. **Not applied yet** — no countdown is rendered. |
+| `timed` | number | Intended time limit in seconds. **Not applied yet:** Studio shows no countdown. |
 | `attempts` | number | Maximum number of attempts before the answer is locked. Use `0` for unlimited attempts. |
 | `shuffle` | boolean | Randomize option/item order on each attempt. Available on: choose-one, choose-many, match, order, categorize. |
 
@@ -427,9 +427,9 @@ Decorator parameters add metadata for learning analytics and adaptive behavior:
 | Parameter | Type | Description |
 |---|---|---|
 | `scored` | boolean | Whether this assessment contributes to the overall course score. Default: `true` for assessments inside an assessment-group. |
-| `competency` | text | Competency tag or identifier this question maps to (e.g. `"fire-safety"`). **Not applied yet** — not emitted in xAPI. |
-| `confidence` | boolean | Intended to enable confidence-based marking. **Not applied yet** — no confidence prompt is rendered. |
-| `retrieval` | boolean | Marks this as a retrieval practice question. **Not applied yet** — does not affect analytics. |
+| `competency` | text | Competency tag or identifier this question maps to (e.g. `"fire-safety"`). **Not applied yet:** Studio does not send it in xAPI statements. |
+| `confidence` | boolean | Intended to enable confidence-based marking. **Not applied yet:** Studio shows no confidence prompt. |
+| `retrieval` | boolean | Marks this as a retrieval practice question. **Not applied yet:** it does not affect analytics. |
 | `feedback` | text | Shared authored feedback when no `correct:` or `incorrect:` text is supplied. Legacy mode words `immediate`, `after-submit`, `after-all`, `never`, and `deferred` do not configure feedback timing in published output. |
 | `feedbackMode` | enum | `retry` or `reveal` for choice, match, order, fill-blank, and categorize. See reveal behavior above. |
 | `description` | text | Supporting context shown between the question and response controls. |

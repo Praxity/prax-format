@@ -1,0 +1,42 @@
+---
+title: Read an exit plan
+lang: en
+---
+
+# Read an exit plan
+
+/assets/floor-plan.png
+alt: Floor plan showing the north exit beside the meeting room
+size: small
+alignment: left
+float: left
+
+Find the north exit on the plan. Keep the route clear before work begins.
+
+close: float
+
+/assets/exit-route.png
+alt: Diagram showing a clear route to the south exit
+size: medium
+alignment: right
+float: right
+
+Follow the marked route to the south exit when the north exit is blocked.
+
+close: float
+
+as: col
+weight: 2
+
+### Main route
+
+Use the nearest clear exit.
+
+as: col
+weight: 1
+
+### Backup route
+
+Check the alternate route before your shift.
+
+close: col

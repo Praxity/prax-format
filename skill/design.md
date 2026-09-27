@@ -225,8 +225,9 @@ Brand settings are nested under `design.brand`:
 |---|---|---|---|---|
 | `logoUrl` | string | URL | — | Logo image URL (light mode) |
 | `logoDarkUrl` | string | URL | — | Logo image URL (dark mode) |
-| `logoPlacement` | enum | `left`, `center`, `hidden` | — | Logo position in nav bar |
-| `logoScope` | enum | `all-pages`, `title-only` | — | Pages where logo appears |
+| `logoPlacement` | enum | `sidebar`, `header`, `hidden` | `header` | Navigation surface that shows the logo beside the course title |
+
+Older `left` and `center` placements map to `header`. Studio ignores the old `logoScope` setting.
 
 ## Reading settings and branding pill
 

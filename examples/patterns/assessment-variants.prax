@@ -1,0 +1,30 @@
+---
+title: Practice safety checks
+lang: en
+---
+
+# Practice safety checks
+
+## Rate your confidence with the exit plan
+as: rating
+style: stars
+
+1: I need help
+2: I can find one exit
+3: I can find both exits
+
+## Rate how ready you feel to respond
+as: rating
+style: slider
+
+1: I need help
+2: I need more practice
+3: I can follow the plan
+4: I can guide a coworker
+
+## Write your personal action plan
+as: free-response
+private: true
+downloadAs: both
+required: true
+description: Name one exit you will check today and when you will check it.
