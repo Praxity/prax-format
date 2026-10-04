@@ -1,0 +1,19 @@
+---
+title: Complete the exit checks
+lang: en
+---
+
+# Complete the exit checks
+
+## Check the exit
+as: fill-blank
+style: dropdown
+
+Before work begins, check that the exit is {*clear|blocked}.
+
+## Read the route codes
+as: fill-blank
+style: word-bank
+bank: A\|B | C | D
+
+The map labels the shared route {A\|B} and the backup route {C}.

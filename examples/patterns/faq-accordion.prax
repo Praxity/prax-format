@@ -1,6 +1,6 @@
 ---
 title: Workplace Safety FAQ
-description: Common questions about safety policy, reporting, and PPE — answered in a scannable accordion. Learners open only what they need.
+description: Common questions about safety policy, reporting, and PPE in an accordion. Learners open only what they need.
 lang: en
 design:
   palette: clean
@@ -10,7 +10,7 @@ design:
 
 ## Frequently Asked Questions
 
-Use this FAQ when learners need reference material rather than a guided walkthrough. `allowMultipleOpen: true` lets them keep several panels open while they compare answers — important when a question about PPE depends on understanding a reporting requirement.
+Use this FAQ when learners need reference material rather than a guided walkthrough. `allowMultipleOpen: true` lets them keep several panels open while they compare answers. A PPE question may depend on a reporting requirement.
 
 ### Who is responsible for reporting a hazard?
 as: accordion

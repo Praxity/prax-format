@@ -1,0 +1,32 @@
+---
+title: Dialogue branching
+lang: fr
+---
+
+- Roger: Roxanne évite la réunion. Que fais-tu ?
+as: dialogue
+
+### Que dites-vous à Roxanne ?
+as: choice
+name: reply
+scored: true
+attempts: 2
+
+(x) J'ai besoin d'une pause, reparlons-en demain.
+( ) Tu fuis encore la discussion.
+
+if: block:reply.result is "correct"
+then: show @calm-path
+
+if: block:reply.result is "incorrect"
+then: show @tense-path
+
+- Roxanne: [relieved] Merci, ça m'aide beaucoup.
+as: dialogue
+name: calm-path
+hide: true
+
+- Roxanne: [annoyed] Je ne fuis pas, je réfléchis.
+as: dialogue
+name: tense-path
+hide: true

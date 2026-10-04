@@ -4,7 +4,31 @@ Plain-text eLearning courses: human-readable, LLM-friendly, and version-control 
 
 ## What is .prax
 
-`.prax` is Praxity Studio's grammar-based course format. A file contains optional YAML frontmatter plus structured body content that can be exported to SCORM, xAPI, or standalone HTML.
+`.prax` is Praxity Studio's grammar-based course format. A file contains optional YAML frontmatter plus structured body content. Studio exports it to SCORM, xAPI, standalone HTML, or a printable PDF workbook.
+
+## Studio 0.3.0 compatibility
+
+Existing grammar v3 courses need no source migration to open in Studio 0.3.0.
+Saving can normalize syntax and escaping. Keep a copy if a course must reopen
+in Studio 0.2.0. Both versions use grammar v3; older `:::` block fences remain unsupported.
+
+These constructs require Studio 0.3.0 or later:
+
+| Construct | Reference | Studio 0.2.0 behavior |
+| --- | --- | --- |
+| Dialogue turns, course cast and speaker sides | [Dialogue](reference/blocks-content.md#dialogue) | Keeps list and parameter text without a dialogue block. |
+| Dropdown and word-bank blanks | [Fill blanks](reference/blocks-assessments.md#fill-blank) | Uses text inputs instead of selection controls. |
+| Rectangle, ellipse and polygon hotspots | [Hotspots](reference/blocks-assessments.md#hotspot) | Drops the geometric regions. |
+| Continue gate with `because "reason"` | [Continue gates](reference/document-structure.md#continue-gates) | Treats the action as a literal show target and does not block completion. |
+| H5 and H6 headings | [Headings](reference/document-structure.md#headings) | Keeps the hash-prefixed lines as plain text. |
+| Indented or multiple-paragraph list items | [Lists](reference/document-structure.md#lists) | Splits continuation text into separate blocks. |
+| Escaped inline punctuation and field delimiters | [Escaping](reference/inline-formatting.md#escaping) | Can retain backslashes or apply formatting to escaped text. |
+| Consecutive column rows separated by `close: col` | [Columns](reference/blocks-containers.md#columns) | Merges the rows into one column group. |
+
+The references also cover card heading inference and `close: flashcard`, rating
+feedback, named hidden blocks and logic field references, and malformed
+frontmatter warnings. These fixes preserve content when saving. New interactions
+still need the newer application to render them.
 
 ## Studio 0.2.0 syntax
 
@@ -66,7 +90,7 @@ Confirm emergency exits are clear and protective gear is available.
 - Every authoring keyword in Studio's block manifest.
 - Grammar-first authoring that stays readable as plain text.
 - Accessible output patterns built into block semantics.
-- Export targets: SCORM 1.2, SCORM 2004, xAPI, standalone HTML.
+- Export targets: SCORM 1.2, SCORM 2004, xAPI, standalone HTML, and a tagged PDF/UA-1 workbook. The [CLI](cli.md) exports every target except xAPI.
 - Git-friendly diffs and collaboration workflows.
 - Works with language models: give a model the [authoring skill](skill/SKILL.md) as context and it can draft valid courses.
 
@@ -112,6 +136,9 @@ Reusable templates for common eLearning designs:
 - [`patterns/data-display.prax`](examples/patterns/data-display.prax): Key figures, a data table, numbered sources and an inline icon.
 - [`patterns/assessment-variants.prax`](examples/patterns/assessment-variants.prax): Star and slider ratings and a private, downloadable response.
 - [`patterns/module-deck.prax`](examples/patterns/module-deck.prax): Narrated module stops, a knowledge-check gate and deck settings.
+- [`patterns/fill-blank-styles.prax`](examples/patterns/fill-blank-styles.prax): Dropdown and word-bank blanks.
+- [`patterns/dialogue-branching.prax`](examples/patterns/dialogue-branching.prax): Scored choice revealing one of two dialogue branches on a standard page.
+- [`patterns/continue-gate.prax`](examples/patterns/continue-gate.prax): A prerequisite check with an authored Continue reason.
 
 ## Card syntax (v3.1)
 

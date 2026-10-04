@@ -1,8 +1,8 @@
-# Containers — .prax Sub-Skill
+# Containers sub-skill
 
 ## How containers work
 
-Containers hold child blocks. In v3, containers are opened from headings using `as:` and closed by structure or explicit `close:`. Some containers are implicit (accordion, tabs, sequence) — subsequent sibling headings at the same level become additional items. Use explicit `close:` markers to end containers before following same-page content.
+Containers hold child blocks. Open a container from a heading with `as:`. End it through heading structure or an explicit `close:`. In accordion, tabs and sequence containers, subsequent sibling headings at the same level start additional items. Use explicit `close:` markers to end containers before following same-page content.
 
 Key rules:
 
@@ -88,7 +88,7 @@ focus between tabs; Enter or Space activates the focused tab.
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `width` | enum | `narrow`, `wide`, `full`, `breakout` | — | Content width override |
+| `width` | enum | `narrow`, `wide`, `full`, `breakout` | | Content width override |
 
 ### Accordion nesting example
 
@@ -119,17 +119,17 @@ feedback: Goggles and lab coat are also required.
 
 ## columns
 
-Columns are standalone — no heading required. Each `as: col` starts a new column. Adjacent columns merge into one `columns` block. Use `close: col` before following same-page content.
+Columns need no heading. Each `as: col` starts a new column. Adjacent columns merge into one `columns` block. Use `close: col` before following same-page content.
 
 ```prax
 as: col
-**Hazards** — Chemical, biological, physical, and ergonomic risks.
+**Hazards**. Chemical, biological, physical, and ergonomic risks.
 
 as: col
-**Controls** — Engineering, administrative, and PPE-based solutions.
+**Controls**. Engineering, administrative, and PPE-based solutions.
 
 as: col
-**Review** — Annual audits and monthly spot checks.
+**Review**. Annual audits and monthly spot checks.
 
 close: col
 ```
@@ -154,7 +154,7 @@ Each column accepts `weight: <positive number>` for its relative share of the av
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `width` | enum | `narrow`, `wide`, `full`, `breakout` | — | Content width override |
+| `width` | enum | `narrow`, `wide`, `full`, `breakout` | | Content width override |
 
 ## sequence
 
@@ -187,17 +187,17 @@ Verify controls remain effective over time.
 ### Timeline
 
 ```prax
-### 2020 — Foundation
+### 2020, Foundation
 as: sequence
 style: timeline
 
 Established initial safety protocols.
 
-### 2022 — Expansion
+### 2022, Expansion
 
 Added chemical handling procedures.
 
-### 2024 — Automation
+### 2024, Automation
 
 Deployed IoT monitoring sensors.
 ```
@@ -277,7 +277,7 @@ close: card
 
 Use `card: back` for front/back behavior. Content before `card: back` is the front; content after it is the back.
 
-Card item labels are semantic headings by default and keep their authored level. Standalone card groups use level 3 unless `headingLevel: 2` through `headingLevel: 6` is set. Use `headings: false` for presentation-only or storytelling cards whose labels should not appear in heading navigation.
+Card item labels are semantic headings by default and keep their authored level. Standalone card groups infer the item level from the first item heading unless `headingLevel: 2` through `headingLevel: 6` is set. Use `headings: false` for presentation-only or storytelling cards whose labels should not appear in heading navigation.
 
 ```prax
 ## Safety Terms
@@ -311,7 +311,7 @@ Legacy card `filled` remains accepted as `shaded`; `accent` becomes `primary`. L
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `columns` | number | any integer | — | Number of grid columns |
+| `columns` | number | any integer | | Number of grid columns |
 | `layout` | enum | `grid`, `masonry`, `slides`, `rows` | grid | Card presentation mode |
 | `style` | enum | `none`, `outline`, `shaded`, `primary`, `secondary` | none | Surface treatment on ordinary cards, flip faces and single-card decks |
 | `shadow` | enum | `theme`, `none`, `subtle`, `elevated` | theme | Card depth treatment |

@@ -14,6 +14,7 @@ This index lists every authoring keyword in Studio's block manifest. It is gener
 | bookmark | Content | `as: bookmark` | [blocks-content.md#bookmark](blocks-content.md#bookmark) |
 | note | Content | `as: note` | [blocks-content.md#note](blocks-content.md#note) |
 | quote | Content | `> quote` | [blocks-content.md#quote](blocks-content.md#quote) |
+| dialogue | Content | `- key: words + as: dialogue` | [blocks-content.md#dialogue](blocks-content.md#dialogue) |
 | code | Content | `fenced code block` | [blocks-content.md#code](blocks-content.md#code) |
 | equation | Content | `$$` | [blocks-content.md#equation](blocks-content.md#equation) |
 | button | Content | `[label](url) + as: button` | [blocks-content.md#button](blocks-content.md#button) |

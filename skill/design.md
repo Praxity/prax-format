@@ -1,8 +1,8 @@
-# Design Options — .prax Sub-Skill
+# Design options sub-skill
 
 ## Frontmatter structure
 
-Course-wide design values live in YAML frontmatter under `design:`. All design keys are optional — omit any key to use the default. Named page treatments live separately under `pageStyles`; select them with `pageStyle` on a page break or opening H1. See [named page styles](../reference/document-structure.md#named-page-styles-and-corner-artwork).
+Course-wide design values live in YAML frontmatter under `design:`. Omit a design key to use its default. Named page treatments live separately under `pageStyles`; select them with `pageStyle` on a page break or opening H1. See [named page styles](../reference/document-structure.md#named-page-styles-and-corner-artwork).
 
 ```prax
 ---
@@ -36,18 +36,18 @@ The `palette` key selects a Studio theme. Use these source values for new course
 | `colorMode` | enum | `light` | `light`, `dark`, or `auto` |
 | `accentHue` | number | 220 | Hue angle (0–360) for accent color |
 | `accentHueCustomized` | boolean | false | Marks accent as manually overridden |
-| `colorBackgroundLight` | string | — | Six-digit hex or opaque OKLCH light-mode background |
-| `colorBackgroundDark` | string | — | Six-digit hex or opaque OKLCH dark-mode background |
-| `colorText` | string | — | Six-digit hex or opaque OKLCH body text |
-| `colorAccent` | string | — | Six-digit hex or opaque OKLCH accent/interactive colour |
-| `colorButtonBackground` | string | — | Six-digit hex or opaque OKLCH button background |
-| `colorButtonText` | string | — | Six-digit hex or opaque OKLCH button label |
-| `colorSuccessOnLight` / `colorSuccessOnDark` | string | — | Success state for each background mode; adjusted in OKLCH to at least 4.5:1 |
-| `colorErrorOnLight` / `colorErrorOnDark` | string | — | Error state for each background mode; adjusted in OKLCH to at least 4.5:1 |
-| `colorWarningOnLight` / `colorWarningOnDark` | string | — | Warning state for each background mode; adjusted in OKLCH to at least 4.5:1 |
-| `colorSuccess` / `colorError` / `colorWarning` | string | — | Legacy fallback when a mode-specific value is absent |
-| `colorSecondary` | string or null | — | Optional secondary accent color |
-| `colorTertiary` | string or null | — | Optional tertiary accent color |
+| `colorBackgroundLight` | string | | Six-digit hex or opaque OKLCH light-mode background |
+| `colorBackgroundDark` | string | | Six-digit hex or opaque OKLCH dark-mode background |
+| `colorText` | string | | Six-digit hex or opaque OKLCH body text |
+| `colorAccent` | string | | Six-digit hex or opaque OKLCH accent/interactive colour |
+| `colorButtonBackground` | string | | Six-digit hex or opaque OKLCH button background |
+| `colorButtonText` | string | | Six-digit hex or opaque OKLCH button label |
+| `colorSuccessOnLight` / `colorSuccessOnDark` | string | | Success state for each background mode; adjusted in OKLCH to at least 4.5:1 |
+| `colorErrorOnLight` / `colorErrorOnDark` | string | | Error state for each background mode; adjusted in OKLCH to at least 4.5:1 |
+| `colorWarningOnLight` / `colorWarningOnDark` | string | | Warning state for each background mode; adjusted in OKLCH to at least 4.5:1 |
+| `colorSuccess` / `colorError` / `colorWarning` | string | | Legacy fallback when a mode-specific value is absent |
+| `colorSecondary` | string or null | | Optional secondary accent color |
+| `colorTertiary` | string or null | | Optional tertiary accent color |
 
 Note: `colorBackground` is deprecated. Use `colorBackgroundLight` and `colorBackgroundDark` instead.
 
@@ -68,8 +68,8 @@ chroma, and hue together; separate `accentLightness`/`accentChroma` keys do not 
 | `fontFamily` | string array | preset | Ordered primary and fallback catalogue families; maximum four |
 | `fontWeight` | enum | role-specific | `400`, `500`, `600`, `700`, or `800` |
 | `fontStyle` | enum | `normal` | `normal` or `italic` |
-| `headingSize` | number | — | Raises the body-relative heading scale; heading floors prevent inversion |
-| `lineHeight` | number | — | Prose line-height multiplier (e.g. 1.55) |
+| `headingSize` | number | | Raises the body-relative heading scale; heading floors prevent inversion |
+| `lineHeight` | number | | Prose line-height multiplier (e.g. 1.55) |
 
 `typography.headings` is inherited by every heading level. An `h1`–`h6` object may
 override any role field. Valid generic family fallbacks are `serif`, `sans-serif`,
@@ -81,9 +81,9 @@ override any role field. Valid generic family fallbacks are `serif`, `sans-serif
 |---|---|---|---|---|
 | `density` | enum | `compact`, `comfortable`, `spacious` | `comfortable` | Global spacing density |
 | `blockSpacing` | enum | `compact`, `default`, `spacious` | `default` | Legacy value; published adjacency uses the reading rhythm |
-| `sectionGap` | number | — | — | Multiplier for alternate/manual section separation; pixel-era values are normalized |
-| `contentMaxWidth` | number | — | — | Maximum content width in pixels |
-| `borderRadius` | number | — | — | Border radius in pixels |
+| `sectionGap` | number | | | Multiplier for alternate/manual section separation; pixel-era values are normalized |
+| `contentMaxWidth` | number | | | Maximum content width in pixels |
+| `borderRadius` | number | | | Border radius in pixels |
 | `sectionRhythmMode` | enum | `uniform`, `alternate`, `manual` | `uniform` | Controls section spacing rhythm |
 
 Published type ratios are h1 `max(1.5, headingSize)`, h2
@@ -103,11 +103,11 @@ not this reading rhythm or minimum target sizes.
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
 | `dividerStyle` | enum | `none`, `thin`, `gradient`, `ornamental`, `wave`, `angle`, `curve`, `squiggle`, `blend` | `none` | Style of divider between sections |
-| `sectionDarkBackground` | string | — | — | Hex color for dark-background sections |
-| `sectionAccentBackground` | string | — | — | Hex color for accent-background sections |
-| `accentOnDark` | string | — | — | Hex accent color used on dark sections |
+| `sectionDarkBackground` | string | | | Hex color for dark-background sections |
+| `sectionAccentBackground` | string | | | Hex color for accent-background sections |
+| `accentOnDark` | string | | | Hex accent color used on dark sections |
 
-Note: `sectionTransition` is deprecated — use `dividerStyle` instead.
+Note: Use `dividerStyle` in place of the deprecated `sectionTransition`.
 
 ## Visual effects
 
@@ -134,7 +134,7 @@ The navigation system has two layers: an archetype shortcut that configures a pr
 | `minimal` | Minimal chrome, content-first |
 | `embedded` | Embeds without visible chrome |
 | `none` | No navigation elements |
-| `custom` | Fully manual — individual toggles control everything |
+| `custom` | Individual toggles control every setting |
 
 The `slides` preset keeps previous/next controls beside its progress dots and leaves
 `navEdgeArrows` off by default. Set `navEdgeArrows: true` to opt into the additional decorative
@@ -144,30 +144,30 @@ edge arrows; swipe and keyboard paging remain independently configurable.
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `navArchetype` | enum | see table above | — | Navigation archetype shortcut |
-| `navArchetypeBase` | enum | see table above | — | Base archetype before overrides |
-| `navOutline` | boolean | true / false | — | Show lesson outline |
-| `navOutlinePosition` | enum | `left`, `right` | — | Outline panel position |
-| `navPrevNext` | boolean | true / false | — | Show previous/next navigation |
+| `navArchetype` | enum | see table above | | Navigation archetype shortcut |
+| `navArchetypeBase` | enum | see table above | | Base archetype before overrides |
+| `navOutline` | boolean | true / false | | Show lesson outline |
+| `navOutlinePosition` | enum | `left`, `right` | | Outline panel position |
+| `navPrevNext` | boolean | true / false | | Show previous/next navigation |
 | `navPrevNextPosition` | enum | `bottom`, `top` | `bottom` | Position of prev/next buttons |
-| `navProgressStyle` | enum | `bar`, `dots`, `segments`, `none` | — | Progress indicator style |
-| `navBottomArrows` | boolean | true / false | — | Show arrows beside bottom progress dots |
-| `navTopBar` | boolean | true / false | — | Show the header bar |
-| `navReadingSupportPlacement` | enum | `topBar`, `bottomBar`, `sidebar`, `none` | — | Place or hide Reading tools |
-| `navFloatingToc` | boolean | true / false | — | Show floating table of contents |
-| `navScrollProgress` | boolean | true / false | — | Show scroll-progress indicator |
-| `navEdgeArrows` | boolean | true / false | — | Show edge arrow navigation |
-| `navSlideCounter` | boolean | true / false | — | Show slide N-of-M counter |
-| `navBreadcrumbs` | boolean | true / false | — | Show breadcrumb trail |
-| `navCourseTitle` | boolean | true / false | — | Show course title in nav |
-| `navLessonTitles` | boolean | true / false | — | Show lesson titles in nav |
-| `navLessonTitleAsHeading` | boolean | true / false | — | Legacy compatibility setting; course and lesson titles remain in navigation, while page H1s come only from authored content |
-| `navReadingTime` | boolean | true / false | — | Show estimated reading time |
-| `navSwipeGestures` | boolean | true / false | — | Enable swipe navigation on touch |
-| `navKeyboardArrows` | boolean | true / false | — | Enable arrow-key navigation |
+| `navProgressStyle` | enum | `bar`, `dots`, `segments`, `none` | | Progress indicator style |
+| `navBottomArrows` | boolean | true / false | | Show arrows beside bottom progress dots |
+| `navTopBar` | boolean | true / false | | Show the header bar |
+| `navReadingSupportPlacement` | enum | `topBar`, `bottomBar`, `sidebar`, `none` | | Place or hide Reading tools |
+| `navFloatingToc` | boolean | true / false | | Show floating table of contents |
+| `navScrollProgress` | boolean | true / false | | Show scroll-progress indicator |
+| `navEdgeArrows` | boolean | true / false | | Show edge arrow navigation |
+| `navSlideCounter` | boolean | true / false | | Show slide N-of-M counter |
+| `navBreadcrumbs` | boolean | true / false | | Show breadcrumb trail |
+| `navCourseTitle` | boolean | true / false | | Show course title in nav |
+| `navLessonTitles` | boolean | true / false | | Show lesson titles in nav |
+| `navLessonTitleAsHeading` | boolean | true / false | | Legacy compatibility setting; course and lesson titles remain in navigation, while page H1s come only from authored content |
+| `navReadingTime` | boolean | true / false | | Show estimated reading time |
+| `navSwipeGestures` | boolean | true / false | | Enable swipe navigation on touch |
+| `navKeyboardArrows` | boolean | true / false | | Enable arrow-key navigation |
 
 > **Arrow keys cannot be the last one off.** If a page ends up with no visible way to
-> change page — no outline, prev/next, edge arrows, hamburger or floating ToC — then
+> change page, with no outline, prev/next, edge arrows, hamburger or floating ToC, then
 > `navKeyboardArrows: false` is ignored and arrow navigation stays on. Swipe is the only
 > thing left otherwise, which no keyboard user and no mouse user can perform (2.1.1
 > Keyboard; 2.5.7 Dragging Movements). Every other toggle is honoured as written, and the
@@ -182,7 +182,7 @@ Legacy field (deprecated):
 
 ## Image effects
 
-`imageEffects` is a composable map — add only the effects you want. Each key's presence enables that effect; omit to disable.
+Add only the effects you want to the `imageEffects` map. Each key's presence enables that effect; omit to disable.
 
 | Effect key | Parameters | Description |
 |---|---|---|
@@ -202,7 +202,7 @@ Auto-calibration:
 |---|---|---|---|
 | `imageEffectsAuto` | boolean | false | Auto-calibrate effect intensities per image using perceptual metadata |
 
-Note: `imageStyle` is deprecated — use `imageEffects` instead.
+Note: Use `imageEffects` in place of the deprecated `imageStyle`.
 
 Image hover behavior:
 
@@ -223,8 +223,8 @@ Brand settings are nested under `design.brand`:
 
 | Parameter | Type | Valid values | Default | Description |
 |---|---|---|---|---|
-| `logoUrl` | string | URL | — | Logo image URL (light mode) |
-| `logoDarkUrl` | string | URL | — | Logo image URL (dark mode) |
+| `logoUrl` | string | URL | | Logo image URL (light mode) |
+| `logoDarkUrl` | string | URL | | Logo image URL (dark mode) |
 | `logoPlacement` | enum | `sidebar`, `header`, `hidden` | `header` | Navigation surface that shows the logo beside the course title |
 
 Older `left` and `center` placements map to `header`. Studio ignores the old `logoScope` setting.
@@ -233,7 +233,7 @@ Older `left` and `center` placements map to `header`. Studio ignores the old `lo
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
-| `showA11yPill` | boolean | — | Show Reading settings in published output |
+| `showA11yPill` | boolean | | Show Reading settings in published output |
 | `glossaryPage` | boolean | true | Publish the glossary page aggregated from inline tooltips |
 
 Published Reading settings contain Larger text and a Reading guide. Larger text is a convenience

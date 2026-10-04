@@ -33,6 +33,12 @@ When `kicker` is omitted or blank, no kicker is shown. In a multi-file course, `
 supplies the overall course title and each lesson's `title` labels its navigation link.
 Lesson kickers are omitted from the multi-file course outline.
 
+`lang` sets the lesson language. It takes precedence over the course `locale`, which
+takes precedence over the workspace `defaultLocale`. With none of them set, the
+language is `en`. Each published page or module uses its lesson's language for its
+HTML `lang` attribute and its learner controls. In a mixed-language course, a lesson's
+`lang` applies only to that lesson; the next lesson falls back to the course language.
+
 ## H1 heading
 
 `#` creates an ordinary level-one heading. It accepts the same heading parameters, `as:` transformations, and Studio narration handling as other heading levels. It does not create a lesson, module, or page boundary.
@@ -45,6 +51,11 @@ kicker: Before you begin
 ```
 
 Files and their frontmatter define lessons or modules; `course.yaml` organizes a multi-file course. Within a file, only an explicit `---` page break starts another page. Keep the authored heading level when editing or saving, including an opening `##`; Studio does not promote every opening heading to H1.
+
+## Lists
+
+A line indented by at least two spaces beyond the list marker's indentation continues the item above it. A blank line followed by an indented line starts a new paragraph in the same item. Unindented text ends the list.
+Recognized parameter lines, including indented `as:` lines, stay outside the list item. Other indented lines can contain colons and still continue the item.
 
 ## Pages and navigation labels
 
@@ -173,6 +184,16 @@ frontmatter. It stores generated page and stateful block IDs in the project's
 Stateful blocks include accordion, assessment, assessment group, button, card, checklist,
 image comparison, labeled graphic, rating, sequence, signature, and tabs.
 
+For saved labeled-graphic data with `reveal: sequential`, learners explore numbered
+pins in order. A visible, localized instruction explains that later pins become
+available after the preceding pin is revealed. Future pins are disabled; the next
+pin and all previously revealed pins remain available. Selecting a revealed pin
+reopens or closes its description without reducing progress. Saved progress restores
+the revealed sequence and active description. Without JavaScript, an ordered list
+shows every title and description. Unrestricted `reveal: click` keeps every pin
+available, and omitted reveal mode still shows all labels. No source syntax or
+persisted data fields change.
+
 Explicit IDs remain supported. Use `firstPage.id` for the first page, `id` after a page break
 for later pages, or a block's `id` parameter:
 
@@ -195,7 +216,7 @@ and noncanonical forms. Older source without IDs remains valid.
 Keep `.praxity/content-identity.json` when copying or backing up a project. Copying a clean
 `.prax` alone into another project creates new generated page and block identities. Explicit
 source IDs travel with the file. Legacy source still carrying generated UUIDs retains those
-values during migration. Studio's rename and Save As commands preserve generated identities.
+values during migration. Studio's rename commands preserve generated identities.
 Unsaved previews do not replace saved identity records.
 
 Studio preserves identities when it can match content unambiguously. Ambiguous duplicate or
@@ -207,7 +228,7 @@ blocks. Authors and agents should edit the `.prax` source for visible content, t
 edit narration. The CLI reads the same sidecar and bundles referenced MP3 and optional WebVTT
 assets. In the default page runtime, narration never autoplays or affects completion, scoring, content access, or navigation. The experimental [module-deck compiler option](module-deck.md) adds user-started continuous playback and slide navigation. Its knowledge-check gates remain independent of listening time.
 
-Cards, sequences, accordions, and tabs generate separate narration clips for each item,
+Cards, sequences, accordions, tabs, and dialogues generate separate narration clips for each item,
 with a separate clip for any container title or instructions. Two-sided cards have separate
 front and back clips, in that order; each face has its own narration settings. Nested containers retain their
 own item boundaries. Preview and export play the clips in authored order. This keeps a long
@@ -215,6 +236,25 @@ container from consuming Soniox's two-minute limit in one request; an individual
 needs to fit that limit. Existing whole-container recordings remain playable. Regenerating a
 derived recording replaces it with item clips only after the full replacement batch succeeds;
 explicit custom whole-container scripts remain intact.
+
+Derived narration puts each card, tab, accordion or sequence item's label and child headings
+in separate paragraphs from the body. If a container title repeats an item label, the retained
+text still acts as a heading. Whole-container narration keeps the paragraph boundaries of
+nested child scripts, including nested containers. Assessment stems and descriptions keep
+those boundaries too. When a heading has following text and ends without punctuation, Studio
+adds `[pause]` after it for speech. Transcripts and captions omit that cue.
+A heading that ends in punctuation needs no added pause. A heading-only segment keeps its
+existing script because the next clip already has a separate recording boundary. Source
+anchors and segment IDs stay unchanged. Existing generated clips whose speech gains a pause
+remain linked but become stale until regenerated. Custom scripts and recordings remain intact.
+
+A dialogue has one clip for its caption, if any, and one per turn. Each turn uses its speaker's voice from the local `speaker:` declaration or the course cast unless the segment sets its own voice. Speaker names are shown, never spoken. A clip follows its turn when turns move; editing the words or the speaker key unlinks it. Give two otherwise identical dialogues different `name:` values to keep their clips apart.
+
+For a [branching dialogue](../examples/patterns/dialogue-branching.prax), use a scored choice and logic that reveals the committed answer's branch. The standard-page playlist is computed at export and stored in `praxity-config`. A `hidden` logic-controlled wrapper, an ancestor wrapper, or a `.praxity-section` controls eligibility. A block without its own wrapper stays eligible unless an ancestor or section is hidden; inactive tabs, collapsed accordions and other card faces stay eligible and are revealed when selected. Hidden words never play.
+
+The standard page uses authored stop positions at assessment and media boundaries, including boundaries with no audio. An active stop applies to the nearest eligible predecessor. A stop is active only when its originating block, every logic-controlled block or section ancestor, and any conditional owner are shown. A terminal stop stays pending if no branch is eligible, so Play enters a branch revealed after submission. Play then moves strictly forward in authored order; reach an earlier branch by seeking or selecting it. Public `praxity:assessment-response` and `praxity:assessment-group-complete` events pause narration after submission. Private assessments emit no response event; their option selection and submit use indistinguishable `praxity:block-interaction` events, so private submission alone does not guarantee a pause. Deck media keeps its existing `pauseAfter`; authored stops apply only to the standard page. Decks do not support branching.
+
+If child words of a card, tab or accordion item become conditional, its source anchor changes. The old whole-item recording becomes unlinked; new item segments have missing audio until the author regenerates them. They are not automatically marked stale.
 
 Generated narration for single- and multiple-choice questions reads the prompt, description,
 instructions, and visible answer options in authored order, then pauses for the learner.
@@ -224,13 +264,23 @@ existing clips are not rewritten automatically.
 
 Studio keeps one authored narration script for generation and playback metadata. Recognized Soniox emotion and delivery cues such as `[sincerely]`, `[delighted]`, `[whispering]`, and `[long pause]` remain in that script and are sent for generation. Learner transcripts, captions, and reading labels omit these nonspoken cues. Human sound captions such as `[laughs]`, `[sighs]`, and `[coughs]` remain visible. Ordinary bracketed text, citations, and Markdown links are not removed as delivery cues.
 
+To write a cue as literal text, escape its opening bracket: `\[warm]`. The transcript shows `[warm]`, while Soniox receives and speaks `warm` without brackets. [Soniox documents bracketed tags](https://soniox.com/docs/tts/concepts/emotion-and-tone) but no literal-tag escape, so Studio removes the brackets before synthesis.
+
 Recording freshness uses the complete original generation script, including its cues. Changing only a cue therefore marks the existing recording out of date. This does not require a separate learner-transcript script.
+
+Removing a configured voice marks a recording out of date when generation would now use a different provider default voice. A recording made with that provider default stays current.
 
 Narration scripts also supply the reading text in the current slide’s transcript. In Studio's script
 field, use `**bold**`, `*italic*`, `#` through `###` headings, `-` bullet items, and `1.` numbered
 items. Put each heading or list item on its own line, and separate paragraphs with blank lines.
-Lists are flat. Transcript headings keep the surrounding text size. Raw HTML and other inline
-features are literal text, not executable markup.
+Indent list items by two spaces per level to nest them. Studio also derives one script line per
+item from prose lists in block content, including numbered and nested lists. Transcript headings
+keep the surrounding text size. Raw HTML and other inline features are literal text, not
+executable markup.
+
+Within an assessment stem or description, derived narration reads repeated child text in
+authored order. Separate numbered lists in those children remain separate in the transcript,
+so each list keeps its own starting number. PDF narration notes keep nested lists intact.
 
 Formatting stays in the existing sidecar `script` field. Speech receives the same words with
 formatting removed and paragraph breaks between headings, paragraphs, and list items. Studio
@@ -263,16 +313,22 @@ Heading levels drive hierarchy and structure.
 - `##` section heading
 - `###` section/item heading
 - `####` subsection heading
+- `#####` level-five heading
+- `######` level-six heading
 
-Published HTML preserves these authored levels exactly: `#` → `h1`, `##` → `h2`,
-`###` → `h3`, and `####` → `h4`. Course and lesson labels stay in navigation and
-do not shift content headings down. No heading is synthesized when a page has no authored H1.
+Published HTML preserves all six authored levels: `#` → `h1`, `##` → `h2`,
+`###` → `h3`, `####` → `h4`, `#####` → `h5`, and `######` → `h6`. Course and lesson
+labels stay in navigation and do not shift content headings down. Studio adds no
+heading when a page has no authored H1. Choose each level for its place in the
+content hierarchy.
 
 ```prax
 # Module Title
 ## Incident Response Basics
 ### Immediate Actions
 #### Notify Stakeholders
+##### Notify the response team
+###### Confirm receipt
 ```
 
 ## `as:` transformation
@@ -293,6 +349,12 @@ Common uses:
 - `as: accordion`, `as: tab`, `as: sequence`, `as: comparison`
 - `as: stats`, `as: signature`, `as: checklist`
 
+Keep a block's parameter lines together. Studio skips blank lines before the
+first parameter, then stops reading parameters at the next blank line. Structural
+commands such as `close:`, `var:`, and `card: back` end parameter collection,
+even without a separating blank line. A blank line before a standalone
+`as: col`, `as: card`, or `as: flashcard` starts a new container.
+
 ## Section divider vs page break
 
 - `--` is a divider within a page.
@@ -310,6 +372,13 @@ Additional section on same page.
 
 ## New Page
 ```
+
+Add `palette:` after `--` to start a coloured section band. Valid section
+palettes are `light`, `dark`, `accent`, `warm`, `cool`, and `growth`. Explicit
+bands work with `uniform`, `alternate`, and `manual` section rhythm. An
+unmarked opening section keeps the page background. A plain `--` remains a
+visual divider and does not select a palette. An H2 immediately after a palette
+divider stays in that band with its content.
 
 ## Lessons and grouping
 
@@ -333,13 +402,67 @@ All manifest blocks support the following parameters:
 | Parameter | Type | Valid values | Description |
 |---|---|---|---|
 | `width` | enum | `narrow \| wide \| full \| breakout` | Overrides the default content width for this block |
-| `name` | string | any | Assigns a name to the block for cross-referencing. Used in logic rules (`then: show @myBlock`), assessment-group scoring, and anchor links. Use `camelCase` with no spaces — e.g. `name: safetyTip`. Avoid colons, quotes, and special characters. |
+| `name` | string | any | Assigns a name to the block for cross-referencing. Used in logic rules (`then: show @myBlock`), assessment-group scoring, and anchor links. Use `camelCase` with no spaces, such as `name: safetyTip`. Avoid colons, quotes, and special characters. |
 | `hide` | boolean | `true \| false` | Hides the block from rendered output. The block is preserved in the grammar and can be shown later via logic rules (`then: show @name`). |
 | `visible` | condition expression | always | Conditional visibility based on variable state. Example: `visible: score >= 80`. The block renders only when the condition is true. |
 | `entrance` | enum | `fade \| slide \| scale \| none` | Block entrance animation; overrides course-level `motionEntrance`. |
 | `entranceDuration` | CSS duration | `250ms` | Duration of the entrance animation. |
 
+A rule can read a named assessment's result with `if: block:spillResponse.result is "correct"`.
+Use `then: show @correctFollowUp` to reveal a card with `name: correctFollowUp` and
+`hide: true`. Studio preserves the field reference and the card parameters when saving.
+
+## Continue gates
+
+Use a logic rule to block forward navigation while a prerequisite remains unmet.
+Give the learner an actionable reason with `because`:
+
+```prax
+if: block:safetyCheck.result isNot "correct"
+then: disableCompletion because "Submit a correct answer before continuing."
+```
+
+The optional reason must be a JSON double-quoted string. Escape embedded quotes
+as `\"`, backslashes as `\\`, and control characters as `\n` or `\t`. Studio
+preserves the reason when saving. A malformed reason produces a parser warning
+and Studio drops that action; other actions and blocks still parse.
+
+While the condition holds, the rule gates Next, forward keyboard and swipe
+navigation, forward jumps, and completion through forward navigation. Backward
+navigation remains available. Continue stays visible and unavailable, with the
+reason beside it and linked to it for assistive technology. Once the condition
+clears, Continue becomes available.
+
+Plain `then: disableCompletion` remains valid. Studio recommends a reason when
+it is absent or blank. The localized fallback says that the next page is
+unavailable but cannot explain the authored prerequisite.
+
+See the [complete Continue gate example](../examples/patterns/continue-gate.prax).
+
+## End the lesson
+
+`__end_lesson__` is a reserved jump target. A rule that jumps to it finishes the
+course when the learner moves forward from that page:
+
+```prax
+if: block:finalCheck.result is "correct"
+then: jump @__end_lesson__
+```
+
+It runs only when the learner selects Next or Continue, and only after required
+questions are answered and no Continue gate blocks the page. The learner stays
+on the page. In a SCORM package on Pages, finishing saves the learner's progress,
+marks the course complete unless the learner has failed it, and closes the LMS
+session. After that the page no longer reports to the LMS. This is the only way
+a published SCORM course closes its session; leaving the page or closing the
+window saves progress without closing it. Guided slides have no finish action, so the LMS ends the session
+when the learner closes the course.
+
+## Block widths
+
 `width: narrow` centers a block in a measure capped at `45ch`, using the surrounding body font. It keeps the full available width in a narrower parent or viewport and preserves text alignment. Use it for short passages such as notes and quotes on pages or slides. Omit `width` for the normal content width. Wider blocks stay centered in the available content area and retain a side gutter, including when a navigation panel reduces that area. `width: full` fills this usable area; section backgrounds and decorative artwork can still extend to its edges. Cards can combine a presentation such as `layout: slides` with `width: narrow`.
+
+In module decks, `width: breakout` extends beyond the readable text column, while `width: full` fills the slide area with a side gutter. This also applies inside sections. Both stop at an open outline or transcript panel. At narrow viewports, they remain at least as wide as the text column and fit the slide without horizontal scrolling.
 
 ```prax
 > Pause to consider how this applies to your work.
@@ -357,8 +480,13 @@ If text needs to start with a reserved key (`as:`, `close:`, `if:`, `when:`), es
 \as: this is literal text, not a block transform
 ```
 
+A line prefix does not remove a second inline escape. For example,
+`\*stars\*` prints `*stars*` without emphasis. Unknown escapes such as `\q`
+remain literal. See [inline escaping](inline-formatting.md#escaping) for the
+reserved punctuation and field delimiters.
+
 ## Edge cases
 
-- Malformed YAML frontmatter is ignored as metadata, but body still parses.
+- Malformed YAML frontmatter produces a warning at the affected line. The body still parses, and Studio leaves the original frontmatter unchanged until the YAML is fixed. Design changes remain pending while it is invalid.
 - Text before first heading is valid but can be semantically unclear.
 - Unknown `as:` values are treated as plain headings with a warning.

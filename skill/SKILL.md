@@ -1,6 +1,6 @@
 ---
 name: prax-format
-description: Generate and edit .prax course files — the plain-text eLearning format used by Praxity Studio
+description: Generate and edit .prax course files in the plain-text eLearning format used by Praxity Studio
 version: "3.0"
 ---
 
@@ -314,6 +314,28 @@ Use `style: none | outline | shaded | primary | secondary` for an unstyled quote
 Legacy `attribution` maps to `speaker`; legacy `decorator`, `size`, and pull-quote `style`
 values are accepted but ignored without dropping quote content.
 
+### Dialogue
+
+Write a bullet list with a speaker key before each turn, then add `as: dialogue`:
+
+```prax
+- alex: What should I say when the meeting starts?
+- sam: Start with the goal, then ask what everyone needs.
+as: dialogue
+speaker: alex; name: Alex
+speaker: sam; name: Sam
+```
+
+Keys are case-insensitive identifiers, never display names. `speaker:` may repeat to define local names, avatars and voices. Escape `;` as `\;` and `:` as `\:` inside values. For shared speakers, use the [course cast in `course.yaml`](../cli.md#course-cast). `style: bubbles | script` defaults to `bubbles`; `caption:` adds a caption. Names stay visible and avatars are decorative. Inline narration fields are ignored; put narration in `narration.yaml`. Without `as: dialogue`, the lines remain a plain list.
+
+For a branch, follow the dialogue with a scored choice named `name: reply`, then rules on `block:reply.result` that show named, hidden dialogues. Copy the [complete branching example](../examples/patterns/dialogue-branching.prax). Branching narration works on standard pages; decks reject logic.
+
+The standard-page playlist is computed at export and stays in authored order. A `hidden` logic-controlled wrapper, an ancestor wrapper, or a `.praxity-section` can hide a segment. A block without its own wrapper stays eligible unless an ancestor or section is hidden; inactive tabs, collapsed accordions and other card faces stay eligible and are revealed on selection. Hidden words never play. Play moves strictly forward after a retry; seek or select to hear an earlier branch.
+
+The standard page checks authored stops at assessment and media boundaries, even without audio. An active stop applies to the nearest eligible predecessor. A stop is active only when its originating block, every logic-controlled block or section ancestor, and any conditional owner are shown. A terminal stop stays pending if no branch is eligible, so Play enters a branch revealed after submission. Public `praxity:assessment-response` and `praxity:assessment-group-complete` events pause narration after submission. A private assessment emits no response event; its option selection and submit use indistinguishable `praxity:block-interaction` events, so private submission alone does not guarantee a pause. Deck media keeps `pauseAfter`; authored stops apply only to the standard page.
+
+If child words of a card, tab or accordion item become conditional, its source anchor changes. The old whole-item recording becomes unlinked; new item segments have missing audio until the author regenerates them. They are not automatically marked stale.
+
 ### Code block
 
 Standard markdown fenced code block with optional language:
@@ -520,7 +542,7 @@ close: card
 
 Use `card: back` for front/back behavior. Content before `card: back` is the front; content after it is the back.
 
-Card item labels are semantic headings by default and keep their authored level. Standalone card groups use level 3 unless `headingLevel: 2` through `headingLevel: 6` is set. Use `headings: false` for presentation-only or storytelling cards whose labels should not appear in heading navigation.
+Card item labels are semantic headings by default and keep their authored level. Standalone card groups infer the item level from the first item heading unless `headingLevel: 2` through `headingLevel: 6` is set. Use `headings: false` for presentation-only or storytelling cards whose labels should not appear in heading navigation.
 
 ```
 ## Safety Terms
@@ -569,7 +591,7 @@ Assessments use a heading for the question, `as:` for the type, and specialized 
 
 | Key | Effect | Default |
 |-----|--------|---------|
-| `points:` | Point value | omitted |
+| `points:` | Point value | |
 | `shuffle:` | Randomize option order | `false` |
 | `attempts:` | Max attempts (0 = unlimited) | unlimited for ungraded auto-scored checks; otherwise `1` |
 | `required:` | Must complete to proceed | `false` |
@@ -604,7 +626,7 @@ feedback: Correct -- all three are required
 feedback: Important, but not sufficient alone
 ```
 
-**With whole-question feedback** (placed after all options): use `correct:` and `incorrect:` for differentiated feedback based on overall correctness. These are distinct from per-option `feedback:` lines — `correct:` and `incorrect:` are not tied to any specific option and are stored as `data.correct`/`data.incorrect` on the block.
+Place whole-question `correct:` and `incorrect:` feedback after all options. These lines describe the overall response. Studio stores them as `data.correct` and `data.incorrect` on the block. Per-option `feedback:` lines describe a specific option.
 
 ```
 ### Which PPE is required?
@@ -841,7 +863,7 @@ mode: draw
 
 Standard markdown: `**bold**`, `*italic*`, `~~strikethrough~~`, `==highlight==`, `` `inline code` ``, `[link text](url)`.
 
-Variable interpolation: `{{userName}}` inserts variable values inline. Exception: inside `as: fill-blank`, single `{braces}` marks answer blanks — not interpolation.
+Variable interpolation: `{{userName}}` inserts variable values inline. Exception: inside `as: fill-blank`, single `{braces}` marks answer blanks.
 
 Tooltips: `[PPE]{Personal Protective Equipment -- gear that protects.}` -- brackets for visible text, braces for the definition. Every defined term is also collected into a published glossary page; set `design.glossaryPage: false` to keep the tooltips without the page.
 
@@ -886,7 +908,20 @@ then: set attempts = 0
 
 Condition operators: `is`, `isNot`, `>`, `<`, `>=`, `<=`, `contains`, `isEmpty`, `isNotEmpty`, `isAnyOf`.
 
-Action types: `show @name, @other`, `hide @name, @other`, `jump @page`, `set variable = value`, `add variable + n`, `subtract variable - n`, `require @name, @other`, `disableCompletion`. `when:` is accepted as a compatibility alias for `if:`.
+Action types: `show @name, @other`, `hide @name, @other`, `jump @page`, `set variable = value`, `add variable + n`, `subtract variable - n`, `require @name, @other`, `disableCompletion`. `when:` is accepted as a compatibility alias for `if:`. `jump @__end_lesson__` finishes the course when the learner moves forward; in SCORM on Pages it is the only action that closes the LMS session.
+
+`disableCompletion` blocks forward progress from the current page while its condition is true. It gates Next, forward keyboard and swipe navigation, forward jumps, and completion through forward navigation. Backward navigation remains available.
+
+Add an actionable reason for learners:
+
+```prax
+if: passedQuiz is false
+then: disableCompletion because "Complete the safety check before continuing."
+```
+
+The optional `because` clause takes a JSON double-quoted string. Escape quotes as `\"`, backslashes as `\\`, and control characters with JSON escapes such as `\n` and `\t`. The reason appears beside the visible, unavailable Continue control and describes it for assistive technology. Plain `then: disableCompletion` remains valid for older documents; Studio recommends adding a reason when it is missing or blank. A localized fallback states that the next page is unavailable. It cannot explain an authored prerequisite.
+
+Malformed `because` clauses produce a parser warning and the action is ignored. Other rules and blocks keep parsing.
 
 `and:` and `or:` chain conditions but cannot be mixed in one rule.
 

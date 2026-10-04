@@ -482,6 +482,47 @@
       ]
     },
     {
+      "id": "dialogue",
+      "label": "Dialogue",
+      "category": "Content",
+      "syntax": "- key: words + as: dialogue",
+      "reference": "blocks-content.md#dialogue",
+      "variants": [
+        {
+          "name": "style",
+          "type": "enum",
+          "options": [
+            "bubbles",
+            "script"
+          ],
+          "default": "bubbles"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "caption",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "speaker",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "width",
+          "type": "enum",
+          "required": false,
+          "options": [
+            "narrow",
+            "wide",
+            "full",
+            "breakout"
+          ]
+        }
+      ]
+    },
+    {
       "id": "code",
       "label": "Code",
       "category": "Content",
@@ -1947,14 +1988,8 @@
           "type": "enum",
           "options": [
             "inline-inputs",
-            {
-              "value": "word-bank",
-              "implemented": false
-            },
-            {
-              "value": "dropdown",
-              "implemented": false
-            }
+            "word-bank",
+            "dropdown"
           ],
           "default": "inline-inputs"
         }
@@ -2044,6 +2079,11 @@
         {
           "name": "attempts",
           "type": "number",
+          "required": false
+        },
+        {
+          "name": "bank",
+          "type": "text",
           "required": false
         },
         {

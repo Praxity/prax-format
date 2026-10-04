@@ -58,7 +58,7 @@ Markdown image syntax is supported.
 ![Fire extinguisher location map](assets/extinguisher-map.png)
 ```
 
-For advanced image params (alt text, captions, sizing), use a bare media path on its own line followed by parameter lines. See [blocks-content.md — image](blocks-content.md#image) for the full parameter reference.
+For advanced image params (alt text, captions, sizing), use a bare media path on its own line followed by parameter lines. See [image reference](blocks-content.md#image) for the full parameter reference.
 
 ```prax
 /assets/extinguisher-map.png
@@ -102,9 +102,14 @@ Ordered:
 
 Task lists become checklist blocks only with `as: checklist`.
 
+Indent continuation lines at least two spaces beyond the item's marker to keep them in that item.
+A blank line followed by an indented line starts another paragraph in that item.
+Unindented prose ends the list. Recognized parameter lines, including indented `as:`
+lines, stay outside the item; other indented lines can contain colons.
+
 ## Tables
 
-Pipe tables use standard markdown syntax. The separator row (`| --- | --- |`) is optional — the parser skips it if present but does not require it.
+Pipe tables use standard markdown syntax. The parser skips the optional separator row (`| --- | --- |`).
 
 ```prax
 | Risk | Likelihood |
@@ -112,14 +117,14 @@ Pipe tables use standard markdown syntax. The separator row (`| --- | --- |`) is
 | Fire | Low |
 ```
 
-Add `chart:` below a table to render it as a chart. See [blocks-content.md — data-table](blocks-content.md#data-table) for chart parameters.
+Add `chart:` below a table to render it as a chart. See [data-table reference](blocks-content.md#data-table) for chart parameters.
 
 ## Tooltips and the glossary
 
 Brackets contain the visible term, braces contain its definition:
 
 ```prax
-Workers must wear [PPE]{Personal Protective Equipment — clothing and gear designed to protect the wearer from injury or infection.} at all times.
+Workers must wear [PPE]{Personal Protective Equipment, clothing and gear designed to protect the wearer from injury or infection.} at all times.
 ```
 
 "PPE" renders as a dotted-underlined trigger announced as having a definition. Selecting it
@@ -127,11 +132,11 @@ Workers must wear [PPE]{Personal Protective Equipment — clothing and gear desi
 and returns focus to the term. It is a toggletip, not a hover-only tooltip, so it works on touch
 and by keyboard.
 
-Every defined term is also collected into a **glossary page**, published alongside the course pages and linked from the course menu. Terms are sorted A–Z and deduplicated case-insensitively, so defining `PPE` once and writing `ppe` later produces one entry — the first definition wins. Define a term where a learner first meets it.
+Studio collects defined terms into a glossary page and links it from the course menu. It sorts terms A–Z and merges duplicates without regard to case. Defining `PPE` once and writing `ppe` later produces one entry. The first definition wins. Define a term where a learner first meets it.
 
 Set `design.glossaryPage: false` in the frontmatter to keep the inline tooltips but not publish the aggregated page.
 
-Definitions are plain inline text. Do not nest another tooltip, a link, or a block inside one — a definition that needs that much is a paragraph, not a tooltip.
+Keep definitions as plain inline text. Put longer explanations in a paragraph outside the tooltip.
 
 ## Numbered sources
 
@@ -212,13 +217,40 @@ Use sparingly; prefer plain markdown emphasis for compatibility.
 
 ## Escaping
 
-Escape reserved syntax with backslash when you need literal text.
+Put a backslash before reserved punctuation to print the character instead of
+using it as syntax. Escape the opening character to stop a link, tooltip,
+variable, icon or doodle, and escape each formatting delimiter separately.
 
 ```prax
-\---
-\as: not parsed
-\close: not parsed
+Literal \*stars\*, \{{name}}, \@icon{check}, and \@circle{text}.
+Literal \[label](https://example.com) and \[term]{definition}.
+A literal backslash: \\. Unknown escapes such as \q stay unchanged.
 ```
+
+You can escape exactly these characters:
+
+```text
+\ * ~ = ` [ ] { } @ | : ; _ # - > ! ( ) + / $ . ?
+```
+
+A backslash also stops a character from splitting a field:
+
+- `\|` in a table cell, an inline parameter value, a blank answer or a word-bank entry;
+- `\::` in a matching label;
+- `\;` in a hotspot label.
+
+Studio splits the field first and then removes the backslash, so each escape is
+decoded once.
+
+Escapes do nothing in code spans, fenced code, URLs, and literal parameters such as
+`alt:`, IDs and file paths. Those fields keep backslashes exactly as typed, so do not
+add them there. Escaping belongs to the grammar, not to HTML: Studio still sanitizes
+any HTML you write.
+
+Escaped text stays literal when you save and reopen a lesson. Studio may add escapes
+of its own when it saves, so the saved source can spell an escape differently from
+what you typed. For line-level commands such as `as:`, see
+[escaping reserved lines](document-structure.md#escaping-reserved-lines).
 
 ## Inline quality guidelines
 

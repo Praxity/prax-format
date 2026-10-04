@@ -1,6 +1,6 @@
 ---
 title: Spill Response Scenario
-description: Conditional feedback pattern. The learner chooses a response to a workplace scenario, then sees differentiated follow-up content based on their answer. Uses assessment results and if: rules to reveal the right feedback block.
+description: "Conditional feedback pattern. The learner chooses a response to a workplace scenario, then sees differentiated follow-up content based on their answer. Uses assessment results and if: rules to reveal the right feedback block."
 lang: en
 design:
   palette: campfire
@@ -30,7 +30,7 @@ feedback: Containment is important, but people must be cleared from the area fir
 ( ) Close the valve, then continue your work
 feedback: Closing the valve alone does not address the spill already on the floor or alert others to the hazard.
 
-correct: Well done. Your first priority is always people — clear the area, then follow the spill response procedure.
+correct: Well done. Your first priority is always people. Clear the area, then follow the spill response procedure.
 incorrect: Review the spill response procedure. People before product is the guiding rule.
 
 --
@@ -64,7 +64,7 @@ as: card
 name: incorrectFollowUp
 hide: true
 
-The spill response procedure has four phases: **protect people**, then **contain the source**, then **clean up**, then **report**. Skipping the first phase — even with good intentions — puts coworkers at risk from vapour inhalation or slipping on the spill.
+The spill response procedure has four phases: **protect people**, then **contain the source**, then **clean up**, then **report**. Skipping the first phase puts coworkers at risk from vapour inhalation or slipping on the spill.
 
 > When in doubt, clear the area first. Containment can wait thirty seconds.
 as: note

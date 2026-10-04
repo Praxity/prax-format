@@ -10,7 +10,7 @@ design:
 
 ## How We Respond to Incidents
 
-Every reported incident follows the same five-step process. The horizontal layout lets you see the full sequence at once — useful when teaching a workflow where order matters and each step depends on the previous one completing correctly.
+Every reported incident follows the same five-step process. The horizontal layout lets you see the full sequence at once. Use it for a workflow where each step depends on the previous step.
 
 ### Contain
 as: sequence
@@ -34,4 +34,4 @@ Complete the official incident report in the EHS portal. Include timeline, contr
 
 ### Close Out
 
-Once corrective actions are confirmed — updated procedures, equipment repair, additional training — the safety officer closes the incident file and notifies all affected workers of the outcome and any changes to their work process.
+Once the safety officer confirms updated procedures, equipment repairs and training, they close the incident file and notify affected workers of the outcome and changes to their work process.

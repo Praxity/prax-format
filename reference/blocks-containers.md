@@ -41,9 +41,13 @@ File an incident report within 24 hours.
 ```
 
 **Parameters:**
-- `style`: `none | outline | shaded | primary | secondary` — surface treatment. `none` removes fill, border and separators; `outline` adds an unshaded border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Omitted style retains the original separator-line treatment. Legacy `default`, `contained` and `separated` source remains supported with its original appearance.
-- `allowMultipleOpen` (boolean) — whether multiple panels can be open at once.
+- `style`: `none | outline | shaded | primary | secondary`, surface treatment. `none` removes fill, border and separators; `outline` adds an unshaded border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Omitted style retains the original separator-line treatment. Legacy `default`, `contained` and `separated` source remains supported with its original appearance.
+- `allowMultipleOpen` (boolean), whether multiple panels can be open at once.
 - `width`: `narrow | wide | full | breakout`
+
+Published accordions use buttons inside headings, followed by their panels. Each button exposes its expanded state and references its panel. Scripts initially collapse the panels after installing working controls. Without scripts, every panel and its plain heading remain visible. Printing expands every panel. Existing item trigger and panel fragment IDs remain valid.
+
+`allowMultipleOpen: true` permits independent panels. Otherwise opening one closes its siblings. Space and Enter toggle the focused button; Arrow Up/Down, Home and End move between headings. Narration reveals the relevant item without taking focus. The state icon is decorative and does not enter the button's accessible name.
 
 ## tabs
 
@@ -65,9 +69,10 @@ Use the checklist and escalate unresolved hazards.
 - `width`: `narrow | wide | full | breakout`
 
 The tab strip and active panel share a neutral surface and continuous hairline boundary, so the
-selected tab remains visibly attached to its content without relying on color. The first tab label
-starts on the page content spine. Published tabs use manual activation: arrow keys move focus,
-and Enter or Space selects the focused tab.
+selected tab remains visibly attached to its content without relying on color. Tab labels have
+symmetric inline padding and an inset focus ring. Published tabs use manual activation: arrow
+keys move focus, and Enter or Space selects the focused tab. Horizontal tab lists scroll the
+focused tab fully into view; moving focus alone does not select a panel.
 
 Set `style: default|outline|pills` and `orientation: horizontal|vertical` on
 the first `as: tab` item to style the whole tab group. Defaults are `default` and
@@ -76,6 +81,8 @@ the first `as: tab` item to style the whole tab group. Defaults are `default` an
 ## columns
 
 Column layout. Each `as: col` starts a new column. Use `close: col` to end the column layout before following content on the same page.
+
+An `as: col` after `close: col` starts a new columns row, even when no other content separates the rows. Each row keeps its own columns and layout settings.
 
 **Syntax:**
 ```prax
@@ -96,12 +103,12 @@ weight: 1
 close: col
 ```
 
-Any content can go inside a column — headings, images, text, lists, even nested blocks.
+Columns accept headings, images, text, lists and nested blocks.
 
 **Parameters:**
 - `width`: `narrow | wide | full | breakout`
 
-Set the container’s `width` on the first `as: col`. Each `as: col` accepts `weight: <positive number>` as a relative proportion. For example, weights `2` and `1` allocate two thirds and one third of the available width after the gap. Omitted or invalid weights use `1`. Default columns and side-by-side comparisons share width equally. Columns stack in source order on narrow screens. Existing fractional proportions remain valid.
+Set the container’s `width` on the first `as: col`. Each `as: col` accepts `weight: <positive number>` as a relative proportion. For example, weights `2` and `1` allocate two thirds and one third of the available width after the gap. Omitted or invalid weights use `1`. Default columns and side-by-side comparisons share width equally. Columns stack in source order on narrow screens. Studio's PDF export keeps them side by side in their proportions. Existing fractional proportions remain valid.
 
 ## sequence
 
@@ -128,9 +135,9 @@ Take photos and complete the incident form.
 **Variants:**
 - `style`: `numbered | timeline | none`
 - `orientation`: `vertical | horizontal`
-- `alignment`: `left | center | right` — controls text alignment within steps.
-- `distribution`: `uniform | scaled` — controls spacing between steps.
-- `scrollable` (boolean) — whether the sequence is scrollable.
+- `alignment`: `left | center | right`, controls text alignment within steps.
+- `distribution`: `uniform | scaled`, controls spacing between steps.
+- `scrollable` (boolean), whether the sequence is scrollable.
 
 Bulleted and numbered lists inside steps keep their text aligned to the start of
 the reading direction, with hanging indents for wrapped lines. Step headings and
@@ -138,7 +145,7 @@ paragraphs retain the chosen alignment.
 
 ## comparison
 
-Comparison of two items — text or images.
+Comparison of two text or image items.
 
 Each item owns the blocks between its heading and the next item heading.
 Descriptions and media stay inside their respective columns. `close: comparison`
@@ -184,9 +191,19 @@ The `slider` layout renders an interactive drag handle that reveals the before/a
 **Variants:**
 - `layout`: `side-by-side | slider`
 
+Stored comparison image records accept `altText` or `alt` in preview and export.
+When both keys are present, `altText` takes precedence. Missing decorative flags
+continue to mean informative images that require a description.
+
 ## card
 
 Unified card container for static cards, carousels, and flip cards. Use `close: card` to mark the end of the group explicitly.
+
+Images on either card face use the same accessibility rules as images outside cards.
+Provide `alt:` for informative images or `decorative: true` for pictures that convey
+no information. Decorative pictures do not require alt text and do not block export.
+These rules also apply to images nested in tabs, accordions, sequences and columns.
+
 
 When a card container is opened from a heading, that heading is the card group title. It is rendered around the group, not inside an individual card face.
 
@@ -218,21 +235,47 @@ close: card
 ```
 
 **Parameters:**
-- `layout`: `grid | masonry | slides | rows` — card presentation mode.
-- `width`: `narrow | wide | full | breakout` — container width, independent of card presentation.
-- `media`: `inset | flush` — move the first front child before the item title when it is an image. Omit to keep existing child placement. `inset` pads the image; `flush` reaches the card edges. Captions travel with the image. Works in each layout and on flip-card fronts; back content is unchanged.
-- `columns` (number) — number of columns when `layout` is `grid` or `masonry`.
-- `headingLevel` (`2` to `6`). Sets the heading level for item labels in a standalone `as: card` group. The default is `3`.
+- `layout`: `grid | masonry | slides | rows`, card presentation mode.
+- `width`: `narrow | wide | full | breakout`, container width, independent of card presentation.
+- `media`: `inset | flush`, move the first front child before the item title when it is an image. Omit to keep existing child placement. `inset` pads the image; `flush` reaches the card edges. Captions travel with the image. Works in each layout and on flip-card fronts; back content is unchanged.
+- `columns` (number), number of columns when `layout` is `grid` or `masonry`.
+- `headingLevel` (`2` to `6`). Sets the heading level for item labels in a standalone `as: card` group. When omitted, the first item heading determines the level.
 - `headings` (boolean). Controls whether item labels participate in heading navigation. The default is `true`; use `false` for presentation-only or storytelling cards.
-- `style`: `none | outline | shaded | primary | secondary` — surface treatment across grid, masonry, single-card decks and flip faces. `none` removes surface chrome; `outline` is transparent with a border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Legacy `filled` aliases `shaded`; `accent` aliases `primary`. Old `filled`/`shaded`/`accent` plus `color: primary` or `color: secondary` is accepted and serialized as the corresponding named style.
-- `shadow`: `theme | none | subtle | elevated` — card depth treatment.
-- `advance` (number, seconds) — auto-advance interval for `layout: slides`; `0` = manual.
-- `transition`: `none | fade | slide | zoom` — transition style for `layout: slides`.
-- `showProgress` (boolean) — show pagination/progress controls in `layout: slides`.
-- `shuffle` (boolean) — randomize card item order.
-- `trackCompletion` (boolean) — track learner interaction/completion for `layout: slides` only.
+- `style`: `none | outline | shaded | primary | secondary`, surface treatment across grid, masonry, single-card decks and flip faces. `none` removes surface chrome; `outline` is transparent with a border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Legacy `filled` aliases `shaded`; `accent` aliases `primary`. Old `filled`/`shaded`/`accent` plus `color: primary` or `color: secondary` is accepted and serialized as the corresponding named style.
+- `shadow`: `theme | none | subtle | elevated`, card depth treatment.
+- `advance` (number, seconds), auto-advance interval for `layout: slides`; `0` = manual.
+- `transition`: `none | fade | slide | zoom`, transition style for `layout: slides`.
 
-Use `card: back` to mark the back face of an item. Content before `card: back` is the front face.
+  Fade, slide and zoom fade outgoing text out over 120ms, then fade incoming text in
+  over 180ms. Slide keeps its horizontal movement and zoom keeps its scale effect.
+  `none` and reduced motion show the active card immediately. The default remains
+  `fade`; existing authored transition values are unchanged.
+- `showProgress` (boolean), show pagination/progress controls in `layout: slides`.
+- `shuffle` (boolean), randomize card item order.
+- `trackCompletion` (boolean), track learner interaction/completion for `layout: slides` only.
+
+Compatibility: `as: flashcard` is an alias for `as: card`; either `close: flashcard` or `close: card` closes it. New content should use `card`.
+
+Use `card: back` to mark the back face of an item. Content before `card: back` is the front face. An item heading alone is a valid front face; no body text or separating blank line is required.
+
+In a standalone card group, omit `headingLevel` to let the first item heading set
+the item level. `card: back` ends parameter collection immediately, so this
+example needs no blank line between the heading and back marker:
+
+```prax
+as: card
+layout: slides
+
+## PPE
+card: back
+Personal protective equipment.
+
+## Hazard
+card: back
+A source of potential harm.
+
+close: card
+```
 
 Generated narration reads each card front and then its back as separate clips. With Follow
 narration enabled, playback and seeking reveal the exact card face, including in shuffled
