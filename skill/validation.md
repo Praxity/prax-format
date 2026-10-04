@@ -1,4 +1,4 @@
-# Validation — .prax Sub-Skill
+# Validation sub-skill
 
 ## Pre-output checklist
 

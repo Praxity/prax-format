@@ -15,7 +15,7 @@ as: choice
 points: 2
 
 (x) Stop work and isolate hazard
-feedback: Correct — isolating the hazard prevents further injury.
+feedback: Correct. Isolating the hazard prevents further injury.
 ( ) Keep working and monitor
 feedback: Monitoring alone does not remove the risk.
 ( ) Ask later
@@ -27,8 +27,8 @@ incorrect: Review the emergency response procedure before continuing.
 Per-option `feedback: <text>` lines go directly after each option, not indented. These are shown for the specific option the learner selected.
 
 Whole-question feedback lines go after all options (not after any individual option):
-- `correct: <text>` — shown when the learner answers the question correctly overall.
-- `incorrect: <text>` — shown when the learner answers incorrectly overall.
+- `correct: <text>`, shown when the learner answers the question correctly overall.
+- `incorrect: <text>`, shown when the learner answers incorrectly overall.
 
 Both `correct:`/`incorrect:` and per-option `feedback:` can be used together. They are stored as `data.correct` and `data.incorrect` on the block.
 
@@ -37,6 +37,10 @@ A whole-assessment `feedback: <text>` line is also accepted as a shared fallback
 ## choose-many
 
 Multi-answer question. Use square-bracket `[ ]` option markers.
+
+For both choice types, selecting an option's text, row padding, or empty space
+around its native control selects that option. Choice rows remain stationary
+while pressed so the same target receives pointer-down and pointer-up.
 
 **Syntax:**
 ```prax
@@ -53,6 +57,17 @@ feedback: Not a mandatory safety check.
 
 
 ### Scoring retries
+
+Standalone assessments reserve space for Check or Submit before interaction while
+keeping the existing rule for when that action becomes available. Choice questions
+reserve that space before JavaScript activates, without exposing an inactive action.
+Group members leave submission space to the shared group action. Empty feedback
+adds no gap before or after activation. After submission,
+the result appears before the attempt count and Try again. Submitted answers remain
+readable and cannot be edited, including matrix and likert selections. Try again
+re-enables the response and returns keyboard focus to its first enabled control.
+Inline-only fill-blank results focus a brief review summary above the retry action.
+These presentation changes do not alter authored syntax, scoring or attempt limits.
 
 The course score uses the latest submitted scored attempt for each question, not
 an average of that question's attempts. An incorrect attempt followed by a correct
@@ -128,6 +143,9 @@ as: order
 ```
 
 Ordering renders with accessible move-up and move-down controls rather than drag-only interaction.
+After a keyboard move, focus stays on the moved item's control. At either end, focus moves
+to that item's remaining move button. A polite announcement gives the new position without
+revealing whether the order is correct before submission.
 
 ## free-response
 
@@ -205,6 +223,75 @@ the activity is completion-only even when `scored: true`: it emits no score, is 
 assessment-group percentages and scored SCORM interactions, and the editor reports the scoring
 configuration as an authoring issue.
 
+### Dropdown blanks
+
+Use `style: dropdown` to give each blank its own choices. Prefix each correct
+choice with `*`; choices without `*` are distractors. Choices stay in authored
+order, so the correct answer need not be first. Mark more than one choice when
+several answers are accepted. Each blank needs at least two distinct choices
+and at least one marked answer.
+
+```prax
+### Complete the description
+as: fill-blank
+style: dropdown
+
+The sky is {red|*blue|green} and grass is {*green|purple|orange}.
+```
+
+### Shared word bank
+
+Use `style: word-bank` with a pipe-separated `bank:`. Each bank entry can be used
+once. Repeat an entry to make it available more than once. Include distractors
+in the bank without using them as blank answers.
+
+```prax
+### Complete the pattern
+as: fill-blank
+style: word-bank
+bank: red | blue | red | green
+
+The pattern is {red}, {blue}, then {red}.
+```
+
+The bank must contain enough copies of each primary answer, even if a blank
+also accepts alternatives such as `{blue|green}`. Every alternative must appear
+in the bank. Answers are literal, so `~` does not enable wildcard matching.
+These two styles do not support open `____` blanks. A choice that contains `|` or
+braces, or a dropdown choice that starts with `*`, needs the backslash escapes in
+[literal answer punctuation](#literal-answer-punctuation). A dropdown cannot have
+empty or duplicate choices.
+
+Author these styles and `bank:` on each question; course-wide block defaults do not set them.
+
+Both styles use native select controls. Clearing or changing a bank selection
+makes its previous entry available again. A word bank is selected from menus,
+not dragged. Submission, scoring, retry, answer reveal and saved progress follow
+the usual fill-blank rules. Without `style:`, or with `style: inline-inputs`,
+`{answer|alternative}` continues to mean accepted typed answers.
+
+### Literal answer punctuation
+
+A backslash makes the next delimiter character part of an answer or choice. Use it
+when an answer contains `|`, braces, or a leading `*`, `~` or `?` that should not act
+as syntax.
+
+- `{a\|b}` accepts the answer `a|b`.
+- `{\{value\}}` accepts `{value}`.
+- `{\~0.5}` accepts the literal answer `~0.5` instead of starting a wildcard pattern.
+- Inside a `~` pattern, `\*` and `\?` match a literal `*` or `?`: `{~a\*b}` accepts
+  only `a*b`. Unescaped `*` and `?` stay wildcards.
+- In a dropdown, `{*\*star|plain}` marks the choice `*star` correct. The first `*`
+  marks the answer; `\*` is part of the label. An escaped star on its own does not
+  mark a choice correct.
+- Word-bank entries use the same escapes: `bank: a\|b | \{value\} | C:\\temp`.
+
+Outside a blank, `\{literal\}` and `\____` print as text and create no blank.
+
+Answers and choices are plain text, so inline formatting does not apply to them.
+Dropdown and word-bank answers always match the exact choice, even one that starts
+with `~`.
+
 ## hotspot
 
 Image hotspot assessment.
@@ -219,9 +306,18 @@ spot: Valve; 30%; 15%
 spot: Release pin; 45%; 25%; correct
 ```
 
-Use `question:` for the learner-facing assessment title/stem. `alt:` is only the image alternative text.
+Use `question:` for the learner-facing assessment title/stem. `alt:` describes the image.
+Older hotspots without a question still work. Their response group uses the image
+description as its accessible name, and learner output omits the authoring placeholder
+"No question text". Required status and scoring stay the same. A meaningful image
+description remains necessary; this fallback does not supply missing alt text.
 
 The heading form every other assessment uses also works, with the image on the line after the params:
+
+Studio's hotspot starter uses this form with the question "Select the relevant areas
+on the image." Both this heading form and the saved image form with `question:` keep
+the question inside the assessment. The shared authored starter catalog is English;
+authors can replace its question and image description with their course language.
 
 ```prax
 ### Select the release pin.
@@ -239,13 +335,21 @@ spot: Release pin; 45%; 25%; correct
 
 ```prax
 spot: Label; x%; y%; correct
+spot: Valve; rect 10% 20% 30% 15%; correct
+spot: Gauge; ellipse 60% 40% 8% 5%
+spot: Panel; polygon 10% 10%, 40% 10%, 40% 30%, 10% 30%; correct
 ```
 
 - `Label` is the learner-visible hotspot label.
-- `x` and `y` are percentages across and down the image.
+- All coordinates and sizes are percentages of the displayed image. The `%` sign is optional.
+- The point form uses `x` across and `y` down the image. It draws the default circle.
+- `rect` takes left, top, width and height. `ellipse` takes centre x, centre y, radius x and radius y.
+- `polygon` takes at least three comma-separated `x y` vertices.
 - `correct` marks the spot as a correct selection.
 
-Authored `.prax` hotspot spots currently render as small elliptical click regions. Renderer-internal hotspot shapes, multi-select modes, custom indicators, and per-spot feedback are not yet exposed as public `.prax` syntax.
+Regions must use finite numbers, stay within the image and have positive dimensions. Polygons need at least three vertices and nonzero area. Studio warns and omits an invalid spot while keeping the other spots. Escape a semicolon inside a label as `\;`.
+
+Horizontal values are percentages of the image width and vertical values are percentages of its height, so equal radii make a circle only on a square image. Studio warns when a region's bounding width or height is under 8% of the image. For an ellipse, those dimensions are twice its radii. On a wide image, check that each region is still easy to select at a 320 pixel width. Multi-select modes, custom indicators and per-spot feedback are not yet exposed as public `.prax` syntax.
 
 ## rate
 
@@ -271,6 +375,7 @@ selected value and label. Rating is an unscored response; `required: true` requi
 an interaction before completion. `display: standard|scenario` has no effect on
 rating and is not offered in authoring suggestions. Legacy `numeric` and `emoji`
 styles remain supported.
+Add `feedback: <text>` before the scale lines to show feedback after the learner selects a rating. The feedback reappears when a saved rating is restored.
 
 ## matrix
 
@@ -309,9 +414,13 @@ as: matrix
 
 Consecutive `as: matrix` headings are also collapsed into one table-style matrix assessment.
 
+Matrix option columns reserve room for their longest words. Labels wrap between words without automatic hyphenation. The statement column yields width first, and a narrow screen scrolls the table within the assessment rather than the page.
+
 ## categorize
 
 Category sorting.
+
+Category option columns reserve room for their longest words. Labels wrap between words without automatic hyphenation. The item column yields width first, and a narrow screen scrolls the table within the assessment rather than the page.
 
 **Syntax:**
 ```prax
@@ -356,6 +465,8 @@ authored level so they remain inside their parent container.
 
 Group multiple assessments. Put `as: assessment-group` on a `#` heading when its title is the page's primary heading. For a group nested under a page title, use `##` or a deeper heading level and follow it with appropriately nested question headings in Prax source. In learner output, the group title remains a heading and each question stem renders as a bold paragraph labelled to its response controls. Ordinary headings do not end the group. Use `close: assessment-group` before following content on the same page; a page break or the end of the file also closes it.
 
+Content after a closed group uses the same [block spacing](frontmatter-design.md#spacing-and-layout) as content after an ordinary assessment. This applies to standard pages, module decks, and Studio previews. The group's header, questions, and submit footer keep their shared border without added gaps inside the group.
+
 **Syntax:**
 ```prax
 ## Final Checkpoint
@@ -373,7 +484,10 @@ as: choice
 close: assessment-group
 ```
 
-**`mode: oneOf`** allows assessment choice — the learner selects one question to answer. For example, in a group of 5 questions with `mode: oneOf`, the learner can choose any single question to answer.
+**`mode: oneOf`** allows assessment choice. The learner selects one question to answer. For example, in a group of 5 questions with `mode: oneOf`, the learner can choose any single question to answer.
+
+The question chooser's radio rows also remain stationary while pressed, and
+selecting their label or row padding chooses the question.
 
 Note: `passingScore:` is the correct parameter name (not `passing:`).
 
@@ -381,11 +495,11 @@ Note: `passingScore:` is the correct parameter name (not `passing:`).
 
 | Parameter | Type | Description |
 |---|---|---|
-| `mode` | `all \| oneOf` | `all` (default): learner must answer every question. `oneOf`: learner chooses which to answer. |
+| `mode` | `all \| oneOf` | `all` is the default. The group finishes when every required member completes; when none is required, every member must complete. `oneOf` uses only the learner's selected question. |
 | `passingScore` | number | Minimum score (0–100) to pass the group. |
-| `showResultsSummary` | boolean | Show a results summary after all questions are answered. |
+| `showResultsSummary` | boolean | Show a results summary after the required members submit, or all members if none is required. In `oneOf`, show the selected question's result. Defaults to `true`. |
 | `pointsOverride` | number | Override total point value for the group (instead of summing individual question points). |
-| `requireAll` | boolean | Whether all questions must be attempted before submitting. |
+| `requireAll` | boolean | Whether all questions must be answered before the group action runs. Defaults to `false` for every group. Set to `true` to require all answers first. |
 | `buttonLabel` | text | Override the visible group action text. |
 | `deckGate` | `attempt \| pass` | In Studio module decks, release the next slide after group submission or a passing group result. See [module deck settings](module-deck.md#longer-assessments-and-surveys). |
 
@@ -395,10 +509,22 @@ The group's `width` (`narrow`, `wide`, `full`, or `breakout`) sets one width for
 
 Group progress counts the same committed question results that mark each member complete. After the required
 members have submitted, the localized result is announced. The group action remains
-available while a member can retry, and is removed once members finish. In
+available while any member is unanswered or can retry, even after the group finishes.
+It is removed once every member finishes. In
 `mode: all`, ungraded groups default to **Check all** and graded groups to **Submit all**.
 In `mode: oneOf`, only the selected member is shown, submitted, and counted toward the result;
 the defaults are **Check selected** and **Submit selected**.
+
+In a graded `mode: all` group, the score averages answered graded questions and unanswered
+required graded questions. An unanswered required question counts as zero. An unanswered
+optional question does not affect the score. When every question is required, the score
+still averages every graded question. The group action leaves unanswered optional questions
+untouched so the learner can submit them later.
+If no question is required, the group waits for every answer before reporting a score.
+
+The "Questions completed" counter appears when a group contains a scored or automatically checked question. A choice question with no correct option is a survey, so it does not show the counter on its own. A group containing only open responses has no counter. In an ungraded `mode: all` group, the learner can use the group action with some answers still empty. Answered items save separately and return on resume, including from SCORM suspend data. The group finishes when every required member is complete. If no member is required, all members must complete as before. Set `requireAll: true` to require all answers before the action runs.
+
+When at least two text responses in any group set `downloadAs`, the learner sees one group download control. It offers the configured TXT and DOCX formats and puts each full downloadable prompt before its answer in authored order. The individual download controls are hidden. A group with one downloadable response keeps that response's controls. Graded groups still show the completion counter. Downloads stay available after the group is complete.
 
 Published assessments and learner activities use one neutral surface with a 1px semantic border.
 This activity material is distinct from tinted callouts and unfilled quotes and applies to
@@ -406,7 +532,7 @@ standalone questions, grouped assessments, checklists, ratings, and signatures.
 
 ## Shared scoring parameters
 
-These parameters are available on all assessment types except ratings (`as: rating`), which accept only `required`:
+Ratings (`as: rating`) use only `required` from this table. They also accept `feedback:` as described above.
 
 | Parameter | Type | Description |
 |---|---|---|
@@ -426,7 +552,7 @@ Decorator parameters add metadata for learning analytics and adaptive behavior:
 
 | Parameter | Type | Description |
 |---|---|---|
-| `scored` | boolean | Whether this assessment contributes to the overall course score. Default: `true` for assessments inside an assessment-group. |
+| `scored` | boolean | Whether this assessment contributes to the overall course score. Defaults to `false`, including inside an assessment-group. Set `true` on each scored member. |
 | `competency` | text | Competency tag or identifier this question maps to (e.g. `"fire-safety"`). **Not applied yet:** Studio does not send it in xAPI statements. |
 | `confidence` | boolean | Intended to enable confidence-based marking. **Not applied yet:** Studio shows no confidence prompt. |
 | `retrieval` | boolean | Marks this as a retrieval practice question. **Not applied yet:** it does not affect analytics. |
@@ -445,5 +571,5 @@ Decorator parameters add metadata for learning analytics and adaptive behavior:
 - hotspot: `click-regions` implemented.
 - rating: `likert`, `stars`, and `slider` implemented.
 - matrix: `likert` implemented.
-- fill-blank: `inline-inputs` implemented.
+- fill-blank: `inline-inputs`, `dropdown`, and `word-bank` implemented. `bank:` supplies the shared word bank.
 - assessment-group mode: `all | oneOf`.

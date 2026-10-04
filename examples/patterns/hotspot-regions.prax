@@ -1,0 +1,15 @@
+---
+title: Equipment controls
+lang: en
+---
+
+## Find the control
+
+### Select the valve.
+as: hotspot
+
+/assets/equipment-controls.png
+alt: Equipment controls with a valve, gauge and panel
+spot: Valve; rect 10% 20% 30% 15%; correct
+spot: Gauge; ellipse 60% 40% 8% 5%
+spot: Panel; polygon 10% 60%, 40% 60%, 40% 80%, 10% 80%

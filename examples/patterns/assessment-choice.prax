@@ -1,5 +1,5 @@
 ---
-title: Hazard Control Knowledge Check — Your Choice
+title: Hazard control knowledge check, your choice
 description: Assessment group with mode oneOf, giving learners agency over which question they answer. Use this when your audience has varied roles and no single question type fits everyone.
 lang: en
 design:
@@ -10,9 +10,9 @@ design:
 
 ## Knowledge Check
 
-This assessment gives you a choice. Three questions are shown below — you answer **one**. Choose the question that best matches your role and experience. All three questions address the same core competency: selecting appropriate controls for a given hazard.
+Choose one of the three questions below to match your role and experience. Each question asks you to select controls for a hazard.
 
-There is no penalty for which question you choose. This is about demonstrating your understanding in a way that makes sense for your work context.
+Your question choice carries no penalty.
 
 ## Hazard Control Assessment
 as: assessment-group
@@ -20,7 +20,7 @@ mode: oneOf
 showResultsSummary: true
 passingScore: 70
 
-### For field workers — Which control should be applied first?
+### For field workers, which control should you apply first?
 as: choice
 points: 10
 required: true
@@ -28,18 +28,18 @@ shuffle: true
 description: A spill of cleaning solvent has occurred near an electrical panel. Select the most appropriate first control.
 
 (x) Shut off the electrical panel and ventilate the area before cleanup
-feedback: Correct — eliminate the ignition source and reduce vapour concentration before anyone enters.
+feedback: Correct. Eliminate the ignition source and reduce vapour concentration before anyone enters.
 ( ) Provide the cleanup crew with gloves and a face shield, then proceed
 feedback: PPE is a last-resort control, not a first response when an ignition source is present.
 ( ) Post a warning sign and schedule cleanup for after-hours
 feedback: Deferring cleanup increases exposure time and does not address the electrical risk.
 ( ) Notify the supervisor and wait for instructions before taking any action
-feedback: Some immediate actions — like shutting off the panel — should not wait for supervisor confirmation when the risk is clear.
+feedback: Shut off the panel before seeking supervisor confirmation when the risk is clear.
 
 correct: Well done. Eliminating the ignition source before cleanup is the correct application of the hierarchy of controls.
-incorrect: Review the hierarchy of controls — elimination and engineering controls come before PPE.
+incorrect: Review the hierarchy of controls. Elimination and engineering controls come before PPE.
 
-### For supervisors — Describe your approach to a recurring near miss
+### For supervisors, describe your approach to a recurring near miss
 as: free-response
 points: 10
 required: true
@@ -48,7 +48,7 @@ Your team has logged three near misses in the loading dock over the past month, 
 
 Include the type of control you would prioritize and why, and how you would confirm the control is working over time.
 
-### For safety coordinators — Complete the investigation record
+### For safety coordinators, complete the investigation record
 as: fill-blank
 points: 10
 

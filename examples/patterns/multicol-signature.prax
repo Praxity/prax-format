@@ -1,6 +1,6 @@
 ---
 title: Module Completion and Signoff
-description: Two-column completion page — left summarises what was covered, right captures the learner's signature. Use this pattern for compliance training that requires a record of acknowledgement.
+description: Two-column completion page. The left column summarises what the course covered; the right column captures the learner's signature. Use this pattern for compliance training that requires a record of acknowledgement.
 lang: en
 design:
   palette: campfire
@@ -19,7 +19,7 @@ as: col
 ### What You Covered
 
 - Identifying physical, chemical, and procedural hazards in your work zone
-- Applying the hierarchy of controls — elimination through PPE
+- Applying the hierarchy of controls, elimination through PPE
 - Reporting incidents and near misses within the required timeframe
 - Exercising your right to refuse unsafe work
 - Locating first-aid stations, emergency contacts, and PPE supply points

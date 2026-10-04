@@ -1,4 +1,4 @@
-# Course Manifest (`course.yaml`)
+# Course manifest (`course.yaml`)
 
 A `.prax` course can be a single file or a multi-file project. Multi-file courses use a `course.yaml` manifest to define lesson order, course metadata, and design overrides.
 
@@ -26,6 +26,13 @@ locale: en
 theme: brand-theme
 narrationEnabled: true
 
+cast:
+  alex:
+    name: Alex
+    avatar: assets/alex.png
+    voice: v1
+    side: start
+
 lessons:
   - intro.prax
   - hazards.prax
@@ -44,11 +51,12 @@ design:
 |-------|------|----------|---------|-------------|
 | `title` | string | yes | `""` | Course title |
 | `id` | string | no | Studio-generated | Stable, non-sensitive course identity used for learner state. Preserve it after Studio adds it. |
-| `description` | string | no | — | Course description |
+| `description` | string | no | | Course description |
 | `locale` | string | no | inherited | Default locale (`en`, `fr`, etc.) |
-| `theme` | string | no | — | Theme name from `shared/themes/` or built-in |
+| `theme` | string | no | | Theme name from `shared/themes/` or built-in |
 | `moduleDeck` | boolean | no | `false` | Studio module-deck playback; set in Design. See [module-deck.md](module-deck.md). |
 | `narrationEnabled` | boolean | no | `false` | Enables block-level narration unless a lesson overrides it |
+| `cast` | object | no | `{}` | Shared dialogue speakers keyed by identifier. See [course cast](#course-cast). |
 | `lessons` | string[] | recommended | auto-discovered | Ordered list of `.prax` lesson filenames. Omitted or empty lists discover files alphabetically. |
 | `design` | object | no | `{}` | Design overrides (same keys as frontmatter `design:`) |
 
@@ -60,7 +68,7 @@ The `lessons` array is the canonical lesson order. It determines:
 - File tree display order in the editor
 - Export assembly order
 
-Each entry is a filename (not a path) — all lesson files live in the same folder as `course.yaml`.
+Each entry names a file in the same folder as `course.yaml`.
 
 Full-course HTML and SCORM exports list every lesson in this order. Each lesson link
 uses that file's frontmatter `title` and opens its first page. Only the current lesson
@@ -91,6 +99,23 @@ Studio usage and YAML placement are explained in [Studio Help](https://praxity.i
 
 The `design` object accepts the same keys as lesson frontmatter `design:`. See [frontmatter-design.md](frontmatter-design.md) for all options. Course-level design applies to every lesson unless a lesson's own frontmatter overrides it.
 
+### Course cast
+
+Use `cast` to share speakers across lessons. Each key starts with a letter and
+contains only letters, digits, `_`, or `-`. Studio matches keys without regard to
+case. Each speaker needs a nonempty `name`; `avatar`, `voice`, and `side` are optional.
+An avatar must point to a project asset. Remote avatar URLs produce a warning.
+`side` accepts `start` or `end`; invalid sides produce a warning and Studio ignores them.
+
+A dialogue's local `speaker:` declaration overrides only the cast fields it sets.
+Use local `avatar: none` to hide an inherited portrait. Without an authored side,
+the first speaker uses start and other speakers use end. An undeclared speaker
+produces a warning and displays its key as the name. Studio preserves invalid
+cast entries in the manifest so authors can correct them.
+
+See [dialogue syntax](blocks-content.md#dialogue) for turns and local declarations,
+and [CLI course cast](../cli.md#course-cast) for a complete YAML example.
+
 ## Settings inheritance
 
 Settings cascade from workspace to course to lesson:
@@ -100,10 +125,15 @@ workspace.praxity.yaml  (defaultTheme, defaultLocale)
   | overridden by
 course.yaml             (theme, locale, design)
   | overridden by
-lesson frontmatter      (design overrides)
+lesson frontmatter      (lang, design overrides)
 ```
 
 A lesson's frontmatter `design:` block takes highest precedence. The nested `deck` options merge per key. If absent, the course-level `design:` from `course.yaml` applies. If that's also absent, workspace defaults apply.
+
+For language, lesson `lang` overrides course `locale`, which overrides workspace
+`defaultLocale`. Studio uses `en` when all three are absent. Each lesson's language
+applies to its published pages and learner controls. See
+[lesson language](document-structure.md#frontmatter).
 
 `course.yaml` may enable narration for the course with `narrationEnabled`. Lesson enablement,
 generation defaults, scripts, anchors, and assets live in the Studio-managed `narration.yaml`
@@ -155,12 +185,12 @@ Lesson `kicker:` text is excluded from the multi-file course outline. Include a 
 as `Module 1:` in the lesson `title:` when wanted. Single-lesson exports retain their flat
 page outline and existing kicker treatment.
 
-`# H1` headings are content headings in multi-file courses — they do not define lesson boundaries (each file is already one lesson).
+Each file defines one lesson. `# H1` creates a content heading within that lesson.
 
 ## Standalone course (no workspace)
 
-A course folder works without a parent `workspace.praxity.yaml`. The user opens the course folder directly. Workspace-level defaults (`defaultTheme`, `defaultLocale`) are unavailable — set them in `course.yaml` instead.
+A course folder works without a parent `workspace.praxity.yaml`. The user opens the course folder directly. Set `theme` and `locale` in `course.yaml` when workspace defaults are unavailable.
 
 ## Single-file courses
 
-A single `.prax` file without a `course.yaml` is still valid. Pages are separated by `---` breaks. `# H1` headings can be used as structural titles but do not create formal lesson boundaries — the entire file is treated as one course. No manifest needed. This is the simpler model for quick courses.
+A single `.prax` file without a `course.yaml` is still valid. Pages are separated by `---` breaks. Use `# H1` for a content title. Studio treats the entire file as one course. No manifest needed. This is the simpler model for quick courses.

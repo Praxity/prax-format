@@ -1,0 +1,27 @@
+---
+title: Safety check with a Continue reason
+lang: en
+---
+
+# Before you continue
+
+Submit a correct answer to unlock the next page.
+
+### Which action comes first when you find a hazard?
+as: choice
+name: safetyCheck
+scored: true
+required: true
+attempts: 0
+
+(x) Stop work and isolate the hazard
+( ) Continue working until the next break
+
+if: block:safetyCheck.result isNot "correct"
+then: disableCompletion because "Submit a correct answer before continuing."
+
+--- Next steps
+
+# Report the hazard
+
+Tell your supervisor what you found and which control you applied.

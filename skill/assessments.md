@@ -1,4 +1,4 @@
-# Assessments — .prax Sub-Skill
+# Assessments sub-skill
 
 ## Assessment syntax overview
 
@@ -17,18 +17,18 @@ Key rules:
 - Use `as: choice` for both choose-one and choose-many. The parser dispatches on marker type, not a separate `as:` value.
 - Choose-one markers use parentheses: `(x)` and `( )`.
 - Choose-many markers use brackets: `[x]` and `[ ]`.
-- The manifest keyword for the rating block is `rate`, but the parser `as:` value is `rating` — not `rate`.
-- Feedback for an option is written on the next line with `feedback: <text>` — flush to the left margin, not indented.
+- The manifest keyword for the rating block is `rate`, but the parser accepts `as: rating`.
+- Write an option's feedback on the next line as `feedback: <text>`, flush to the left margin.
 - Block-level feedback (correct/incorrect) uses `correct: <text>` and `incorrect: <text>` on their own lines.
 
-## as: choice — dispatching
+## Choice dispatch
 
 Both choose-one and choose-many use `as: choice`. The parser determines the question type from the first option marker it encounters:
 
 - If the first marker is `(x)` or `( )` → single-choice (choose-one)
 - If the first marker is `[x]` or `[ ]` → multiple-choice (choose-many)
 
-Do **not** use `as: choose-one` or `as: choose-many` — these values are not accepted by the parser.
+Use `as: choice`; the parser rejects `as: choose-one` and `as: choose-many`.
 
 ## Shared assessment parameters
 
@@ -37,17 +37,17 @@ These parameters are available across all assessment blocks.
 | Parameter | Type | Default | Description |
 |---|---|---|---|
 | `scored` | boolean | false | Marks block for scoring/tracking |
-| `competency` | text | — | Competency tag for reporting *(not applied yet)* |
+| `competency` | text | | Competency tag for reporting *(not applied yet)* |
 | `confidence` | boolean | false | Captures learner confidence *(not applied yet)* |
 | `retrieval` | boolean | false | Tags block as retrieval practice *(not applied yet)* |
-| `feedback` | enum/text | — | Feedback mode or global message |
-| `description` | text | omitted | Supporting context shown between the question and response controls |
+| `feedback` | enum/text | | Feedback mode or global message |
+| `description` | text | | Supporting context shown between the question and response controls |
 | `display` | enum | `standard`, `scenario` | `scenario` keeps longer context visually attached to a concise question |
-| `points` | number | — | Points awarded for correct answer |
+| `points` | number | | Points awarded for correct answer |
 | `required` | boolean | false | Must be completed before continuing |
-| `timed` | number | — | Time budget in seconds *(not applied yet)* |
-| `attempts` | number | — | Maximum attempts allowed |
-| `width` | enum | — | `narrow`, `wide`, `full`, `breakout` |
+| `timed` | number | | Time budget in seconds *(not applied yet)* |
+| `attempts` | number | | Maximum attempts allowed |
+| `width` | enum | | `narrow`, `wide`, `full`, `breakout` |
 
 > **Not applied yet.** `competency`, `confidence`, `retrieval` and `timed` parse and
 > validate, so a course using them stays valid, but nothing reads them and they make
@@ -117,10 +117,10 @@ incorrect: Review the emergency spill response procedure.
 |---|---|---|---|
 | `scored` | boolean | true / false | false |
 | `shuffle` | boolean | true / false | false |
-| `points` | number | any positive number | — |
+| `points` | number | any positive number | |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
+| `timed` | number | seconds | |
+| `attempts` | number | integer | |
 | `style` | enum | `radio` | radio |
 
 Planned style variants: `card-select`, `image-select`, `inline-dropdown`.
@@ -152,10 +152,10 @@ feedback: Exits must always be unobstructed.
 |---|---|---|---|
 | `scored` | boolean | true / false | false |
 | `shuffle` | boolean | true / false | false |
-| `points` | number | any positive number | — |
+| `points` | number | any positive number | |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
+| `timed` | number | seconds | |
+| `attempts` | number | integer | |
 | `style` | enum | `checkbox` | checkbox |
 
 Planned style variants: `grid`, `tag-picker`.
@@ -183,10 +183,10 @@ Noise exposure :: Hearing protection
 |---|---|---|---|
 | `scored` | boolean | true / false | false |
 | `shuffle` | boolean | true / false | false |
-| `points` | number | any positive number | — |
+| `points` | number | any positive number | |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
+| `timed` | number | seconds | |
+| `attempts` | number | integer | |
 | `style` | enum | `select-dropdowns` | select-dropdowns |
 
 Matching renders as labelled native select controls; the browser owns keyboard interaction, popup
@@ -215,10 +215,10 @@ shuffle: true
 |---|---|---|---|
 | `scored` | boolean | true / false | false |
 | `shuffle` | boolean | true / false | false |
-| `points` | number | any positive number | — |
+| `points` | number | any positive number | |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
+| `timed` | number | seconds | |
+| `attempts` | number | integer | |
 | `style` | enum | `up-down-arrows` | up-down-arrows |
 
 Ordering renders with accessible move-up and move-down controls. Planned style variant: `numbered-input`.
@@ -249,14 +249,14 @@ learner writes.
 | Parameter | Type | Valid values | Default |
 |---|---|---|---|
 | `scored` | boolean | true / false | false |
-| `points` | number | any positive number | — |
+| `points` | number | any positive number | |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
-| `description` | text | visible supporting instructions | — |
+| `timed` | number | seconds | |
+| `attempts` | number | integer | |
+| `description` | text | visible supporting instructions | |
 | `placeholder` | text | brief input hint | Type your answer |
 | `buttonLabel` | text | visible action text | Complete reflection (ungraded), Submit (graded) |
-| `downloadAs` | enum | `txt` \| `docx` \| `both` | — |
+| `downloadAs` | enum | `txt` \| `docx` \| `both` | |
 | `private` | boolean | true / false | false |
 | `style` | enum | `textarea` | textarea |
 
@@ -281,7 +281,7 @@ Before entering the lab, verify {ventilation} and review the {procedure} sheet.
 Workers must wear {gloves} and {eye protection} at all times.
 ```
 
-Note: Use `{word}` — single braces — not double braces or angle brackets.
+Use single braces for an answer blank, such as `{word}`.
 Use `____` when the author intentionally does not supply a correct answer. The surrounding
 sentence is rendered with bottom-rule inputs inline. Known answers size the field to the
 expected answer length (clamped to 8–32 characters); open blanks use a 12-character default.
@@ -302,17 +302,25 @@ flagged by the editor as an authoring issue.
 | Parameter | Type | Valid values | Default |
 |---|---|---|---|
 | `scored` | boolean | true / false | false |
-| `points` | number | any positive number | — |
+| `points` | number | any positive number | |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
-| `style` | enum | `inline-inputs` | inline-inputs |
+| `timed` | number | seconds | |
+| `attempts` | number | integer | |
+| `style` | enum | `inline-inputs`, `dropdown`, `word-bank` | inline-inputs |
+| `bank` | text | pipe-separated words for `word-bank` | |
 
-Planned style variants: `word-bank`, `dropdown`.
+For `style: dropdown`, write each blank as `{red|*blue|green}`. Mark each accepted
+choice with `*`. Learners see the choices in the order you write them. For
+`style: word-bank`, keep `{answer}` blanks and add `bank: red | blue | red | green`.
+Learners can use each entry once, so repeat a word to allow it twice. The bank must
+hold every primary answer and every accepted alternative. Both styles use native
+select menus and the usual scoring, retry and reveal behaviour. Use literal answers,
+give each dropdown at least two distinct choices, and leave out open `____` blanks.
+See [selection syntax](../reference/blocks-assessments.md#dropdown-blanks).
 
 ## hotspot
 
-Use an image path followed by `as: hotspot` and repeated `spot:` params. Each spot is `label; x%; y%; [correct]`.
+Use an image path followed by `as: hotspot` and repeated `spot:` params. A point spot uses `label; x%; y%; [correct]` and draws the default circle. Coordinates and sizes are percentages of the image. The `%` sign is optional.
 
 ```prax
 /assets/extinguisher-diagram.png
@@ -321,35 +329,40 @@ question: Select the pull pin.
 alt: Extinguisher diagram with labeled parts
 scored: true
 points: 4
-
 spot: Pressure gauge; 28%; 18%
 spot: Pull pin; 42%; 25%; correct
 spot: Discharge horn; 65%; 40%
+spot: Valve; rect 10% 20% 30% 15%; correct
+spot: Gauge; ellipse 60% 40% 8% 5%
+spot: Panel; polygon 10% 10%, 40% 10%, 40% 30%, 10% 30%; correct
 ```
+
+`rect` uses left, top, width and height. `ellipse` uses centre x, centre y, radius x and radius y. Horizontal values are percentages of the image width and vertical values are percentages of its height, so equal radii make a circle only on a square image. `polygon` uses at least three comma-separated `x y` vertices. Regions must stay within the image and have positive dimensions. Studio warns when a region is under 8% of the image width or height. On a wide image, check that each region is still easy to select at a 320 pixel width.
 
 ### hotspot parameters
 
 | Parameter | Type | Valid values | Default |
 |---|---|---|---|
-| `question` | string | learner-facing prompt | — |
-| `alt` | string | descriptive text | — |
+| `question` | string | learner-facing prompt | |
+| `alt` | string | descriptive text | |
 | `scored` | boolean | true / false | false |
-| `points` | number | any positive number | — |
+| `points` | number | any positive number | |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
+| `timed` | number | seconds | |
+| `attempts` | number | integer | |
 | `style` | enum | `click-regions` | click-regions |
 
 Planned style variants: `labeled-diagram`, `description-list`.
 
 ## rate (as: rating)
 
-Manifest keyword: `rate`. Parser `as:` value: `rating` — **not** `rate`. Use numbered scale lines in `N: label` format.
+The manifest keyword is `rate`. Use `as: rating` in source. Use numbered scale lines in `N: label` format.
 
 ```prax
 ### How confident are you with incident reporting?
 as: rating
 required: true
+feedback: Review your rating before continuing.
 
 1: Not confident
 2: Somewhat confident
@@ -358,7 +371,7 @@ required: true
 5: Expert
 ```
 
-Common mistake: writing `as: rate` — the parser only accepts `as: rating`.
+The parser accepts `as: rating` and rejects `as: rate`.
 
 ### rating parameters
 
@@ -366,9 +379,11 @@ Common mistake: writing `as: rate` — the parser only accepts `as: rating`.
 |---|---|---|---|
 | `required` | boolean | true / false | false |
 | `style` | enum | `likert`, `stars`, `slider` | likert |
+| `feedback` | text | Authored feedback shown after a rating is selected | |
 
 Rating collects a scale response; scoring/attempt controls from knowledge checks
 are not rating settings.
+Place `feedback: <text>` before the numbered scale lines. Saved ratings show the feedback again when restored.
 
 ## matrix
 
@@ -436,10 +451,10 @@ Hand Protection:
 |---|---|---|---|
 | `scored` | boolean | true / false | false |
 | `shuffle` | boolean | true / false | false |
-| `points` | number | any positive number | — |
+| `points` | number | any positive number | |
 | `required` | boolean | true / false | false |
-| `timed` | number | seconds | — |
-| `attempts` | number | integer | — |
+| `timed` | number | seconds | |
+| `attempts` | number | integer | |
 
 ## assessment-group
 
@@ -484,17 +499,30 @@ close: assessment-group
 | Parameter | Type | Valid values | Default |
 |---|---|---|---|
 | `mode` | enum | `all`, `oneOf` | all |
-| `showResultsSummary` | boolean | true / false | false |
-| `pointsOverride` | number | any positive number | — |
-| `passingScore` | number | 0–100 | — |
+| `showResultsSummary` | boolean | true / false | true |
+| `pointsOverride` | number | any positive number | |
+| `passingScore` | number | 0–100 | |
 | `requireAll` | boolean | true / false | false |
 | `buttonLabel` | text | visible action text | Check all (ungraded), Submit all (graded) |
-| `width` | enum | `narrow`, `wide`, `full`, `breakout` | — |
+| `width` | enum | `narrow`, `wide`, `full`, `breakout` | |
 
 Note: The parameter is `passingScore`, not `passing` or `pass-score`.
 
-Group progress counts committed member completions. When every member is complete, the group action
-is removed and the localized result is announced.
+In `mode: all`, the group finishes when every required member completes. If no
+member is required, every member must complete. The default `requireAll: false`
+allows partial submission, so an ungraded reflection group can save answered
+items while others remain empty. Set `requireAll: true` to require all answers
+before the group action runs. `mode: oneOf` submits and counts only the selected
+question. Set `scored: true` on each member that should contribute a score;
+group membership does not enable scoring.
+
+Group progress counts committed member completions. Studio shows and announces
+results after the required members submit, or all members if none is required.
+A retryable incorrect answer can show a result before the member completes.
+The group action stays available while members remain
+unanswered or can retry, and disappears after every member finishes. See the
+[assessment-group reference](../reference/blocks-assessments.md#assessment-group)
+for optional-member scoring and response downloads.
 
 ## Feedback patterns
 

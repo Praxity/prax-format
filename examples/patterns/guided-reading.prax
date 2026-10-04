@@ -1,6 +1,6 @@
 ---
 title: Working Safely at Heights
-description: Guided reading pattern — teaching content interleaved with inline knowledge checks across three pages. Use this when learners need to absorb a concept before being tested on it, not after.
+description: Guided reading pattern with teaching content interleaved with inline knowledge checks across three pages. Use this when learners need to absorb a concept before being tested on it, not after.
 lang: en
 design:
   palette: standard
@@ -12,7 +12,7 @@ design:
 
 ## Fall Prevention Fundamentals
 
-Falls from height remain one of the leading causes of serious injury in industrial and construction workplaces. Understanding when controls are required — and which controls to apply — is the first line of defence.
+Falls from height remain one of the leading causes of serious injury in industrial and construction workplaces. Choose controls for the task before starting work.
 
 /assets/fall-hazard-zones.png
 alt: Diagram of a warehouse showing fall hazard zones at elevated platforms and open floor edges
@@ -31,9 +31,9 @@ style: outline
 
 Use the hierarchy of controls to choose the most effective protection:
 
-1. **Elimination** — redesign the task so work at height is not required.
-2. **Passive protection** — guardrails, safety nets, covers over openings.
-3. **Active protection** — [personal fall arrest systems]{A harness, lanyard, and anchor point that stop a fall already in progress rather than preventing it.} (PFAS) with harness, lanyard, and anchor point.
+1. **Elimination**, redesign the task so work at height is not required.
+2. **Passive protection**, guardrails, safety nets, covers over openings.
+3. **Active protection**, [personal fall arrest systems]{A harness, lanyard, and anchor point that stop a fall already in progress rather than preventing it.} (PFAS) with harness, lanyard, and anchor point.
 
 Passive protection is always preferred over active protection because it works without any action from the worker.
 
@@ -55,7 +55,7 @@ feedback: Correct. The standard threshold is 1.5 metres for most work surfaces.
 ( ) Only on rooftops
 feedback: Fall protection applies to any elevated work surface, not only rooftops.
 
-correct: Correct. The 1.5-metre threshold is the baseline requirement — always check your site standard, which may be more stringent.
+correct: Correct. The 1.5-metre threshold is the baseline requirement. Always check your site standard, which may be more stringent.
 incorrect: The standard threshold is 1.5 metres above a lower level. Review the regulations for your jurisdiction before proceeding.
 
 ---
@@ -70,7 +70,7 @@ A personal fall arrest system (PFAS) has three components that must all be prese
 as: sequence
 style: numbered
 
-The fixed attachment point — rated to hold a minimum of 22 kN (5,000 lbs) per attached worker. Select an anchor above the work position whenever possible to reduce free-fall distance.
+The fixed attachment point must hold a minimum of 22 kN (5,000 lbs) per attached worker. Select an anchor above the work position whenever possible to reduce free-fall distance.
 
 ### Body harness
 
@@ -78,7 +78,7 @@ A full-body harness distributes arrest forces across the thighs, pelvis, chest, 
 
 ### Connecting subsystem
 
-The lanyard, self-retracting lifeline (SRL), or energy absorber that connects the harness to the anchor. Maximum allowable free-fall is 1.8 metres. Always calculate total fall clearance — harness height, lanyard extension, deceleration distance, and safety margin — before beginning work.
+The lanyard, self-retracting lifeline (SRL), or energy absorber that connects the harness to the anchor. Maximum allowable free-fall is 1.8 metres. Before beginning work, calculate total fall clearance using harness height, lanyard extension, deceleration distance and safety margin.
 
 close: sequence
 
@@ -122,14 +122,14 @@ feedback: Eye protection is separate PPE, not a fall arrest component.
 
 ## Summary and Reflection
 
-Fall protection requires both the right equipment and the right decisions. The regulations set a floor — but professional judgment and site conditions often demand more.
+Fall protection requires both the right equipment and the right decisions. Professional judgment and site conditions may demand more than the regulations require.
 
 ### Key takeaways
 
 - Fall protection is required at 1.5 metres or above any hazardous surface.
 - Choose passive protection (guardrails, covers) over active protection (PFAS) wherever possible.
 - A PFAS has three components: anchorage, harness, and connecting subsystem. All three must be inspected before each use.
-- A deployed energy absorber means the system has been in a fall — retire it immediately.
+- A deployed energy absorber means the system has been in a fall. Retire it immediately.
 
 --
 

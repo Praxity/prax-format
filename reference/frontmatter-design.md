@@ -218,14 +218,14 @@ The `slides` preset keeps previous/next controls beside its progress dots and le
 edge arrows; swipe and keyboard paging remain independently configurable.
 
 > **Arrow keys cannot be the last one off.** If a page ends up with no visible way to
-> change page — no outline, prev/next, edge arrows, hamburger or floating ToC — then
+> change page, with no outline, prev/next, edge arrows, hamburger or floating ToC, then
 > `navKeyboardArrows: false` is ignored and arrow navigation stays on. Swipe is the only
 > thing left otherwise, which no keyboard user and no mouse user can perform (2.1.1
 > Keyboard; 2.5.7 Dragging Movements). Every other toggle is honoured as written, and the
 > repair adds nothing visible.
 
 - `showA11yPill` (boolean)
-- `glossaryPage` (boolean, default `true`) — publish the aggregated glossary page built from `[term]{definition}` tooltips
+- `glossaryPage` (boolean, default `true`), publish the aggregated glossary page built from `[term]{definition}` tooltips
 
 Published Reading settings contain Larger text and a Reading guide. Larger text is a convenience
 for environments where browser zoom does not persist; it returns to the course default from the
@@ -243,7 +243,9 @@ platform through `prefers-contrast` and `forced-colors`; there is no course-leve
 
 `dividerStyle` inserts decorative separators before subsequent H2 sections within
 a page, including pages with uniform colours. `none` removes them. With alternate
-or manually assigned section palettes, separators mark the palette boundaries.
+or explicitly assigned section palettes, separators mark the palette boundaries.
+An explicit `palette:` on `--` starts a coloured band even with `uniform` rhythm.
+In uniform rhythm, an unmarked opening section keeps the page background.
 The setting applies in small previews and full preview. It does not change an
 explicit `--` divider block.
 
@@ -278,7 +280,7 @@ Also available:
 
 - `motionEntrance`: `none | fade | slide | scale`
 - `motionStagger`: `none | sequential`
-- `slideTransition`: `none | fade | slide | zoom` — default transition for single-layout Card
+- `slideTransition`: `none | fade | slide | zoom`, default transition for single-layout Card
   blocks whose own `transition` parameter is unset. A block-level value takes precedence.
 
 Both entrance motion and Card transitions are disabled when the learner requests reduced motion.
@@ -306,7 +308,7 @@ learner's selected appearance. Keep both files with the project.
 
 ## Custom code and defaults
 
-- `customCss` (string) — raw author CSS appended to published output. Praxity's contrast and
+- `customCss` (string), raw author CSS appended to published output. Praxity's contrast and
   reflow validation cannot vouch for styles introduced here; authors must validate that CSS.
 - `componentDefaults` (object)
 

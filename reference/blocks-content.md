@@ -14,9 +14,9 @@ This is plain paragraph text.
 
 ## heading
 
-Headings define content hierarchy. `#` is an ordinary H1 with the same parameters and Studio narration handling as the other levels; it does not split lessons or pages. The heading level is determined by the number of `#` marks — it is not set via a parameter.
+Headings define content hierarchy. `#` is an ordinary H1 with the same parameters and Studio narration handling as the other levels; it does not split lessons or pages. The number of `#` marks sets the heading level.
 The published tag uses the same level without an export-time offset (`#` → `h1`,
-`##` → `h2`, `###` → `h3`, `####` → `h4`).
+`##` → `h2`, `###` → `h3`, `####` → `h4`, `#####` → `h5`, `######` → `h6`).
 
 Use `display: standard|chapter` for the visual heading treatment and `kicker:`
 for supporting text above a chapter heading. These do not change its document level.
@@ -29,9 +29,9 @@ for supporting text above a chapter heading. These do not change its document le
 ```
 
 **Parameters:**
-- `pageStyle` (string) — named `pageStyles` entry, on an opening top-level H1.
-- `display`: `standard | chapter` — visual heading treatment.
-- `kicker` (string) — supporting text above a chapter heading.
+- `pageStyle` (string), named `pageStyles` entry, on an opening top-level H1.
+- `display`: `standard | chapter`, visual heading treatment.
+- `kicker` (string), supporting text above a chapter heading.
 - `width`: `narrow | wide | full | breakout`
 
 ## image
@@ -57,20 +57,20 @@ close: float
 This paragraph starts below the image.
 ```
 
-The image source is the bare media path or URL on its own line — it is not written as a `src:` parameter.
+Write the image source as a bare media path or URL on its own line.
 
 **Parameters:**
-- `alt` (string) — descriptive text for screen readers. A warning is issued if missing.
-- `decorative` (boolean) — set `decorative: true` for purely decorative images that convey no information. Either `alt` or `decorative: true` should be provided.
-- `caption` (string) — visible caption below the image.
-- `captionEnabled` (boolean) — set `false` to suppress the image caption.
-- `size` (string) — content-relative display size: `small`, `medium`, `large`. Use `width: full` for a full-frame image.
-- `alignment` (string) — horizontal alignment: `left`, `center`, `right`.
-- `ratio`: `square | 4:3 | 3:2 | 16:9` — optional image frame; omit to preserve natural proportions.
-- `fit`: `contain | cover` — fit inside a requested frame. Defaults to `contain` when `ratio` is set; `cover` crops to fill it.
+- `alt` (string), descriptive text for screen readers. Studio warns when it is missing.
+- `decorative` (boolean), set `decorative: true` for purely decorative images that convey no information. Provide either `alt` or `decorative: true`.
+- `caption` (string), visible caption below the image.
+- `captionEnabled` (boolean), set `false` to suppress the image caption.
+- `size` (string), content-relative display size: `small`, `medium`, `large`. Use `width: full` for a full-frame image.
+- `alignment` (string), horizontal alignment: `left`, `center`, `right`.
+- `ratio`: `square | 4:3 | 3:2 | 16:9`, optional image frame; omit to preserve natural proportions.
+- `fit`: `contain | cover`, fit inside a requested frame. Defaults to `contain` when `ratio` is set; `cover` crops to fill it.
 - `float` (string): `left | right`. Places the image on the specified physical side. Omit it for the default stacked layout.
-- `treatment`: `none | grayscale | tint | duotone | grain | dither | blur` — image treatment.
-- `effects` (string) — per-image effects that override the course's `design.imageEffects`. List one or more effects separated by spaces, each with an optional intensity in parentheses: `effects: grayscale(40) grain(20)`. `colorWash` takes a colour after its intensity, as in `colorWash(40 #4269d0)`. Use `effects: none` to turn off the course effects for this image. See [image effects](frontmatter-design.md) for each effect's range.
+- `treatment`: `none | grayscale | tint | duotone | grain | dither | blur`, image treatment.
+- `effects` (string), per-image effects that override the course's `design.imageEffects`. List one or more effects separated by spaces, each with an optional intensity in parentheses: `effects: grayscale(40) grain(20)`. `colorWash` takes a colour after its intensity, as in `colorWash(40 #4269d0)`. Use `effects: none` to turn off the course effects for this image. See [image effects](frontmatter-design.md) for each effect's range.
 - `width`: `narrow | wide | full | breakout`
 
 Use `fit: contain` for diagrams or documents whose edges carry information. Image framing also works inside cards. Omitting both controls preserves existing image rendering.
@@ -94,8 +94,11 @@ percentage width intended for flowing text beside it.
 
 The image stays stacked until its content container is wide enough to leave about 22
 characters for prose. The container thresholds are `20.25em` for `small`, `27em` for
-`medium`, and `54em` for `large`, so they follow the learner's text size. Print output is
-always stacked.
+`medium`, and `54em` for `large`, so they follow the learner's text size. Browser print
+output is always stacked. In Studio's PDF export, a `small` or `medium` float keeps its
+side at 33% or 50% of the text width. Following paragraphs and list items sit beside it
+while they fit its height, and the rest continues below. A `large` float stacks, as it
+would on a screen as narrow as the printed page.
 
 **Design system image effects** can also be applied at the course level via frontmatter `design.imageEffects`. See [frontmatter-design.md](frontmatter-design.md) for `grayscale`, `colorWash`, `accentLighting`, `progressiveBlur`, `grain`, `halftone`, and other composable effects.
 
@@ -122,12 +125,12 @@ caption: Safety walkthrough
 ```
 
 **Parameters:**
-- `caption` (string) — visible caption below the video.
-- `captions` (WebVTT path or HTTPS URL) — synchronized captions for a local/direct video, for example `captions: /assets/intro.fr.vtt`. Studio packages local files with the export; HTTPS caption URLs remain remote and need a network connection.
-- `title` (string) — visible title above the player.
-- `transcript` (string) — text shown under the player. A file path is displayed literally; Studio does not load that file.
-- `start` / `end` (number) — optional playback bounds in seconds.
-- `captionEnabled` (boolean) — set `false` to suppress the visible caption.
+- `caption` (string), visible caption below the video.
+- `captions` (WebVTT path or HTTPS URL), synchronized captions for a local/direct video, for example `captions: /assets/intro.fr.vtt`. Studio packages local files with the export; HTTPS caption URLs remain remote and need a network connection.
+- `title` (string), visible title above the player.
+- `transcript` (string), text shown under the player. Published output uses a heading-wrapped disclosure button with expanded state and a following panel. The transcript stays visible if scripts fail, collapses only after its control works, and prints in full. A file path is displayed literally; Studio does not load that file.
+- `start` / `end` (number), optional playback bounds in seconds.
+- `captionEnabled` (boolean), set `false` to suppress the visible caption.
 - `width`: `narrow | wide | full | breakout`
 
 `start` and `end` are playback bounds in seconds. They are supported for YouTube, Vimeo, local/direct video files, and Mux-hosted video. Loom and unknown iframe embeds can render, but they do not expose reliable playback control to Praxity Studio, so timing bounds are not enforced there.
@@ -149,10 +152,10 @@ transcript: The supervisor reviews the daily safety checks.
 ```
 
 **Parameters:**
-- `title` (string) — display title for the audio player.
-- `caption` (string) — visible caption below the player.
-- `transcript` (string) — text shown under the player. A file path is displayed literally; Studio does not load that file.
-- `captionEnabled` (boolean) — set `false` to suppress the visible caption.
+- `title` (string), display title for the audio player.
+- `caption` (string), visible caption below the player.
+- `transcript` (string), text shown under the player. Published output uses a heading-wrapped disclosure button with expanded state and a following panel. The transcript stays visible if scripts fail, collapses only after its control works, and prints in full. A file path is displayed literally; Studio does not load that file.
+- `captionEnabled` (boolean), set `false` to suppress the visible caption.
 - `width`: `narrow | wide | full | breakout`
 
 ## divider
@@ -178,10 +181,10 @@ as: embed
 height: 420
 ```
 
-The embed source is the URL on its own line — it is not written as a `src:` parameter.
+Write the embed URL on its own line.
 
 **Parameters:**
-- `height` (number) — iframe height in pixels.
+- `height` (number), iframe height in pixels.
 - The embedded frame fills its block. Use universal `width` to set the block width; there is no separate inner-width parameter.
 - `width`: `narrow | wide | full | breakout`
 
@@ -218,9 +221,9 @@ style: shaded
 ```
 
 **Parameters:**
-- `title` (string) — visible callout label; overrides the label derived from `color`.
-- `icon` (string) — any kebab-case [Tabler Icons](https://tabler.io/icons) outline icon name, for example `thinking-high`, `bulb`, or `sparkles`. Omit it to use the icon derived from `color`; use `none` for no icon.
-- `emoji` (string) — accepted for backward compatibility but ignored; published callouts use the matching project icon.
+- `title` (string), visible callout label; overrides the label derived from `color`.
+- `icon` (string), any kebab-case [Tabler Icons](https://tabler.io/icons) outline icon name, for example `thinking-high`, `bulb`, or `sparkles`. Omit it to use the icon derived from `color`; use `none` for no icon.
+- `emoji` (string), accepted for backward compatibility but ignored; published callouts use the matching project icon.
 - `style`: `outline | shaded` (`light` and `filled` remain accepted aliases)
 - `color`: `accent | primary | secondary | success | warning | error | grey`
 - `width`: `narrow | wide | full | breakout`
@@ -247,6 +250,9 @@ so color remains supplementary rather than the only signal. The icon occupies a 
 scales with the viewer's Larger text setting. HTML and SCORM exports embed only the vector data for
 icons the document uses; exported courses do not depend on an icon CDN.
 
+Built-in themes use lightly tinted shaded fills, with distinct Info and Success hues in both
+colour modes. The tint strength preserves readable body copy, including Plum light accent notes.
+
 ## quote
 
 Quotation with optional speaker, work title, and source URL. Omitted style retains upright
@@ -262,20 +268,63 @@ sourceUrl: https://example.com/safety-review
 ```
 
 **Parameters:**
-- `style`: `none | outline | shaded | primary | secondary` — no chrome, transparent full border, neutral surface, or the corresponding brand tint. Omitted style preserves the original start-border treatment.
-- `speaker` (string) — person or organisation responsible for the words; rendered as semibold text, never `<cite>`.
-- `work` (string) — title of the source work; rendered in `<cite>`.
-- `sourceUrl` (URL) — added to the blockquote's `cite` attribute and shown as a visible link around the work title (or as the URL when no work title is supplied).
+- `style`: `none | outline | shaded | primary | secondary`, no chrome, transparent full border, neutral surface, or the corresponding brand tint. Omitted style preserves the original start-border treatment.
+- `speaker` (string), person or organisation responsible for the words; rendered as semibold text, never `<cite>`.
+- `work` (string), title of the source work; rendered in `<cite>`.
+- `sourceUrl` (URL), added to the blockquote's `cite` attribute and shown as a visible link around the work title (or as the URL when no work title is supplied).
 - `width`: `narrow | wide | full | breakout`
 
-Legacy `attribution` is treated as `speaker`. Legacy `decorator`, `size`, and `style`
-values—including `cinematic`, `quotation-marks`, and `pullquote`—are accepted but map to
+Studio reads legacy `attribution` as `speaker`. Legacy `decorator`, `size`, and `style`
+values such as `cinematic`, `quotation-marks`, and `pullquote` map to
 the original quote treatment. Serialization preserves the five current surface styles, writes
 legacy attribution as `speaker`, and omits obsolete visual parameters. Quote bodies remain intact.
+
+## dialogue
+
+Use a bullet list for a conversation. Put `as: dialogue` after the list to turn each item into a speaker turn. Each item starts with a speaker key and a colon. Keys are case-insensitive identifiers, never display names. Set the display name in a local `speaker:` declaration or the course cast.
+
+**Syntax:**
+
+```prax
+- alex: What should I say when the meeting starts?
+- sam: Start with the goal, then ask what everyone needs.
+as: dialogue
+style: bubbles
+caption: Preparing for a meeting
+speaker: alex; name: Alex; avatar: /assets/alex.png; side: end
+speaker: sam; name: Sam; side: start
+```
+
+Start each turn with `- key: words`. Indent continuation lines by at least two spaces. A blank line followed by an indented line starts another paragraph in the same turn. See [list continuation](inline-formatting.md#lists). Without `as: dialogue`, the lines remain a plain list.
+
+**Parameters:**
+
+- `style`: `bubbles | script`. Default: `bubbles`.
+- `caption` (text): an optional caption for the exchange.
+- `speaker` (repeatable string): `key; name: Display name; avatar: /assets/image.png; voice: voice-id; side: start|end`. Set only the fields you need. Escape a semicolon as `\;` and a colon as `\:` inside field values.
+- `width`: `narrow | wide | full | breakout`.
+
+Local `speaker:` declarations apply to this block and override only the cast fields they set. Define shared speakers in the [course cast in `course.yaml`](course-manifest.md#course-cast). Use local `avatar: none` to hide an inherited portrait. Avatars must use project asset paths; remote URLs produce a warning. An undeclared speaker produces a warning and displays its key as the name. The display name stays visible for every turn; avatars are decorative. Studio ignores inline narration fields with a warning. Put narration in `narration.yaml`.
+
+Dialogue turns support inline formatting and multiple paragraphs. They cannot contain nested lists or child blocks. A turn without a speaker key produces a parser warning and a validation error. Studio keeps its text so the author can correct it. Duplicate local speaker declarations produce a warning; the last declaration wins.
+
+`side: start|end` fixes a speaker's bubble to a logical side. A local value overrides the course cast. Without it, the first speaker uses start and all other speakers use end. Invalid sides warn and are ignored. On narrow screens, avatars sit beside names above full-width bubbles. Glossary definitions remain available in the visible tooltip; derived narration speaks only the term in turns and captions.
+
+Each turn is narrated as its own clip in the speaker's voice.
+
+To branch after a dialogue, use a scored choice with `name: reply`, then rules on `block:reply.result` that show named, hidden dialogues. See the [complete branching example](../examples/patterns/dialogue-branching.prax). The standard page computes its fixed authored-order narration playlist at export, including logic-controlled hidden content. A `hidden` logic-controlled wrapper, an ancestor wrapper, or a `.praxity-section` hides its audio; a block without its own wrapper stays eligible unless an ancestor or section is hidden. Inactive tabs, collapsed accordions and other card faces stay eligible and are revealed on selection. Hidden words never play.
+
+The standard page checks authored stops at assessment and media boundaries, even without audio. An active stop applies to the nearest eligible predecessor. A stop is active only when its originating block, every logic-controlled block or section ancestor, and any conditional owner are shown. A terminal stop stays pending if no branch is eligible, then Play enters the branch revealed after submission. Play moves strictly forward after a retry; seek or select to hear an earlier branch. Public `praxity:assessment-response` and `praxity:assessment-group-complete` events pause narration after submission. A private assessment emits no response event, and its option selection and submit use indistinguishable `praxity:block-interaction` events, so private submission alone does not guarantee a pause. Deck media keeps `pauseAfter`; authored stops and branching apply only to the standard page.
+
+If child words of a card, tab or accordion item become conditional, its source anchor changes. The old whole-item recording becomes unlinked, and new item segments have missing audio until the author regenerates them. They are not automatically marked stale.
 
 ## code
 
 Fenced code block.
+
+Published output and compiled previews preserve authored indentation and empty
+lines. Line numbers and highlights do not add blank rows. Copy reconstructs the
+source from those rows, without line numbers or syntax highlighting markup.
 
 **Syntax:**
 
@@ -291,7 +340,7 @@ console.log("safe start");
 
 ## equation
 
-Math block using [KaTeX](https://katex.org/) syntax, fenced with `$$`. Supports standard LaTeX math notation — see the [KaTeX supported functions](https://katex.org/docs/supported) for the full reference.
+Math block using [KaTeX](https://katex.org/) syntax, fenced with `$$`. Use standard LaTeX math notation. See the [KaTeX supported functions](https://katex.org/docs/supported) for the full reference.
 
 **Syntax:**
 ```prax
@@ -302,6 +351,13 @@ $$
 
 **Parameters:**
 - `width`: `narrow | wide | full | breakout`
+
+Equations render once as native MathML in published output and compiled previews.
+Inline equations use the same rendering path. Expressions supported by the speech
+helper retain a readable speech label on a math wrapper; other expressions expose
+native MathML. Fractions and matrices retain their MathML structure.
+Invalid expressions remain visible as escaped authored source. No KaTeX HTML
+stylesheet is required. This changes rendering only, with no syntax change.
 
 ## button
 
@@ -317,8 +373,8 @@ openInNewTab: true
 ```
 
 **Parameters:**
-- `text` (required) — link label from markdown link text.
-- `href` (required) — link target from markdown link URL.
+- `text` (required), link label from markdown link text.
+- `href` (required), link target from markdown link URL.
 - `style`: `filled | outline | light`
 - `openInNewTab` (optional)
 - `width`
@@ -328,7 +384,7 @@ openInNewTab: true
 
 ## data-table
 
-Pipe table rendered as a data table or chart. The first row is treated as the header. The separator row (`| --- | --- |`) is optional — the parser skips it if present but does not require it.
+Studio renders a pipe table as a data table or chart. It uses the first row as the header. The parser skips the optional separator row (`| --- | --- |`).
 
 **Syntax:**
 ```prax
@@ -337,7 +393,7 @@ Pipe table rendered as a data table or chart. The first row is treated as the he
 | Q2 | 1 |
 ```
 
-Optional chart rendering — add `chart:` below the table to render it as a visualization:
+Add `chart:` below a table to render it as a chart:
 
 ```prax
 | Quarter | Incidents |
@@ -349,25 +405,25 @@ yLabel: Count
 ```
 
 **Parameters:**
-- `title` (string) — table or chart title.
-- `caption` (string) — visible caption below a table.
-- `chart` (string) — chart type. When present, renders as a chart instead of a table. Valid values:
-  - `bar` — vertical bar chart (default orientation)
-  - `line` — line chart
-  - `scatter` — scatter plot (renders as line with individual points, no connecting lines)
-  - `area` — area chart (line with filled area below)
-  - `radar` — radar / spider chart
-  - `stacked` — stacked bar chart
-  - Note: `pie` and `donut` are **not** supported — they were intentionally omitted.
-- `orientation` (`vertical | horizontal`) — bar chart axis orientation. Only applies to `chart: bar`. Default is `vertical`; use `horizontal` for horizontal bars.
-- `subtitle` (string) — chart subtitle displayed below the title.
-- `altText` (string) — accessible description of the chart for screen readers.
-- `xLabel` (string) — horizontal axis label.
-- `yLabel` (string) — vertical axis label.
-- `stacked` (boolean) — stack multiple data series.
-- `showLines` (boolean) — show connecting lines between points. Default `true` for most chart types; default `false` for `scatter`.
-- `showPoints` (boolean) — show individual data point markers. Default `true` for `scatter`.
-- `sortOrder` (`none | asc | desc`) — sort data before rendering.
+- `title` (string), table or chart title.
+- `caption` (string), visible caption below a table.
+- `chart` (string), chart type. When present, renders as a chart instead of a table. Valid values:
+  - `bar`, vertical bar chart (default orientation)
+  - `line`, line chart
+  - `scatter`, scatter plot (renders as line with individual points, no connecting lines)
+  - `area`, area chart (line with filled area below)
+  - `radar`, radar / spider chart
+  - `stacked`, stacked bar chart
+  - Note: Studio supports neither `pie` nor `donut`.
+- `orientation` (`vertical | horizontal`), bar chart axis orientation. Only applies to `chart: bar`. Default is `vertical`; use `horizontal` for horizontal bars.
+- `subtitle` (string), chart subtitle displayed below the title.
+- `altText` (string), accessible description of the chart for screen readers.
+- `xLabel` (string), horizontal axis label.
+- `yLabel` (string), vertical axis label.
+- `stacked` (boolean), stack multiple data series.
+- `showLines` (boolean), show connecting lines between points. Default `true` for most chart types; default `false` for `scatter`.
+- `showPoints` (boolean), show individual data point markers. Default `true` for `scatter`.
+- `sortOrder` (`none | asc | desc`), sort data before rendering.
 - `width`: `narrow | wide | full | breakout`
 
 Dense annual category axes in vertical bar, line, area, scatter and stacked charts show labels at roughly five-year intervals. Longer series may use wider intervals to keep labels readable. The first and last years always appear; nearby interior labels may be omitted to leave room for them. This applies to consecutive four-digit years in ascending or descending order. Narrow charts may also show fewer labels for other categories. Every data point and accessible data-table row is retained.
