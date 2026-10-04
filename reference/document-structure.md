@@ -59,6 +59,8 @@ Recognized parameter lines, including indented `as:` lines, stay outside the lis
 
 ## Pages and navigation labels
 
+An implicit first page exists only when at least one parsed content block precedes the first page delimiter; blank lines and source that produces no blocks do not create a page.
+
 Pages are separated with `---` on its own line. Text after the dashes labels the new page in navigation; it is not rendered as a heading. Use an authored `#` heading when the page needs a visible title.
 
 ```prax
@@ -86,7 +88,7 @@ hide: true
 # Visible page title
 ```
 
-Page 1 has no preceding page break, so its explicit navigation label and page defaults live in
+For an implicit first page, its explicit navigation label and page defaults live in
 frontmatter. Without an explicit label, its first heading provides the same fallback.
 
 ```yaml
