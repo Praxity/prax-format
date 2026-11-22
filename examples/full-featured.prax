@@ -1,6 +1,7 @@
 ---
 title: Full .prax Feature Tour
-description: Demonstrates supported content blocks, containers, assessments, and interactions.
+description: Demonstrates supported content blocks, containers, assessments, and
+  interactions.
 lang: en
 design:
   palette: bauhaus
@@ -9,11 +10,11 @@ design:
   typography:
     fontDisplay: swap
     body:
-      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontFamily: [ Inter, "DM Sans", sans-serif ]
       fontWeight: 400
       fontStyle: normal
     headings:
-      fontFamily: [Inter, "DM Sans", sans-serif]
+      fontFamily: [ Inter, "DM Sans", sans-serif ]
       fontWeight: 600
       fontStyle: normal
       h1: { fontWeight: 700 }
@@ -36,40 +37,46 @@ design:
   motionStagger: sequential
   brand:
     logoPlacement: sidebar
+variables:
+  attempts: 0
+  passedCheckpoint: false
+  learnerName: Learner
 ---
+
+# Introduction {hideTitle}
 
 ## Introduction
 
 Welcome to the full feature tour. This file demonstrates content blocks, containers, assessments, and interactions.
 
-/assets/facility-overview.png
-alt: Industrial workspace overview
-caption: Main inspection zone
+::: figure
+![Industrial workspace overview](/assets/facility-overview.png)
+Main inspection zone
+:::
 
-/assets/facility-walkthrough.mp4
-captions: /assets/facility-walkthrough.en.vtt
+::: video /assets/facility-walkthrough.mp4 {captions=/assets/facility-walkthrough.en.vtt start=12 end=90}
 caption: Facility walkthrough
-start: 12
-end: 90
+:::
 
-/assets/briefing.mp3
+::: audio /assets/briefing.mp3
 title: Safety audio briefing
 transcript: Check the work area, confirm the exit route, and report any hazards before you start.
+:::
 
-https://app.example.com/widget
-as: embed
-height: 420
+::: embed https://app.example.com/widget {height=420}
+:::
 
-[Inspection Handbook](https://example.com/inspection-handbook.pdf)
-as: bookmark
+::: bookmark [Inspection Handbook](https://example.com/inspection-handbook.pdf)
+:::
 
-> Consistency beats speed when risk is high.
+::: quote
+Consistency beats speed when risk is high.
 speaker: Safety Lead
+:::
 
-> Use controls before relying on memory.
-as: note
-color: accent
-style: outline
+::: note {tone=note style=outline}
+Use controls before relying on memory.
+:::
 
 ```ts
 function riskScore(severity: number, likelihood: number) {
@@ -81,10 +88,8 @@ $$
 R = S \times L
 $$
 
-[Open SOP Portal](https://example.com/sop)
-as: button
-style: filled
-openInNewTab: true
+::: button [Open SOP Portal](https://example.com/sop) {style=filled newTab}
+:::
 
 | Area | Incidents | Near Misses |
 | --- | --- | --- |
@@ -97,217 +102,158 @@ openInNewTab: true
 | Q1 | 12 |
 | Q2 | 9 |
 
---
+---
 
 ## Flow Blocks
 
-### Identification
-as: accordion
-style: outline
-
+::: accordion {style=outline}
+:: Identification
 Document what happened, where, and who is exposed.
 
-### Assessment
-
+:: Assessment
 Estimate severity and likelihood.
 
-### Control
-
+:: Control
 Apply elimination, substitution, engineering, then admin/PPE.
+:::
 
-### Before Shift
-as: tab
-
+::: tabs
+:: Before Shift
 Check unresolved items from prior shift.
 
-### During Shift
-
+:: During Shift
 Capture new hazards quickly.
 
-### After Shift
-
+:: After Shift
 Confirm all incidents are documented.
+:::
 
-close: tab
-
-as: col
+::: columns
+::
 ### Hazards
+
 - Chemical
 - Electrical
 - Ergonomic
 
-as: col
+::
 ### Controls
+
 - Ventilation
 - Lockout/tagout
 - Lift assist
+:::
 
-close: col
-
-### Step 1
-as: sequence
-style: numbered
-
+::: sequence {style=numbered}
+:: Step 1
 Identify the issue.
 
-### Step 2
-
+:: Step 2
 Assess risk.
 
-### Step 3
-
+:: Step 3
 Apply controls.
+:::
 
-### Before
-as: comparison
-layout: side-by-side
-
+::: comparison {layout=side-by-side}
+:: Before
 Manual forms with delayed escalation.
 
-### After
-
+:: After
 Real-time logging and notifications.
+:::
 
-### Scenario Card
-as: card
-
+::: cards Scenario Card
+:: Scenario Card {level=3}
 A pressure alarm triggers during startup. Review context and choose a response.
+:::
 
-close: card
-
-### What is lockout/tagout?
-as: card
-
+::: cards What is lockout/tagout?
+:: What is lockout/tagout? {level=3}
 Energy isolation before maintenance.
 
-card: back
+::: back
 A lockout/tagout procedure isolates hazardous energy before maintenance starts.
+:::
+:::
 
-close: card
+# Final Checkpoint {hideTitle}
 
----
-
-## Final Checkpoint
-as: assessment-group
-mode: all
-showResultsSummary: true
-passingScore: 75
-
-### Which action is safest first?
-as: choice
-points: 2
-required: true
-shuffle: true
-
+::: group Final Checkpoint {mode=all showResultsSummary passingScore=75}
+::: choice Which action is safest first? {points=2 required shuffle}
 ( ) Keep operating and monitor
 (x) Stop work and isolate hazard
 ( ) Ask for review after completion
-
-### Select all valid controls
-as: choice
-points: 3
-shuffle: true
-
+:::
+::: choice Select all valid controls {points=3 shuffle}
 [x] Guard rail
 [x] Ventilation
 [ ] Ignore warning alarm
 [x] PPE for residual risk
-
-### Match hazard to control
-as: match
-points: 3
-shuffle: true
-
-Slip risk :: Housekeeping
-Electrical fault :: Lockout/tagout
-Noise exposure :: Hearing protection
-
-### Put response steps in order
-as: order
-points: 3
-shuffle: true
-
+:::
+::: match Match hazard to control {points=3 shuffle}
+- Slip risk -> Housekeeping
+- Electrical fault -> Lockout/tagout
+- Noise exposure -> Hearing protection
+:::
+::: order Put response steps in order {points=3 shuffle}
 1. Stop work
 2. Secure area
 3. Notify lead
 4. Record incident
-
-### Describe one prevention strategy
-as: free-response
-points: 5
-required: true
-
-Focus on one engineering control and one communication process.
-
-### Complete the sentence
-as: fill-blank
-points: 2
-
+:::
+::: free-response Describe one prevention strategy {points=5 required}
+placeholder: Focus on one engineering control and one communication process.
+:::
+::: fill-blank Complete the sentence {points=2}
 Before restart, verify {isolation} and confirm {authorization}.
-
-/assets/extinguisher-diagram.png
-as: hotspot
-question: Select the pull pin.
-alt: Fire extinguisher diagram
-points: 4
-spot: Gauge; 28%; 18%
-spot: Pull pin; 42%; 25%; correct
-spot: Nozzle; 65%; 39%
-
-### Confidence with emergency protocol
-as: rating
-required: true
-
-1: Not confident
-2: Somewhat confident
-3: Confident
-4: Very confident
-5: Expert
-
-### Sort controls by category
-as: categorize
-points: 4
-shuffle: true
-
-Engineering Controls:
+:::
+::: hotspot Select the pull pin. {points=4}
+![Fire extinguisher diagram](/assets/extinguisher-diagram.png)
+- Gauge {x=28 y=18}
+- Pull pin {x=42 y=25 correct}
+- Nozzle {x=65 y=39}
+:::
+::: rating Confidence with emergency protocol {required}
+1. Not confident
+2. Somewhat confident
+3. Confident
+4. Very confident
+5. Expert
+:::
+::: categorize Sort controls by category {points=4 shuffle}
+:: Engineering Controls
 - Guard rail
 - Ventilation
-
-Administrative Controls:
+:: Administrative Controls
 - Shift checklist
 - Permit workflow
+:::
+:::
 
-close: assessment-group
-
----
+# Interactive Blocks {hideTitle}
 
 ## Interactive Blocks
 
+::: checklist {required}
 - [ ] Confirm route maps are posted
 - [ ] Verify alarms are audible
 - [ ] Review first-aid inventory
-as: checklist
-required: true
+:::
 
-### I confirm this module was reviewed
-as: signature
-mode: type
+::: signature I confirm this module was reviewed {mode=type}
+:::
 
-### Branching Scenario
-as: card
-
+::: cards Branching Scenario
+:: Branching Scenario {level=3}
 A forklift alarm triggers near a pedestrian route. Choose your first action.
+:::
 
-close: card
+::: note {name=remediation hide}
+Review the checkpoint questions before continuing.
+:::
 
-var: attempts = 0
-var: passedCheckpoint = false
-var: learnerName = "Learner"
-
+::: rule
 if: passedCheckpoint is false
 then: show @remediation
-
-> Review the checkpoint questions before continuing.
-as: note
-name: remediation
-hide: true
+:::

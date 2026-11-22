@@ -7,15 +7,18 @@ design:
   accentHue: 220
 ---
 
+# Welcome {hideTitle}
+
 ## Welcome
 
 This short course introduces a simple safety routine you can run before starting work.
 
-/assets/safety-checklist.png
-alt: Checklist on a clipboard
-caption: Daily pre-shift checklist
+::: figure
+![Checklist on a clipboard](/assets/safety-checklist.png)
+Daily pre-shift checklist
+:::
 
----
+# Before You Begin {hideTitle}
 
 ## Before You Begin
 

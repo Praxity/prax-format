@@ -1,400 +1,247 @@
-# Container Blocks
+# Item containers
 
-Containers use the normal content width by default. Set `width: narrow|wide|full|breakout`
-to change a container's width. Cards independently use `layout:` to select
-`grid`, `masonry`, `slides`, or `rows`. Sequences do not widen automatically as items are added.
-
-A blank line before `as: card`, its legacy alias `as: flashcard`, or `as: col`
-starts a standalone container and leaves the preceding heading or content outside.
-To attach a card to a heading, put `as: card` directly beneath that heading.
-Accordion, tab, sequence, comparison, and assessment-group declarations require a
-heading; their existing heading attachment also accepts intervening blank lines.
-
-For compatibility when reading source with inline narration overrides, `narration`, `narrationVoice`,
-`narrationLanguage`, `narrationSpeed`, `narrationDisabled`, and recording metadata on
-an item heading belong to that item. This applies to every accordion, tab, and sequence
-heading, including the first, and to card item headings. Overrides do not carry over to
-the next item. A card's outer title retains its own narration; a lower-level heading
-inside a front or back face remains a separate narrated content block. Existing
-whole-card narration retains its whole-container behavior. Studio saves narration in
-`narration.yaml`; serializing blocks to `.prax` does not emit in-memory narration fields.
+Settings go in braces on the opener. Parts hold learner text. Omitted settings keep the schema or renderer default.
 
 ## accordion
 
-Collapsible panels. The heading with `as: accordion` opens the accordion; subsequent headings at the same level become additional panels. Any heading level works (`##`, `###`, `####`), though `###` is most common.
+Let learners expand titled sections. See the [example](../examples/patterns/faq-accordion.prax).
 
-**Syntax:**
+The subject is an optional group title. Each `:: Title` item needs a title and holds prose or nested blocks. At least one item is required.
+
+Follow [keep required content visible](../skill/learners.md#keep-required-content-visible) when choosing what to fold away.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
+
+| Setting | Values | Default | Purpose |
+|---|---|---|---|
+| `style` | `none`, `outline`, `shaded`, `primary`, `secondary` | Omitted | Select the style. |
+| `allowMultipleOpen` | `true`, `false` | `false` | Select the allowMultipleOpen. |
+
 ```prax
-### Hazard Types
-as: accordion
-style: shaded
+# Example
 
-Chemical, electrical, and mechanical hazards.
-
-### Control Measures
-
-Engineering controls, administrative controls, and PPE.
-
-### Reporting
-
-File an incident report within 24 hours.
+::: accordion
+:: First
+Text
+:: Second
+Text
+:::
 ```
 
-**Parameters:**
-- `style`: `none | outline | shaded | primary | secondary`, surface treatment. `none` removes fill, border and separators; `outline` adds an unshaded border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Omitted style retains the original separator-line treatment. Legacy `default`, `contained` and `separated` source remains supported with its original appearance.
-- `allowMultipleOpen` (boolean), whether multiple panels can be open at once.
-- `width`: `narrow | wide | full | breakout`
+## accordion-item
 
-Published accordions use buttons inside headings, followed by their panels. Each button exposes its expanded state and references its panel. Scripts initially collapse the panels after installing working controls. Without scripts, every panel and its plain heading remain visible. Printing expands every panel. Existing item trigger and panel fragment IDs remain valid.
+Put one expandable section inside an accordion. See the [example](../examples/patterns/faq-accordion.prax).
 
-`allowMultipleOpen: true` permits independent panels. Otherwise opening one closes its siblings. Space and Enter toggle the focused button; Arrow Up/Down, Home and End move between headings. Narration reveals the relevant item without taking focus. The state icon is decorative and does not enter the button's accessible name.
+Start an item with `:: Title`. Its title is required. The next item or container closer ends it. Close nested blocks before the next item.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
 
 ## tabs
 
-Tabbed content panels. The heading with `as: tab` opens the tab group; subsequent headings at the same level become additional tabs. Any heading level works.
+Let learners switch between related sections. See the [example](../examples/interactive-module.prax).
 
-**Syntax:**
+The subject is an optional group title. Each `:: Title` item needs a title and holds prose or nested blocks. At least one item is required.
+
+Follow [keep required content visible](../skill/learners.md#keep-required-content-visible) when choosing tab content.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
+
+| Setting | Values | Default | Purpose |
+|---|---|---|---|
+| `style` | `default`, `outline`, `pills` | `default` | Select the style. |
+| `orientation` | `horizontal`, `vertical` | `horizontal` | Select the orientation. |
+
 ```prax
-### Before Shift
-as: tab
+# Example
 
-Review overnight incidents and pending actions.
-
-### During Shift
-
-Use the checklist and escalate unresolved hazards.
+::: tabs
+:: First
+Text
+:: Second
+Text
+:::
 ```
 
-**Parameters:**
-- `width`: `narrow | wide | full | breakout`
+## tabs-item
 
-The tab strip and active panel share a neutral surface and continuous hairline boundary, so the
-selected tab remains visibly attached to its content without relying on color. Tab labels have
-symmetric inline padding and an inset focus ring. Published tabs use manual activation: arrow
-keys move focus, and Enter or Space selects the focused tab. Horizontal tab lists scroll the
-focused tab fully into view; moving focus alone does not select a panel.
+Put one section inside a tab. See the [example](../examples/interactive-module.prax).
 
-Set `style: default|outline|pills` and `orientation: horizontal|vertical` on
-the first `as: tab` item to style the whole tab group. Defaults are `default` and
-`horizontal`. Both settings survive serialization.
+Start an item with `:: Title`. Its title is required. The next item or container closer ends it. Close nested blocks before the next item.
 
-## columns
-
-Column layout. Each `as: col` starts a new column. Use `close: col` to end the column layout before following content on the same page.
-
-An `as: col` after `close: col` starts a new columns row, even when no other content separates the rows. Each row keeps its own columns and layout settings.
-
-**Syntax:**
-```prax
-as: col
-weight: 2
-
-/assets/safety-diagram.png
-alt: Workplace safety zones diagram
-
-as: col
-weight: 1
-
-### Key Safety Zones
-- Loading dock
-- Chemical storage
-- Assembly line
-
-close: col
-```
-
-Columns accept headings, images, text, lists and nested blocks.
-
-**Parameters:**
-- `width`: `narrow | wide | full | breakout`
-
-Set the container’s `width` on the first `as: col`. Each `as: col` accepts `weight: <positive number>` as a relative proportion. For example, weights `2` and `1` allocate two thirds and one third of the available width after the gap. Omitted or invalid weights use `1`. Default columns and side-by-side comparisons share width equally. Columns stack in source order on narrow screens. Studio's PDF export keeps them side by side in their proportions. Existing fractional proportions remain valid.
+[Shared block settings](blocks.md#shared-block-settings) apply.
 
 ## sequence
 
-Step-by-step or timeline container. The opening heading sets the item level; subsequent headings at that level become labeled steps.
+Present steps or events in order. See the [example](../examples/patterns/guided-reading.prax).
 
-**Syntax:**
+The subject is an optional group title. Each `:: Title` item needs a title. Keep style and orientation separate. At least one item is required.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
+
+| Setting | Values | Default | Purpose |
+|---|---|---|---|
+| `style` | `numbered`, `timeline`, `none` | `numbered` | Select the style. |
+| `orientation` | `vertical`, `horizontal` | `vertical` | Select the orientation. |
+| `alignment` | `left`, `center`, `right` | `left` | Select the alignment. |
+| `distribution` | `uniform`, `scaled` | Omitted | Select the distribution. |
+| `scrollable` | `true`, `false` | Omitted | Select the scrollable. |
+
 ```prax
-### Report the incident
-as: sequence
-style: timeline
-orientation: vertical
+# Example
 
-Notify your supervisor immediately.
-
-### Secure the area
-
-Cordon off the affected zone.
-
-### Document findings
-
-Take photos and complete the incident form.
+::: sequence
+:: First
+Text
+:: Second
+Text
+:::
 ```
 
-**Variants:**
-- `style`: `numbered | timeline | none`
-- `orientation`: `vertical | horizontal`
-- `alignment`: `left | center | right`, controls text alignment within steps.
-- `distribution`: `uniform | scaled`, controls spacing between steps.
-- `scrollable` (boolean), whether the sequence is scrollable.
+## sequence-item
 
-Bulleted and numbered lists inside steps keep their text aligned to the start of
-the reading direction, with hanging indents for wrapped lines. Step headings and
-paragraphs retain the chosen alignment.
+Put one step or event inside a sequence. See the [example](../examples/patterns/guided-reading.prax).
+
+Start an item with `:: Title`. Its title is required. The next item or container closer ends it. Close nested blocks before the next item.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
+
+## cards
+
+Group short entries or reveal answers on card backs. See the [example](../examples/patterns/flashcard-drill.prax).
+
+The subject is an optional group title. Item titles are optional. A bare `::` starts an untitled card. Cards can hold prose, images and nested blocks. Each card can have one back face. At least one item is required.
+
+For flip cards, follow [ask before revealing an answer](../skill/learners.md#ask-before-revealing-an-answer) and [keep required content visible](../skill/learners.md#keep-required-content-visible).
+
+Recall cards keep the prompt visible. "I have my answer" reveals the answer below it; "Hide answer" conceals it again. Revealing a card in the slides layout records its existing viewed completion credit; hiding the answer does not remove that credit. Without JavaScript and in print, all prompts and answers remain visible. Recall cards use the unboxed reading treatment.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
+
+| Setting | Values | Default | Purpose |
+|---|---|---|---|
+| `layout` | `grid`, `masonry`, `slides`, `rows` | `grid` | Select the layout. |
+| `style` | `none`, `outline`, `shaded`, `primary`, `secondary` | `none` | Select the style. |
+| `color` | `primary`, `secondary` | Omitted | Colour override. A primary or secondary style takes precedence. |
+| `shadow` | `theme`, `none`, `subtle`, `elevated` | `theme` | Select the shadow. |
+| `columns` | integer, at least 2, at most 4 | Omitted | Authored grid column count. Other counts are refused and the diagnostic names the line. |
+| `media` | `inset`, `flush` | Omitted | Select the media. |
+| `advance` | number, at least 0 | Omitted | Seconds between cards in a learner-started playthrough with `layout=slides` and at least two cards. Zero disables the playthrough. |
+| `transition` | `none`, `fade`, `slide`, `zoom` | `fade` | Select the transition. |
+| `showProgress` | `true`, `false` | Omitted | Select the showProgress. |
+| `shuffle` | `true`, `false` | Omitted | Shuffle response entries or items. |
+| `trackCompletion` | `true`, `false` | Omitted | Track viewed cards. |
+| `headings` | `true`, `false` | Omitted | Show card headings. |
+
+`advance=N` never starts on load and never loops. In Pages and slides without playable narration, "Play cards" starts from the current card, or the first card when the last is showing. "Pause cards", manual navigation, or reaching the last card stops the pass. The control changes its command name to "Pause cards" while playing. French uses "Lire les cartes" and "Mettre les cartes en pause".
+
+In a [module deck](module-deck.md), a slide with narration audio uses the narration controls instead. Cards turn every N seconds while narration plays and automatic advancement is enabled in More. Pausing narration or turning that setting off stops the cards. Resuming narration waits a fresh N seconds from the current card. Narration ending stops the pass. Narration cues targeting individual cards take precedence over `advance`. Word timings for a whole cards block highlight the Transcript and leave the playthrough active.
+
+Automatic turns announce the card position through the same channel as manual navigation and keep focus in place. A pass stops before hiding focused card content or disabling its focused Next control. Reduced motion makes each turn instant. Without JavaScript and in print, all cards remain readable and the playthrough control is absent.
+
+```prax
+# Example
+
+::: cards
+::
+Text
+::
+Text
+:::
+```
+
+## cards-item
+
+Put one entry inside a cards block. See the [example](../examples/patterns/flashcard-drill.prax).
+
+Start an item with `::`. Its title is optional. The next item or container closer ends it. Close nested blocks before the next item.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
+
+## back
+
+Add the answer or reverse side of a card. See the [example](../examples/patterns/flashcard-drill.prax).
+
+Open a card's back face with `::: back` and close it with `:::`. It has no subject or parts. Each card accepts at most one back face. Close the back before the next card or the container closer.
+
+Follow [ask before revealing an answer](../skill/learners.md#ask-before-revealing-an-answer) when writing the front and back.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
+
+```prax
+# Terms
+
+::: cards Safety terms {layout=slides}
+:: Lockout/tagout
+What does it mean?
+::: back
+Isolate energy before maintenance.
+:::
+:: Confined space
+When do you need a permit?
+::: back
+When the atmosphere or exit is hazardous.
+:::
+:::
+```
 
 ## comparison
 
-Comparison of two text or image items.
+Compare two versions or approaches. See the [example](../examples/full-featured.prax).
 
-Each item owns the blocks between its heading and the next item heading.
-Descriptions and media stay inside their respective columns. `close: comparison`
-ends the comparison before following prose. Serialization preserves these children
-and writes an explicit closing marker for heading-based containers.
+The subject is an optional group title. Write exactly two items. Their titles are optional. Use slider for an image comparison or side-by-side for adjacent content.
 
-**Syntax (side-by-side text):**
-```prax
-### Before
-as: comparison
-layout: side-by-side
+[Shared block settings](blocks.md#shared-block-settings) apply.
 
-Manual triage with paper forms.
-
-### After
-
-Automated triage with digital checklists.
-```
-
-The two authored headings label the columns. Preset labels such as “Option A” / “Option B”
-or “Before” / “After” are used only when a stored column has no authored heading; authored
-headings always win while keeping the preset accent rule.
-
-**Syntax (image slider):**
-```prax
-### Before renovation
-as: comparison
-layout: slider
-
-/assets/before.jpg
-alt: Office before renovation
-
-### After renovation
-
-/assets/after.jpg
-alt: Office after renovation
-```
-
-Image sliders are authored with `as: comparison` and `layout: slider`. There is no separate public `as: imageComparison` block.
-
-The `slider` layout renders an interactive drag handle that reveals the before/after images. Supports keyboard (arrow keys) and pointer drag. Includes ARIA `role="slider"`.
-
-**Variants:**
-- `layout`: `side-by-side | slider`
-
-Stored comparison image records accept `altText` or `alt` in preview and export.
-When both keys are present, `altText` takes precedence. Missing decorative flags
-continue to mean informative images that require a description.
-
-## card
-
-Unified card container for static cards, carousels, and flip cards. Use `close: card` to mark the end of the group explicitly.
-
-Images on either card face use the same accessibility rules as images outside cards.
-Provide `alt:` for informative images or `decorative: true` for pictures that convey
-no information. Decorative pictures do not require alt text and do not block export.
-These rules also apply to images nested in tabs, accordions, sequences and columns.
-
-
-When a card container is opened from a heading, that heading is the card group title. It is rendered around the group, not inside an individual card face.
-
-Card items are created by headings one level below the group heading. For a `##` card group, each `###` heading starts a new card item. The item heading becomes the card label/header. It is not part of the flippable front or back face.
-
-**Syntax:**
-```prax
-## Safety Concepts
-as: card
-layout: slides
-transition: slide
-showProgress: true
-
-### Hazard Identification
-
-Recognize potential injury sources before work begins.
-
-card: back
-Start with the task, environment, tools, and materials. Document anything with harm potential.
-
-### Risk Control
-
-Apply controls in order: elimination, substitution, engineering controls, administrative controls, then PPE.
-
-card: back
-Use the hierarchy of controls to choose the strongest feasible mitigation.
-
-close: card
-```
-
-**Parameters:**
-- `layout`: `grid | masonry | slides | rows`, card presentation mode.
-- `width`: `narrow | wide | full | breakout`, container width, independent of card presentation.
-- `media`: `inset | flush`, move the first front child before the item title when it is an image. Omit to keep existing child placement. `inset` pads the image; `flush` reaches the card edges. Captions travel with the image. Works in each layout and on flip-card fronts; back content is unchanged.
-- `columns` (number), number of columns when `layout` is `grid` or `masonry`.
-- `headingLevel` (`2` to `6`). Sets the heading level for item labels in a standalone `as: card` group. When omitted, the first item heading determines the level.
-- `headings` (boolean). Controls whether item labels participate in heading navigation. The default is `true`; use `false` for presentation-only or storytelling cards.
-- `style`: `none | outline | shaded | primary | secondary`, surface treatment across grid, masonry, single-card decks and flip faces. `none` removes surface chrome; `outline` is transparent with a border; `shaded` uses the neutral surface; `primary` and `secondary` use their brand tints. Legacy `filled` aliases `shaded`; `accent` aliases `primary`. Old `filled`/`shaded`/`accent` plus `color: primary` or `color: secondary` is accepted and serialized as the corresponding named style.
-- `shadow`: `theme | none | subtle | elevated`, card depth treatment.
-- `advance` (number, seconds), auto-advance interval for `layout: slides`; `0` = manual.
-- `transition`: `none | fade | slide | zoom`, transition style for `layout: slides`.
-
-  Fade, slide and zoom fade outgoing text out over 120ms, then fade incoming text in
-  over 180ms. Slide keeps its horizontal movement and zoom keeps its scale effect.
-  `none` and reduced motion show the active card immediately. The default remains
-  `fade`; existing authored transition values are unchanged.
-- `showProgress` (boolean), show pagination/progress controls in `layout: slides`.
-- `shuffle` (boolean), randomize card item order.
-- `trackCompletion` (boolean), track learner interaction/completion for `layout: slides` only.
-
-Compatibility: `as: flashcard` is an alias for `as: card`; either `close: flashcard` or `close: card` closes it. New content should use `card`.
-
-Use `card: back` to mark the back face of an item. Content before `card: back` is the front face. An item heading alone is a valid front face; no body text or separating blank line is required.
-
-In a standalone card group, omit `headingLevel` to let the first item heading set
-the item level. `card: back` ends parameter collection immediately, so this
-example needs no blank line between the heading and back marker:
+| Setting | Values | Default | Purpose |
+|---|---|---|---|
+| `layout` | `slider`, `side-by-side` | `side-by-side` | Select the layout. |
 
 ```prax
-as: card
-layout: slides
+# Example
 
-## PPE
-card: back
-Personal protective equipment.
-
-## Hazard
-card: back
-A source of potential harm.
-
-close: card
+::: comparison
+::
+Text
+::
+Text
+:::
 ```
 
-Generated narration reads each card front and then its back as separate clips. With Follow
-narration enabled, playback and seeking reveal the exact card face, including in shuffled
-layouts and without sentence timings. Narration follows authored item order. Single-card
-layouts advance to the next narrated item at its clip boundary. Manual card navigation or
-flipping pauses narration without changing the Follow preference. Play resumes at the current
-audio position and restores the narrated face when Follow is enabled. Narration does not move
-keyboard focus. Starting a module-deck slide from its beginning resets its cards before the
-introduction plays, without clearing completion progress. Resuming partway through a clip does
-not rewind the cards.
-Card auto-advance timers wait while their container is being narrated. Manual card browsing
-stops the authored timer for that mounted session; narration can still advance cards. Automatic reveals do
-not count as learner flips or grant completion. Older custom aggregate scripts remain intact
-and do not acquire invented front/back boundaries.
+## comparison-item
 
-Card item headings keep the level authored in `.prax`. For example, a `##` card group with `###` items renders those labels as `<h3>`. To make standalone card items page-level sections, set `headingLevel: 2` and author each item with `##`. Use `headings: false` when labels should remain visual labels rather than document headings.
+Put one version inside a comparison. See the [example](../examples/full-featured.prax).
+
+Start an item with `::`. Its title is optional. The next item or container closer ends it. Close nested blocks before the next item.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
+
+## columns
+
+Place related content side by side. See the [example](../examples/patterns/image-layouts.prax).
+
+The subject is an optional group title. Item titles are optional. Set weight on each item to control relative widths. Two columns with weights 2 and 1 divide the available width in that ratio. At least one item is required.
+
+[Shared block settings](blocks.md#shared-block-settings) apply.
 
 ```prax
-as: card
-headingLevel: 2
-style: outline
+# Example
 
-## Who has been left behind?
-Identify the groups facing the greatest need.
-
-## Which standards are at stake?
-Identify the affected housing standards.
-
-close: card
+::: columns
+::
+Text
+::
+Text
+:::
 ```
 
-Do not put the next item heading immediately after `card: back` if you intend that heading to appear on the back face. A same-level item heading starts the next card. Use paragraph text or a lower-level heading for back-face content.
+## columns-item
 
-`as: flashcard` is a deprecated parser alias for `as: card` and should not be used for new content.
+Put related content inside one column. See the [example](../examples/patterns/image-layouts.prax).
 
-**Flip-card syntax (`card: back`):**
-```prax
-## Safety Terms
-as: card
-layout: slides
-style: outline
+Start an item with `::`. Its title is optional. The next item or container closer ends it. Close nested blocks before the next item.
 
-### What is lockout/tagout?
-Energy isolation before maintenance on energized equipment.
+[Shared block settings](blocks.md#shared-block-settings) apply.
 
-card: back
-#### Answer
-A formal energy-isolation procedure required before servicing machinery.
-
-### When is a confined space permit required?
-
-Before entering any space with limited entry/exit and potential hazardous atmosphere.
-
-card: back
-#### Answer
-Permits are required when atmospheric or entrapment risks are present.
-
-close: card
-```
-
-**Headingless single-card syntax:**
-```prax
-as: card
-layout: slides
-style: outline
-
-/assets/control-panel.png
-alt: Control panel with emergency stop highlighted
-
-card: back
-This panel includes the emergency stop, lockout point, and status indicator.
-
-close: card
-```
-
-Headingless `as: card` is useful for a single card whose front face is image or paragraph content. Multiple cards in one group currently need item headings; another standalone `as: card` inside an open card creates a nested card, not a sibling card item.
-
-### Card rows and image framing
-
-Use `layout: rows` for unordered rich chunks with labels beside their bodies. Rows retain the item heading levels and source order, use a subtle separator, and stack the label above the body when their container is narrow. `columns` does not affect rows. Cards with back content retain their flip interaction as full-width rows.
-
-```prax
-as: card
-layout: rows
-style: none
-
-### Host
-Check the room booking before you send the invite.
-
-### Guest
-Use the latest invite to find the time and room.
-
-close: card
-```
-
-For image-led cards, set `media: flush` or `media: inset` on the card and author the image as the first child of each front. Use image `ratio` and `fit` only when a shared frame is useful. `fit: contain` keeps the whole image visible; `fit: cover` explicitly crops it. Other children keep their order. If the first child is not an image, media placement has no effect.
-
-## Nesting rules
-
-- Containers may include content blocks and assessments as children.
-- Avoid deeply nested multi-container chains for readability.
-- Page breaks (`---`) and the end of the file close all open containers automatically.
-
-## Closing rules
-
-All containers accept an explicit closer. Page breaks and the end of
-file also close every open container; an omitted closer is not a syntax error.
-Use explicit closers when following content should sit outside a container on the
-same page. Additional boundaries depend on the container:
-
-| Container | Explicit closer | Other boundaries on the same page |
-|---|---|---|
-| `accordion` / `tab` | `close: accordion` / `close: tab` | A higher-level heading, or a same-level heading declaring another block type |
-| `col` | `close: col` | The next `as: col` starts a sibling column; ordinary headings remain inside the column |
-| `assessment-group` | `close: assessment-group` | Ordinary headings do not end the group |
-| `card` | `close: card` | A heading above the card item level, or an item-level heading declaring another block type |
-| `sequence` | `close: sequence` | A higher-level heading, or a same-level heading declaring another block type |
-| `comparison` | `close: comparison` | A higher-level heading, or a same-level heading declaring another block type; the second item does not automatically close the group |
-
-Same-level headings without a different `as:` declaration add items to heading-based
-containers. Use an explicit closer before following prose or columns that belong
-outside the group. `close: tabs` remains accepted as an alias for `close: tab`.
+| Setting | Values | Default | Purpose |
+|---|---|---|---|
+| `weight` | number, above 0 | Omitted | Relative column width. Any finite positive number, including fractions. |
