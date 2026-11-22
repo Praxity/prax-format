@@ -1,196 +1,84 @@
-# Course manifest (`course.yaml`)
+# Course manifest
 
-A `.prax` course can be a single file or a multi-file project. Multi-file courses use a `course.yaml` manifest to define lesson order, course metadata, and design overrides.
-
-## Folder structure
-
-```
-safety-training/              <- course folder
-  course.yaml                 <- manifest (required)
-  assets/                     <- course-level assets
-    hero.webp
-  intro.prax                  <- lesson file
-  hazards.prax                <- lesson file
-  emergency.prax              <- lesson file
-```
-
-Each `.prax` file in the folder is a standalone lesson. Pages within a lesson are separated by `---` as usual.
-
-## Schema
+Use course.yaml to order lessons and share metadata, design and dialogue speakers. Each lesson's pages start with # headings. Keep media in an assets folder beside the manifest.
 
 ```yaml
-title: Safety Training Fundamentals
-id: 4b827bfd-f5ea-4ba6-a8aa-5fb5113cdef4
-description: Comprehensive workplace safety program
+title: Workplace safety
+description: Prepare for a safe shift
 locale: en
-theme: brand-theme
+moduleDeck: false
 narrationEnabled: true
-
 cast:
   alex:
     name: Alex
     avatar: assets/alex.png
     voice: v1
     side: start
-
+  sam:
+    name: Sam
+    side: end
 lessons:
   - intro.prax
   - hazards.prax
-  - emergency.prax
-
 design:
-  palette: waves
-  accentHue: 200
-  density: comfortable
+  palette: standard
   navArchetype: sidebar
 ```
 
-### Fields
+| Field | Type | Meaning |
+|---|---|---|
+| title | string | Course title |
+| description | string | Optional course description |
+| locale | string | Default language, such as en or fr |
+| courseHomeUrl | string | HTML export destination for glossary and Pages/Guided course-return actions. Defaults to `index.html`. Accepts a relative URL or an absolute HTTPS URL. |
+| theme | string | Optional shared or built-in theme name |
+| moduleDeck | boolean | Guided-slide playback. Omitted means false. See [module decks](module-deck.md). |
+| narrationEnabled | boolean | Enable narration unless a lesson overrides it in the narration sidecar |
+| cast | mapping | Shared speakers keyed by identifier |
+| lessons | string array | Lesson filenames in course order. Omitted or empty discovers files alphabetically. |
+| design | mapping | [Presentation overrides](frontmatter-design.md) shared by lessons |
 
-| Field | Type | Required | Default | Description |
-|-------|------|----------|---------|-------------|
-| `title` | string | yes | `""` | Course title |
-| `id` | string | no | Studio-generated | Stable, non-sensitive course identity used for learner state. Preserve it after Studio adds it. |
-| `description` | string | no | | Course description |
-| `locale` | string | no | inherited | Default locale (`en`, `fr`, etc.) |
-| `theme` | string | no | | Theme name from `shared/themes/` or built-in |
-| `moduleDeck` | boolean | no | `false` | Studio module-deck playback; set in Design. See [module-deck.md](module-deck.md). |
-| `narrationEnabled` | boolean | no | `false` | Enables block-level narration unless a lesson overrides it |
-| `cast` | object | no | `{}` | Shared dialogue speakers keyed by identifier. See [course cast](#course-cast). |
-| `lessons` | string[] | recommended | auto-discovered | Ordered list of `.prax` lesson filenames. Omitted or empty lists discover files alphabetically. |
-| `design` | object | no | `{}` | Design overrides (same keys as frontmatter `design:`) |
+Identity is stored in [.praxity/identity/](content-identity.md), outside authored YAML and .prax source. Preserve the sidecars when editing or backing up a course.
 
-### `lessons` list
+## Lesson order and navigation
 
-The `lessons` array is the canonical lesson order. It determines:
+List each .prax lesson filename in lessons. HTML and SCORM exports follow that order. Lesson links use frontmatter title and open the lesson's first page. Previous and Next cross lesson boundaries. SCORM exports remain one package with one SCO and one course completion record.
 
-- Navigation order in the published course
-- File tree display order in the editor
-- Export assembly order
+The glossary collects terms across listed lessons. It opens separately and contributes no progress or completion. See [inline formatting](inline-formatting.md).
 
-Each entry names a file in the same folder as `course.yaml`.
+Set `courseHomeUrl: ../overview/` or `courseHomeUrl: https://example.org/courses/safety/`
+to return learners to your site's course page from the glossary's "Back to the course"
+link and the Pages and Guided "Back to course" actions. Relative URLs resolve from
+the exported HTML document. Root-relative paths,
+queries and fragments are allowed. Empty values, protocol-relative URLs such as
+`//example.org/`, backslashes, control characters and schemes other than HTTPS
+are refused with a message naming `courseHomeUrl`. SCORM, xAPI and PDF ignore the
+destination. Validation applies whenever the manifest is read: an invalid value
+prevents the course from loading in Studio or CLI commands, including non-HTML
+exports. Correct or remove the field in `course.yaml` to load it again. CLI refusal
+messages use `--lang`, independently of the course's `locale`. Omit the field to keep
+the existing `index.html` links.
 
-Full-course HTML and SCORM exports list every lesson in this order. Each lesson link
-uses that file's frontmatter `title` and opens its first page. Only the current lesson
-shows its nested page links. There are no lesson disclosure controls, and learners may
-visit other lessons freely.
+## Course cast
 
-Previous and Next follow one sequence across all lesson pages. At a forward lesson
-boundary the action reads `Continue to [lesson title]`; Previous returns to the prior
-lesson's final page. Position labels show the current module and its local page count,
-for example `Module 3 of 6 · Page 4 of 11`. Bookmarking resumes the exact page.
-SCORM exports remain one package with one SCO and one course completion record.
+Cast keys start with a letter and use letters, digits, underscores or hyphens. Each entry needs a nonempty name. Avatar, voice and side are optional. Avatar points to a project asset; remote URLs warn. Side is start or end. Invalid sides warn and are ignored. Without a side, the first speaker appears at start and other speakers at end.
 
-The glossary collects inline terms from every listed lesson. Its link sits outside the
-lesson list and opens a new tab, leaving the current course page in place. The glossary
-does not start an LMS session or contribute to progress, completion, or Previous/Next.
-Electron preview opens the same glossary in a separate protected window.
-
-### Stable course identity
-
-Studio adds `id` to a valid manifest when it first opens the course. The value stays the same
-across preview regeneration and publishing so learner state remains attached to the course.
-Preserve it when editing the manifest. Do not reuse it for a copied course that should have
-independent learner state.
-
-### `design` overrides
-
-Studio usage and YAML placement are explained in [Studio Help](https://praxity.io/en/help/studio/yaml-settings).
-
-The `design` object accepts the same keys as lesson frontmatter `design:`. See [frontmatter-design.md](frontmatter-design.md) for all options. Course-level design applies to every lesson unless a lesson's own frontmatter overrides it.
-
-### Course cast
-
-Use `cast` to share speakers across lessons. Each key starts with a letter and
-contains only letters, digits, `_`, or `-`. Studio matches keys without regard to
-case. Each speaker needs a nonempty `name`; `avatar`, `voice`, and `side` are optional.
-An avatar must point to a project asset. Remote avatar URLs produce a warning.
-`side` accepts `start` or `end`; invalid sides produce a warning and Studio ignores them.
-
-A dialogue's local `speaker:` declaration overrides only the cast fields it sets.
-Use local `avatar: none` to hide an inherited portrait. Without an authored side,
-the first speaker uses start and other speakers use end. An undeclared speaker
-produces a warning and displays its key as the name. Studio preserves invalid
-cast entries in the manifest so authors can correct them.
-
-See [dialogue syntax](blocks-content.md#dialogue) for turns and local declarations,
-and [CLI course cast](../cli.md#course-cast) for a complete YAML example.
+Dialogue turns use these keys and match them without regard to case. Local speaker declarations are not supported. The [example manifest](../examples/patterns/course.yaml) supplies cast for both dialogue patterns. See [dialogue](blocks-content.md#dialogue), the [dialogue pattern](../examples/patterns/dialogue.prax) and the [CLI cast example](../cli.md#course-cast).
 
 ## Settings inheritance
 
-Settings cascade from workspace to course to lesson:
+Lesson lang overrides course locale, then workspace defaultLocale. The fallback is en. Each published lesson uses its resolved language for learner controls.
 
-```
-workspace.praxity.yaml  (defaultTheme, defaultLocale)
-  | overridden by
-course.yaml             (theme, locale, design)
-  | overridden by
-lesson frontmatter      (lang, design overrides)
-```
+`praxity inspect <course> --schema 1` preserves this distinction in its
+[language provenance](../cli.md#language-provenance). `course.locale` retains its
+`en` fallback for compatibility; `course.language.declared` is `null` and its
+`source` is `default` when the manifest omits `locale`. Each lesson's `language`
+reports its resolved `value` and whether it came from `lesson`, `course` or
+`default`. Inspect does not load workspace defaults and explicitly reports
+`course.language.workspaceContext: "unavailable"`; it never claims a workspace
+source. These fields are additive within inspect projection 2. They record
+declarations, not language detection.
 
-A lesson's frontmatter `design:` block takes highest precedence. The nested `deck` options merge per key. If absent, the course-level `design:` from `course.yaml` applies. If that's also absent, workspace defaults apply.
+Lesson frontmatter design overrides course design, then workspace defaults. Nested deck settings merge per key. See [frontmatter](document-structure.md#frontmatter) and [frontmatter design](frontmatter-design.md).
 
-For language, lesson `lang` overrides course `locale`, which overrides workspace
-`defaultLocale`. Studio uses `en` when all three are absent. Each lesson's language
-applies to its published pages and learner controls. See
-[lesson language](document-structure.md#frontmatter).
-
-`course.yaml` may enable narration for the course with `narrationEnabled`. Lesson enablement,
-generation defaults, scripts, anchors, and assets live in the Studio-managed `narration.yaml`
-sidecar rather than lesson frontmatter.
-
-## Manifest integrity
-
-`course.yaml` is the source of truth. File operations must keep it in sync:
-
-| Operation | Manifest update |
-|-----------|-----------------|
-| Rename a `.prax` file | Update the filename in `lessons:` |
-| Delete a `.prax` file | Remove from `lessons:` |
-| Create a new `.prax` file | Append to `lessons:` |
-| Drag a `.prax` file into course | Append to `lessons:` |
-
-### Invalid state handling
-
-| Condition | Behavior |
-|-----------|----------|
-| `lessons:` references a file that doesn't exist | Skip on export, warn in editor |
-| `.prax` file on disk but not in `lessons:` | Shown dimmed as "(unlisted)" in editor |
-| Duplicate entry in `lessons:` | Deduplicated on load, first occurrence kept |
-| `course.yaml` missing | Folder treated as non-course |
-| Missing or empty `lessons:` list | Auto-discover `.prax` files alphabetically |
-
-## Lesson files
-
-Each lesson file is a standalone `.prax` document. Frontmatter is optional:
-
-```
----
-title: Introduction to Safety
-kicker: Module 1
----
-
-Welcome to the safety training program.
-
----
-
-## Why Safety Matters
-
-Content for page 2...
-```
-
-The `title:` in lesson frontmatter is the canonical lesson title. If absent, the filename (minus `.prax`) is the fallback.
-
-Lesson `kicker:` text is excluded from the multi-file course outline. Include a label such
-as `Module 1:` in the lesson `title:` when wanted. Single-lesson exports retain their flat
-page outline and existing kicker treatment.
-
-Each file defines one lesson. `# H1` creates a content heading within that lesson.
-
-## Standalone course (no workspace)
-
-A course folder works without a parent `workspace.praxity.yaml`. The user opens the course folder directly. Set `theme` and `locale` in `course.yaml` when workspace defaults are unavailable.
-
-## Single-file courses
-
-A single `.prax` file without a `course.yaml` is still valid. Pages are separated by `---` breaks. Use `# H1` for a content title. Studio treats the entire file as one course. No manifest needed. This is the simpler model for quick courses.
+Scripts, narration anchors and audio assets are linked through narration.yaml. They do not belong in .prax blocks. Keep the whole project folder for preview and export.

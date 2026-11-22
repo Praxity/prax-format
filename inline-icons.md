@@ -1,28 +1,16 @@
 # Inline icons
 
-Use `@icon{...}` to place a Tabler icon in formatted prose:
+Use `@icon{mail}` in formatted learner text. Keep a visible label beside the icon.
 
 ```prax
+# Contact support
+
 Contact support @icon{mail} or use @icon{IconMail}.
 Use @icon{IconMailFilled} for the filled variant.
 ```
 
-Names may be a kebab-case Tabler name (`mail`, `arrow-right`, or
-`mail-filled`) or the corresponding Tabler export name (`IconMail`,
-`IconArrowRight`, or `IconMailFilled`). The export name is useful when the
-outline and filled exports share a base name. An unknown name remains literal
-text so a typo cannot silently become a different icon.
+Names accept kebab-case Tabler names such as mail, arrow-right and mail-filled, or export names such as IconMail and IconArrowRight. Unknown names remain literal text. Code spans keep the syntax literal.
 
-Icons are decorative (`aria-hidden="true"`) and inherit the surrounding text
-colour at `1em`. Give an icon-only idea a visible text label; do not rely on an
-icon as the only cue for meaning. Icon syntax inside backtick code spans stays
-literal.
+Icons are decorative, hidden from assistive technology, and inherit the text colour at 1em. They work in [formatted learner fields](reference/inline-formatting.md#where-formatting-works), including link labels and doodles. They cannot supply an accessible name alone.
 
-Icons also work in the formatted display fields listed in
-[Inline formatting](reference/inline-formatting.md#where-formatting-works), including
-captions, table cells and container labels. An icon can sit inside a Markdown
-link label or doodle. The surrounding text still supplies the meaning.
-
-Published output embeds only the validated path data for icons used by the
-course. It is rendered as local static SVG after HTML sanitization and does
-not load Tabler or an icon CDN at learner runtime.
+Published output embeds validated SVG path data for the icons used by the course. It needs no icon CDN. A [note's icon setting](reference/blocks-content.md#note) uses a lowercase Tabler name; omission uses the tone's default, and icon=none hides it.

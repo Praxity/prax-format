@@ -1,59 +1,73 @@
 # Block index
 
-This index lists every authoring keyword in Studio's block manifest. It is generated from Studio's block manifest, so it always matches the parser. Edit the reference pages, not this file.
+Grammar 4 uses explicit blocks and Markdown content. [blocks.json](blocks.json) is generated from the grammar-4 schema. It includes types, settings, parts, body constraints, templates and conversion declarations. Never edit the JSON by hand. Regenerate it from Studio's repository:
 
-| Block | Category | Syntax | Reference |
+```sh
+node docs/prax-format/scripts/generate-block-index.mjs
+```
+
+| Topic | Reference |
+|---|---|
+| Content and media | [Content blocks](blocks-content.md) |
+| Items and back faces | [Item containers](blocks-containers.md) |
+| Questions and groups | [Questions and groups](blocks-assessments.md) |
+| Tasks, retrieval sheets, highlight practice, write-distractors, signatures and rules | [Interactive blocks](blocks-interactive.md) |
+
+`blocks` lists the main block definitions. `childDefinitions` describes additional
+child-only nodes. A child definition is permitted only where its parent lists it
+in `allowedChildren`; `back` is allowed only in a cards item, at most once.
+
+## Shared block settings
+
+These settings apply to blocks, images, headings, dividers, items and back faces when their reference section links here. Page and rule settings are listed separately. Keys are case-sensitive. Boolean keys can stand alone for true.
+
+| Setting | Values | Default | Purpose |
 |---|---|---|---|
-| text | Content | `paragraph text` | [blocks-content.md#text](blocks-content.md#text) |
-| heading | Content | `## Heading` | [blocks-content.md#heading](blocks-content.md#heading) |
-| image | Content | `/assets/image.png` | [blocks-content.md#image](blocks-content.md#image) |
-| video | Content | `/assets/video.mp4` | [blocks-content.md#video](blocks-content.md#video) |
-| audio | Content | `/assets/audio.mp3` | [blocks-content.md#audio](blocks-content.md#audio) |
-| divider | Content | `--` | [blocks-content.md#divider](blocks-content.md#divider) |
-| embed | Content | `as: embed` | [blocks-content.md#embed](blocks-content.md#embed) |
-| bookmark | Content | `as: bookmark` | [blocks-content.md#bookmark](blocks-content.md#bookmark) |
-| note | Content | `as: note` | [blocks-content.md#note](blocks-content.md#note) |
-| quote | Content | `> quote` | [blocks-content.md#quote](blocks-content.md#quote) |
-| dialogue | Content | `- key: words + as: dialogue` | [blocks-content.md#dialogue](blocks-content.md#dialogue) |
-| code | Content | `fenced code block` | [blocks-content.md#code](blocks-content.md#code) |
-| equation | Content | `$$` | [blocks-content.md#equation](blocks-content.md#equation) |
-| button | Content | `[label](url) + as: button` | [blocks-content.md#button](blocks-content.md#button) |
-| data-table | Content | `\| table \|` | [blocks-content.md#data-table](blocks-content.md#data-table) |
-| stats | Content | `\| value \| label \| + as: stats` | [blocks-content.md#stats](blocks-content.md#stats) |
-| accordion | Container | `as: accordion` | [blocks-containers.md#accordion](blocks-containers.md#accordion) |
-| tabs | Container | `as: tab` | [blocks-containers.md#tabs](blocks-containers.md#tabs) |
-| columns | Container | `as: col` | [blocks-containers.md#columns](blocks-containers.md#columns) |
-| card | Container | `as: card` | [blocks-containers.md#card](blocks-containers.md#card) |
-| sequence | Container | `as: sequence` | [blocks-containers.md#sequence](blocks-containers.md#sequence) |
-| comparison | Container | `as: comparison` | [blocks-containers.md#comparison](blocks-containers.md#comparison) |
-| choose-one | Assessment | `as: choice + (x)/( )` | [blocks-assessments.md#choose-one](blocks-assessments.md#choose-one) |
-| choose-many | Assessment | `as: choice + [x]/[ ]` | [blocks-assessments.md#choose-many](blocks-assessments.md#choose-many) |
-| match | Assessment | `as: match` | [blocks-assessments.md#match](blocks-assessments.md#match) |
-| order | Assessment | `as: order` | [blocks-assessments.md#order](blocks-assessments.md#order) |
-| free-response | Assessment | `as: free-response` | [blocks-assessments.md#free-response](blocks-assessments.md#free-response) |
-| hotspot | Assessment | `as: hotspot` | [blocks-assessments.md#hotspot](blocks-assessments.md#hotspot) |
-| rate | Assessment | `as: rating` | [blocks-assessments.md#rate](blocks-assessments.md#rate) |
-| fill-blank | Assessment | `as: fill-blank` | [blocks-assessments.md#fill-blank](blocks-assessments.md#fill-blank) |
-| categorize | Assessment | `as: categorize` | [blocks-assessments.md#categorize](blocks-assessments.md#categorize) |
-| matrix | Assessment | `as: matrix` | [blocks-assessments.md#matrix](blocks-assessments.md#matrix) |
-| assessment-group | Assessment | `as: assessment-group` | [blocks-assessments.md#assessment-group](blocks-assessments.md#assessment-group) |
-| checklist | Interactive | `as: checklist` | [blocks-interactive.md#checklist](blocks-interactive.md#checklist) |
-| signature | Interactive | `as: signature` | [blocks-interactive.md#signature](blocks-interactive.md#signature) |
+| `width` | `narrow`, `wide`, `full`, `breakout` | Omitted | Outer block width. |
+| `name` | name | Omitted | Human logic name. Start with an ASCII letter; continue with letters, digits or hyphens. Case-sensitive. |
+| `hide` | `true`, `false` | Omitted | Hide the block initially. |
+| `visible` | string | Omitted | Visibility condition. Quote expressions containing spaces. |
+| `entrance` | `none`, `fade`, `slide`, `scale` | `none` | Entrance animation. |
+| `level` | integer, at least 1, at most 6 | Omitted | Heading level override. |
 
-For matrix syntax, use a heading prompt, numbered scale points, and bullet-list statements.
+## Safe links and media URLs
 
-## Parameters that are not applied yet
+Button and bookmark links, quote sources, and image, audio and video sources accept relative paths, fragments, and `http:`, `https:`, `mailto:` and `tel:` URLs. Image, audio and video sources also accept raster image `data:` URLs (`data:image/` followed by any type except `svg+xml`). Studio reads the scheme as browsers do, ignoring leading control characters and any tab or line break, and reports every other scheme as an error.
 
-These parse and validate, so a course using them stays valid, but nothing reads
-them and they make no difference to exported output. They are listed so the
-spec does not promise behaviour the exporter does not deliver.
+## Shared question settings and parts
 
-- `colors`
-- `competency`
-- `confidence`
-- `retrieval`
-- `timed`
-- `visual`
+These settings and parts apply to choice, match, order, categorize, fill-blank, free-response, rating, matrix and hotspot. A group's settings are listed separately.
 
-See `blocks.json` for the full per-block parameter list, including which
-parameters each block accepts.
+| Setting | Values | Default | Purpose |
+|---|---|---|---|
+| `points` | number, at least 0 | Omitted | Question score weight. |
+| `required` | `true`, `false` | Omitted | Require completion. |
+| `attempts` | integer, at least 0 | Omitted | Attempt limit. Zero allows unlimited attempts. |
+| `shuffle` | `true`, `false` | Omitted | Shuffle response entries or items. |
+| `scored` | `true`, `false` | Omitted | Include checked answers in scoring. A choice with no correct option remains ungraded. |
+| `feedbackMode` | `retry`, `reveal` | Omitted | Retry keeps answers hidden; reveal can show them. |
+| `display` | `standard`, `scenario` | Omitted | Question presentation. |
+| `deckGate` | `attempt`, `pass` | Omitted | Guided-slide release rule. A pass gate requires an automatically checked answer. |
+
+| Part | Learner text |
+|---|---|
+| `correct:` | Feedback after a correct answer. |
+| `incorrect:` | Feedback after an incorrect answer. |
+| `feedback:` | General question feedback when no result-specific or option feedback applies. |
+
+Question parts precede response entries. See [choice feedback](blocks-assessments.md#choice) for option feedback and precedence. Omitted booleans without a schema default retain the renderer's default; omission does not always mean false.
+
+For choice, an invalid `attempts` setting, including `2.5` or the string `'2'`,
+produces the located source diagnostic `choice-invalid-attempts`. Publication,
+including native PDF, refuses this source before producing output. Studio still
+opens the project and shows this error in place of the preview until the author
+fixes the setting. Outside edits retain the last good preview, and invalid
+drafts return a refusal. The numeric value `2` remains valid. Other grammar
+diagnostics keep their existing admission policy.
+
+After an individual Check, the feedback describes the focused Try again or
+Continue action. Once the feedback reveal finishes, the feedback and focused
+action scroll into view using the nearest edge, clear of sticky navigation bars.
+Choice feedback beside selected options starts with the first selected option.
+If the feedback and action cannot fit together, the focused action takes priority.
+The action's focus ring stays fully visible. The scroll is always instant.

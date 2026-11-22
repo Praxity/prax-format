@@ -1,9 +1,6 @@
 ---
 title: Check exit routes
 lang: en
-firstPage:
-  title: Find the exits
-  deckStop: true
 design:
   deck:
     preset: transcript
@@ -11,24 +8,17 @@ design:
     slideCounter: true
 ---
 
-# Find the exits
+# Find the exits {deckStop}
 
 Locate the nearest exit and one backup route before you start work.
 
---- Practice the route
-deckStop: true
+# Check the route {deckStop}
+nav: Practice the route
 
-# Check the route
-
-## What should you do if the nearest exit is blocked?
-as: choice
-deckGate: pass
-required: true
-
+::: choice What should you do if the nearest exit is blocked? {deckGate=pass required}
 ( ) Wait beside the blocked exit
 (x) Use the backup route
-
---- Review your plan
+:::
 
 # Review your plan
 

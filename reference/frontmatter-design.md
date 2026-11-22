@@ -13,15 +13,15 @@ lang: en
 
 ## Named page styles
 
-Use frontmatter `pageStyles` for reusable page treatments, selected with `pageStyle`
-on a page break or opening H1. See [named page styles and corner artwork](document-structure.md#named-page-styles-and-corner-artwork)
+Use frontmatter `pageStyles` for reusable page treatments, selected with `{style=name}`
+on a page heading. See [named page styles and corner artwork](document-structure.md#named-page-styles-and-corner-artwork)
 for syntax, precedence, and supported properties.
 
 ## Palette and colors
 
 ```yaml
 design:
-  palette: standard
+  palette: ink
   colorMode: light
   accentHue: 220
 ```
@@ -35,19 +35,24 @@ Current Studio presets use these source values:
 
 | Source value | Studio label |
 | --- | --- |
-| `clean` | Minimal |
-| `waves` | Waves |
-| `standard` | Grove |
-| `bauhaus` | Dunes |
-| `campfire` | Campfire |
-| `darkroom` | Plum |
+| `ink` | Ink |
+| `forest` | Forest |
+| `plum` | Plum |
+| `clay` | Clay |
+| `clear` | Clear |
 
-`blueprint` and `marquee` remain supported for existing courses. Older aliases
-also normalize internally: `minimal` maps to `bauhaus`, `universal` and `ocean`
-to `blueprint`, `editorial` and `warm` to `campfire`, `bold` and `playful` to
-`marquee`, `cinematic` and `dark` to `darkroom`, `nature` to `standard`, `pastel`
-to `bauhaus`, and `corporate` to `blueprint`. Use the current source values in new
-courses; the label Minimal corresponds to `clean`, not the legacy `minimal` alias.
+Saved IDs migrate automatically: `standard`, `waves`, `clean` and `minimal` to
+Ink; `grove`, `bauhaus` and `blueprint` to Forest; `marquee` and `darkroom` to
+Plum; `campfire` and `dunes` to Clay.
+
+All presets have light and dark palettes and share the six-size type scale,
+66ch reading measure, spacing scale and radius family. Ink, Forest, Plum and
+Clay default to Sans, with Source Sans 3 for body text and headings. Clear uses
+Atkinson Hyperlegible Next throughout, with ExtraBold 800 headings. Body text uses
+400, controls use 600, and prose bold uses 700. The other pairings use 400 and 600.
+Custom themes retain their accent and paper; retired fonts and geometry settings
+adopt this structure.
+Grain, section darkness and image treatments are ignored. Images retain their files.
 
 Color tokens:
 
@@ -95,45 +100,42 @@ colour-vision-safe chart series) stay with that asset or renderer.
 These settings belong inside frontmatter `design:`. The example below shows the
 `typography` object within that design mapping.
 
-- `typography.fontDisplay`: `auto | block | swap | fallback | optional`
-- `typography.body` (font role)
-- `typography.code.fontFamily` (font family for inline code and fenced code blocks; defaults to system monospace)
-- `typography.headings` (font role plus optional `h1` through `h6` overrides)
-- `fontFamily` (ordered array of up to four family names)
-- `fontWeight`: `400 | 500 | 600 | 700 | 800`
-- `fontStyle`: `normal | italic`
-- `headingSize` (number)
-- `lineHeight` (number)
+- `typography.pairing`: `sans | book | clear`. The id is persisted with course design.
+- `typography.fontDisplay`: `auto | block | swap | fallback | optional`, default `swap`.
+
+| Pairing | English label | French label | Body | Headings |
+| --- | --- | --- | --- | --- |
+| `sans` | Sans | Sans | Source Sans 3 | Source Sans 3 |
+| `book` | Book | Livre | Source Sans 3 | Source Serif 4 |
+| `clear` | Clear | Claire | Atkinson Hyperlegible Next | Atkinson Hyperlegible Next ExtraBold (800) |
+
+Sans is the default for every palette except the Clear preset, which selects Clear.
+A saved typography without an id resolves to Sans, including the old Source Serif 4
+heading default. A legacy Atkinson Hyperlegible body resolves to Clear. An unknown
+id resolves to Sans. Only an explicit `pairing: book` selects serif headings.
 
 ```yaml
-typography:
-  fontDisplay: swap
-  body:
-    fontFamily: [Inter, "DM Sans", sans-serif]
-    fontWeight: 400
-    fontStyle: normal
-  code:
-    fontFamily: ["Fira Code", monospace]
-  headings:
-    fontFamily: [Inter, "DM Sans", sans-serif]
-    fontWeight: 600
-    fontStyle: normal
-    h1:
-      fontWeight: 700
-    h2:
-      fontFamily: [Merriweather, Inter, serif]
-      fontWeight: 500
-      fontStyle: italic
+design:
+  typography:
+    pairing: book
+    fontDisplay: swap
 ```
 
-The `headings` role supplies defaults for all six levels. Each `h1` through `h6`
-object can override any combination of family, weight, or style. Family names must
-come from Praxity's existing font catalogue; `serif`, `sans-serif`, `monospace`, and
-`system-ui` are also valid generic fallbacks. Praxity loads and packages every
-catalogue family in the ordered list. `fontDisplay` is global because it controls
-the packaged `@font-face` rules rather than an individual text element.
-If a family does not ship the exact requested face, exports embed its nearest
-available weight and style so the browser can synthesize the requested rendering.
+Normalization stores the pairing and its resolved `body`, `headings` and `code`
+roles. Body text uses weight 400. Sans and Book headings use 600; Clear headings
+use 800. These roles default to normal style.
+Code uses system monospace. Stored per-level font overrides and retired faces
+resolve to the selected pairing; they do not create another font combination.
+Inspect, export and Studio Check warn for each ignored font setting, naming its design path and the resolved pairing. Choose a different combination with `typography.pairing`; matching font settings do not warn.
+Saved Clear roles using Atkinson Hyperlegible and weight 600 headings migrate to
+Next and weight 800 silently. These settings preserve the author's Clear choice.
+Exports package each selected font locally for offline use. Clear bundles Latin
+and Latin extension WOFF2 subsets at 400, 600, 700 and 800 in normal and italic
+styles. The extension subset covers French `Ÿ`, which the Latin subset omits.
+Both ship with the SIL Open Font License. Clear uses real font files for prose
+emphasis, controls and headings, without substituting the old Atkinson face.
+Only the Latin body and heading faces are preloaded. Latin extension faces load
+through their CSS `unicode-range` when the text needs them.
 
 Published headings use one body-relative scale. `headingSize` raises that scale but
 cannot make a heading smaller than body text:
@@ -152,14 +154,30 @@ text size. The same scale applies inside columns, notes, accordions, tab panels,
 assessment cards. `lineHeight` controls leading within prose; it does not replace the
 published adjacency scale.
 
+Studio's Design panel renders numeric settings within its control ranges:
+`accentHue` 0 to 360, `headingSize` 1.6 to 3.2 rem, and `lineHeight` 1.2 to 2.
+Finite saved values outside those ranges are clamped for display. Non-numeric
+or non-finite saved values use the defaults: 2.375 rem for heading size, 1.55 for
+line height, and the default palette's hue. The panel shows a diagnostic beside
+the field. Opening the panel and editing another field preserve the saved value;
+changing that field replaces it with the chosen value.
+
 ## Spacing and layout
+
+Studio's colour fields and stored colour tokens use the same opaque colour parser.
+Three-digit hex values such as `#abc` expand to `#aabbcc`. Six-digit hex and
+numeric opaque `oklch()` values are supported. Alpha hex forms such as `#abcd`
+and `#aabbccdd` are refused with a field message; the saved colour stays unchanged.
 
 - `density`: `compact | comfortable | spacious`
 - `blockSpacing`: `compact | default | spacious`
 - `sectionGap` (number)
-- `sectionRhythmMode`: `uniform | alternate | manual`
+- `sectionRhythmMode` (retired): retained legacy metadata; export always uses uniform sections.
 - `contentMaxWidth` (number)
-- `borderRadius` (number)
+- `borderRadius` (number, retired): retained in source but ignored. Export and Check
+  report `ignored-radius-setting` once per authored course or lesson setting.
+  Look v2 uses 16 px activity cards and dialogue bubbles, 10 px controls and frames,
+  6 px letter keys and checkboxes, and 4 px marks. Images and attached edges stay square.
 
 Published content uses five body-relative rhythm tokens: `tight` (`0.825rem`), `close`
 (`1.2375rem`), `normal` (`1.65rem`), `section` (`2.475rem`), and `boundary` (`3.3rem`).
@@ -185,10 +203,9 @@ assessments, and assessment groups. Heading adjacency wins when a heading introd
 heavy block. `density` continues to control component-owned internal spacing and does
 not shrink touch targets or reading rhythm. `blockSpacing` scales the gaps while
 preserving the differences between adjacency types: `compact` uses two-thirds of
-the default spacing and `spacious` uses five-thirds. `sectionGap` controls
-alternate/manual section-band separation: values up to `3` are proportional
-multipliers; pixel-era values such as `48` are normalized against the former 48px
-default and then applied to the body-relative `section` token.
+the default spacing and `spacious` uses five-thirds. `sectionGap` is retained
+legacy metadata for retired alternate/manual section bands; it does not restore
+those bands in current exports.
 
 ## Navigation
 
@@ -241,40 +258,18 @@ platform through `prefers-contrast` and `forced-colors`; there is no course-leve
 - `backgroundTexture`: `none | grain | paper | noise`
 - `highlightStyle`: `none | marker | gradient | scribble`
 
-`dividerStyle` inserts decorative separators before subsequent H2 sections within
-a page, including pages with uniform colours. `none` removes them. With alternate
-or explicitly assigned section palettes, separators mark the palette boundaries.
-An explicit `palette:` on `--` starts a coloured band even with `uniform` rhythm.
-In uniform rhythm, an unmarked opening section keeps the page background.
-The setting applies in small previews and full preview. It does not change an
-explicit `--` divider block.
+Course-wide `dividerStyle` and `backgroundTexture` are retained legacy metadata
+with no current export effect. Export uses no automatic section separators,
+section transitions or background texture. This does not change explicit `---`
+divider blocks or their authored palettes; see [document structure](document-structure.md).
 
 ## Image effects
 
-`imageEffects` supports keyed effect objects. A key's presence enables the effect.
-
-| Effect key | Values | Default intensity |
-|---|---|---|
-| `grayscale` | `intensity: 0–100` percent | `100` |
-| `colorWash` | `intensity: 0–100` percent; `color`: CSS hex | `40`; color `#4269d0` |
-| `accentLighting` | `intensity: 0–100` percent | `30` |
-| `progressiveBlur` | `intensity: 0–24` px | `8` |
-| `accentBlur` | `intensity: 0–16` px | `6` |
-| `motionBlur` | `intensity: 0–30` px; `direction`: `0`, `45`, `90`, or `135` degrees | `10`; direction `0` |
-| `grain` | `intensity: 0–100` percent | `25` |
-| `halftone` | `intensity: 2–16` px | `6` |
-| `dithering` | `intensity: 0–100` percent | `50` |
-
-When multiple effects are present, the runtime composites them in this order: grayscale, color
-wash, progressive blur, accent blur, motion blur, grain, halftone, dithering, then accent
-lighting. If more than one blur is active, each blur is reduced to 60% intensity, except the exact
-progressive-blur plus motion-blur pair, which stacks without attenuation. Only the first texture
-in compositing order is kept: grain before halftone before dithering.
-
-Also available:
-
-- `imageEffectsAuto` (boolean)
-- Legacy: `imageStyle`, `imageHoverEffect`
+Course-wide `imageEffects`, `imageEffectsAuto`, `imageStyle` and `imageHoverEffect`
+are retained legacy metadata with no current export effect. Export applies no
+default image treatment or automatic effects. Their saved keys do not enable
+compositing or effect intensities. Per-image block settings have their own
+[image reference](blocks-content.md#image).
 
 ## Animation
 
@@ -317,8 +312,9 @@ An explicit setting on a block takes precedence, even when it selects the normal
 unstyled/default value. Studio writes the appropriate keys when you use Design →
 Block defaults; changing a default does not rewrite each block's source.
 
-Use the same canonical keys as block source in Studio 0.2.0: `card.layout: slides`,
+Component-default YAML keeps its existing keys: `card.layout: slides`,
 `comparison.layout: slider` or `side-by-side`, and `image.size: small|medium|large`.
+Block openers use grammar-4 braces, such as `::: cards {layout=slides}`.
 Outer block width uses `width`; card surface treatment still uses `style`.
 
 ## Complete example
@@ -332,28 +328,17 @@ design:
   colorMode: auto
   accentHue: 205
   typography:
+    pairing: sans
     fontDisplay: swap
-    body:
-      fontFamily: [Inter, "DM Sans", sans-serif]
-      fontWeight: 400
-      fontStyle: normal
-    headings:
-      fontFamily: [Inter, "DM Sans", sans-serif]
-      fontWeight: 600
-      fontStyle: normal
   headingSize: 1.1
   lineHeight: 1.6
   density: comfortable
-  sectionGap: 1.1
   contentMaxWidth: 880
-  borderRadius: 10
   navArchetype: sidebar
   navOutline: true
   navPrevNext: true
   navProgressStyle: segments
   shadowIntensity: subtle
-  dividerStyle: thin
-  backgroundTexture: grain
   highlightStyle: marker
   motionEntrance: fade
   motionStagger: sequential
@@ -366,10 +351,6 @@ design:
   colorSuccess: "#15803d"
   colorWarning: "#b45309"
   colorError: "#b91c1c"
-  imageEffects:
-    grain:
-      intensity: 20
-  imageEffectsAuto: true
   brand:
     logoUrl: /assets/logo-light.svg
     logoDarkUrl: /assets/logo-dark.svg

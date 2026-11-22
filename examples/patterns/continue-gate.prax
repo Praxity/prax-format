@@ -7,21 +7,17 @@ lang: en
 
 Submit a correct answer to unlock the next page.
 
-### Which action comes first when you find a hazard?
-as: choice
-name: safetyCheck
-scored: true
-required: true
-attempts: 0
-
+::: choice Which action comes first when you find a hazard? {name=safetyCheck scored required attempts=0 level=3}
 (x) Stop work and isolate the hazard
 ( ) Continue working until the next break
+:::
 
+::: rule
 if: block:safetyCheck.result isNot "correct"
 then: disableCompletion because "Submit a correct answer before continuing."
-
---- Next steps
+:::
 
 # Report the hazard
+nav: Next steps
 
 Tell your supervisor what you found and which control you applied.
